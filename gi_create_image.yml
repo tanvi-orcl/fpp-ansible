@@ -1,0 +1,19 @@
+- name:
+  hosts: 'FPP'
+  tasks:
+    Updating DBaaS tools before starting is useful.?
+    check client prerequisties
+
+- name:
+  hosts: 'exa host'
+  tasks:
+    patch GI home
+    create zip file, encrypt, and upload to object store
+    set .oraenv and pull values to be used for map
+
+- name:
+  hosts: 'FPP'
+  tasks:
+    create map file
+    register image to FPP server
+    query image to confirm successful

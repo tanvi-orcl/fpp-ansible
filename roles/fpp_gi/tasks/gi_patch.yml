@@ -1,0 +1,24 @@
+gi_home_eval
+
+- name: 'Patch GI'
+  become: 'true'
+  become_user: '{{ user }}'
+  become_method: 'sudo'
+  shell: |
+    /{{ user_mount_point }}/app/rhp/rhphome/bin/rhpctl move gihome
+        -sourcewc {{ sourcewc }} 
+        -destwc {{ destwc }} 
+        -direct 
+        -targetnode {{ targetnode }} 
+        -auth sshkey 
+        -arg1 user:opc 
+        -arg2 identity_file:{{ identity_file }} 
+        -arg3 sudo_location:/bin/sudo 
+        {{ ignorewcpatches }}
+        {{ forcerolling }}
+        {{ eval }}
+  register: 'patch_gi_result'
+- debug:
+    msg: '{{ patch_gi_result }}''
+
+check working copy

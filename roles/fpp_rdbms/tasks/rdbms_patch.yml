@@ -1,0 +1,20 @@
+- name: 'Patch Database {{ dbname }}'
+  become: 'true'
+  become_user: '{{ user }}'
+  become_method: 'sudo'
+  shell: |
+    /{{ user_mount_point }}/app/rhp/rhphome/bin/rhpctl move database 
+        -dbname {{ dbname }} 
+        -sourcewc {{ sourcewc }} 
+        -patchedwc {{ patchedwc }} 
+        -direct 
+        -targetnode {{ targetnode }} 
+        -auth sshkey 
+        -arg1 user:opc 
+        -arg2 identity_file:{{ identity_file }} 
+        -arg3 sudo_location:/bin/sudo 
+        {{ eval }}
+  register: patch_rdbms_result
+- debug:
+    msg: "{{ patch_rdbms_result }}"
+    

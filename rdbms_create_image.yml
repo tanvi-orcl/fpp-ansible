@@ -1,0 +1,23 @@
+- name:
+  hosts: 'FPP'
+  tasks:
+    check client prerequisties (fpp common)
+
+- name:
+  hosts: 'db host'
+  tasks:
+    cswlib download if not present (should be check first?)
+    create fresh home on db host
+    set .oraenv and pull values to be used for map
+
+- name:
+  hosts: 'FPP'
+  tasks:
+    create map file
+    register image to FPP server
+    query image to confirm successful
+
+- name:
+  hosts: 'db host'
+  tasks:
+    purge temp image

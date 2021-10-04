@@ -1,0 +1,15 @@
+- name:
+  hosts: 'FPP'
+  tasks:
+    check client prerequisties
+
+- name:
+  hosts: 'db host'
+  tasks:
+    create fresh home on db host (if does not already exist)
+
+- name:
+  hosts: 'FPP'
+  tasks:
+    register working copy
+    confirm working copy was added

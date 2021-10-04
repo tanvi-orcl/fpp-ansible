@@ -1,0 +1,12 @@
+- name: 'Register Image {{ image }}'
+  become: 'true'
+  become_user: '{{ user }}'
+  become_method: 'sudo'
+  shell: |
+    /{{ user_mount_point }}/app/rhp/rhphome/bin/rhpctl register image 
+        -image {{ image }} 
+        -getfromOSS /{{ user_mount_point }}/app/rhp/admin/maps/{{ map }} 
+        -imagetype {{ imagetype }}
+  register: create_rdbms_image_result
+- debug:
+    msg: "{{ create_rdbms_image_result }}"

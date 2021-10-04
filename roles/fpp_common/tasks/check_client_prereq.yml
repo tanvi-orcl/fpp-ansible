@@ -1,0 +1,11 @@
+- name: 'Check Client Prerequisites'
+  become: 'true'
+  become_user: '{{ user }}'
+  become_method: 'sudo'
+  shell: |
+    ssh -i {{ identity_file }} opc@{{ target_cluster_node }} -t "rpm -qa | egrep 'dbaas|FPE' ; ls /var/opt/oracle/managed/exapatch/mcpostpatch"
+  register: 'check_client_prereq_result'
+- debug:
+    msg: '{{ check_client_prereq_result }}'
+
+# TO DO: Assert successful

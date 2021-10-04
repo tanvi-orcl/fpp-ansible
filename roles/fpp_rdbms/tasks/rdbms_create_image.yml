@@ -1,0 +1,27 @@
+# assert that image is defined
+
+if no existing home - rdbms_create_dbhome
+
+output of group commands
+
+parse
+
+iterate through list and save output
+
+output of patch commands
+
+parse
+
+generate map file
+
+
+- name: 'Create RDBMS Image {{ image }}'
+  include_role:
+    name: 'fpp_common'
+    tasks_from: 'register_image.yml'
+  vars:
+    map: 'db/{{ rdbms_map }}'
+    imagetype: 'ORACLEDBSOFTWARE'
+  register: 'create_rdbms_image_result'
+- debug:
+    msg: '{{ create_rdbms_image_result }}'

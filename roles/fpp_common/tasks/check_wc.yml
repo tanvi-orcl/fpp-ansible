@@ -1,0 +1,9 @@
+- name: 'Query Working Copy'
+  become: 'true'
+  become_user: '{{ user }}'
+  become_method: 'sudo'
+  shell: |
+    /{{ user_mount_point }/app/rhp/rhphome/bin/rhpctl -workingcopy {{ workingcopy }}
+  register: 'query_wc_result'
+- debug:
+    msg: '{{ query_wc_result }}'

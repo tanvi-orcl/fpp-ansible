@@ -1,0 +1,29 @@
+- name: 'Create Workingcopies of GI Images'
+  become: 'true'
+  become_user: '{{ user }}'
+  become_method: 'sudo'
+  shell: |
+    /var/opt/oracle/managed/exapatch/mcimgsetup 
+        -image_name GI1912_210720.zip.gpg 
+        -dbname grid 
+        -container https://objectstorage.us-ashburn-1.oraclecloud.com/p/<PAR>/n/oscnas001/b/fpp-gi-images/o/dbaas_patch/atp 
+        -outfile /tmp/fpp_GI1912_stage.json 
+        -force_patch 0 
+        -ignore_exachk 1 
+        -skip_exachk_exec 1 
+        -exclude_chks A98AD732FD50F308E040E50A1EC01B2C
+  register: patch_single_database_result
+- debug:
+    msg: "{{ patch_single_database_result }}"
+
+- name: 'Add GI Workingcopy {{ workingcopy }}'
+  include_role:
+    name: 'common'
+    tasks_from: 'add_wc.yml'
+  vars:
+    add_wc_parameters: '-softwareonly'
+  register: 'add_gi_wc_result'
+- debug:
+    msg: '{{ add_gi_wc_result }}'
+
+query working copy

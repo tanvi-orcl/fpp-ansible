@@ -1,0 +1,20 @@
+
+db pull path if variable is defined and not in output of check command
+
+- name: 'cswlib download'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    /root/bin/dbaascli cswlib download --version 19000 --bp APR2021
+  register: 'cswlib_download_result'
+- debug:
+    msg: '{{ cswlib_download_result }}'
+
+- name: 'create dbhome'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    /root/bin/dbaascli dbhome create --version 19000 --bp OCT2020 --ohome_name wc_DB199_201020_ecc5c4 --noprompt YES
+  register: 'dbhome_create_result'
+- debug:
+    msg: '{{ dbhome_create_result }}'
