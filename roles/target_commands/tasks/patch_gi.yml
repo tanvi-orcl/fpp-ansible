@@ -1,0 +1,8 @@
+- name: 'patch gi'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    /root/bin/dbaascli patch db apply --patchid {{ patch_id }} --oh {{ patch_oh }} --noprompt YES
+  register: 'patch_gi_result'
+- debug:
+    msg: '{{ patch_gi_result }}'

@@ -1,17 +1,20 @@
 # assert that image is defined
 
-zip -r <target zip file name with full path> . -x@<full path of exclude file>
-/bin/gpg --yes --batch --passphrase 'AdbCsPatching$' -c <zip file created above>
-
-curl -T GI1910.zip.gpg https://objectstorage.us-ashburn-1.oraclecloud.com/p/<PAR>/n/oscnas001/b/fpp-gi-images/o/dbaas_patch/atp/
-
-- name: 'Create GI Image {{ image }}'
+- name: 'Register GI Image {{ image_name }}'
   include_role:
-    name: 'common'
-    tasks_from: 'register_image.yml'
+    name: 'fpp_common'
+    tasks_from: 'image_register.yml'
   vars:
-    map: 'gi/{{ gi_map }}'
+    map: 'gi/{{ image_name }}.map'
     image_type: 'ORACLEGISOFTWARE'
   register: 'create_gi_image_result'
 - debug:
     msg: '{{ create_gi_image_result }}'
+
+- name: 'Query GI Image {{ image_name }}'
+  include_role:
+    name: 'fpp_common'
+    tasks_from: 'query_image.yml'
+  register: 'query_gi_image_result'
+- debug:
+    msg: '{{ query_gi_image_result }}'

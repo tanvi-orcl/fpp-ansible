@@ -1,5 +1,5 @@
 
-- name: 'Register RDBMS Image {{ image }}'
+- name: 'Register RDBMS Image {{ image_name }}'
   include_role:
     name: 'fpp_common'
     tasks_from: 'register_image.yml'
@@ -10,7 +10,7 @@
 - debug:
     msg: '{{ create_rdbms_image_result }}'
 
-- name: 'Query RDBMS Image {{ image }}'
+- name: 'Query RDBMS Image {{ image_name }}'
   include_role:
     name: 'fpp_common'
     tasks_from: 'query_image.yml'

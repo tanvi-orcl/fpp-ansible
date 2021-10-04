@@ -1,13 +1,2 @@
-# database
-CDBname: 'DB1'
-workload_tag: 'tst'
-
-# database home
-exadata_type: 'exacs'       # exacs or exacc
-compartment_id: 'ocid1.compartment.oc1..aaaaaaaaukmxzkrg53zvf3d7bjpnzdrt2qb3snnjt7vdys4p3qalmzo3yfma'
-rdbms_home_name: 'Home1'    # rdbms_home_name or rdbms_home_id
-vm_cluster_id: 'ocid1.cloudvmcluster.oc1.phx.abyhqljt7dxhqiwx65zrxpmjf5rhp4yqopbp2ttpef3ybguhsql3q3nytyva'
-
-# auto backup details
-auto_backup_window: 'SLOT_TWO'
-recovery_window_in_days: '30'
+patch_id: '32895426-GI'
+patch_oh: 'scaqae08dv0403:/u01/app/19.0.0.0/grid'

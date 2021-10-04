@@ -1,19 +1,34 @@
 - name:
   hosts: 'FPP'
   tasks:
-    Updating DBaaS tools before starting is useful.?
-    check client prerequisties
+
+    - name: 'Check Client Prerequistes'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: 'exa host'
+  hosts: '{{ hostgroup_exadata }}'
   tasks:
-    patch GI home
-    create zip file, encrypt, and upload to object store
-    set .oraenv and pull values to be used for map
+    
+    - name: 'Patch GI Home'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'patch_gi.yml'
+
+# TO DO: Create GI Home Zip File
+# Upload Encrypted File to Object Storage
 
 - name:
   hosts: 'FPP'
   tasks:
-    create map file
-    register image to FPP server
-    query image to confirm successful
+    
+    - name: 'Create Map File'
+      include_role:
+        name: 'fpp_gi'
+        tasks_from: 'gi_create_map_file.yml'
+    
+    - name: 'Register Image'
+      include_role:
+        name: 'fpp_gi'
+        tasks_from: 'gi_register_image.yml'
