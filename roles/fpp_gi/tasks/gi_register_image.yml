@@ -11,7 +11,7 @@ curl -T GI1910.zip.gpg https://objectstorage.us-ashburn-1.oraclecloud.com/p/<PAR
     tasks_from: 'register_image.yml'
   vars:
     map: 'gi/{{ gi_map }}'
-    imagetype: 'ORACLEGISOFTWARE'
+    image_type: 'ORACLEGISOFTWARE'
   register: 'create_gi_image_result'
 - debug:
     msg: '{{ create_gi_image_result }}'

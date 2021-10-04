@@ -1,9 +1,9 @@
-- name: 'Query Image {{ image }}'
+- name: 'Query Image {{ image_name }}'
   become: 'true'
-  become_user: '{{ user }}'
+  become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    /{{ user_mount_point }/app/rhp/rhphome/bin/rhpctl query image -image {{ image }}
-  register: 'query_wc_result'
+    /u01/app/rhp/rhphome/bin/rhpctl query image -image {{ image_name }}
+  register: 'query_image_result'
 - debug:
-    msg: '{{ query_wc_result }}'
+    msg: '{{ query_image_result }}'

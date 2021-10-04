@@ -1,0 +1,11 @@
+# client prerequistes
+identity_file: 'path_to_key'
+target_cluster_node: 'target_node'
+
+# new home
+dbhome_version: '19000'
+dbhome_bp: 'APR2021'
+
+# register image
+image_name: DB1911_210420
+

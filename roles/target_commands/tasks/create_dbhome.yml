@@ -1,13 +1,12 @@
 
-db pull path if variable is defined and not in output of check command
+# db pull path if variable is defined and not in output of check command
 
 # TO DO: cswlib download if not present (should be check first?)
-
 - name: 'cswlib download'
   become: 'true'
   become_user: 'root'
   shell:  |
-    /root/bin/dbaascli cswlib download --version 19000 --bp APR2021
+    /root/bin/dbaascli cswlib download --version {{ dbhome_version }} --bp {{ dbhome_bp }}
   register: 'cswlib_download_result'
 - debug:
     msg: '{{ cswlib_download_result }}'
@@ -16,7 +15,7 @@ db pull path if variable is defined and not in output of check command
   become: 'true'
   become_user: 'root'
   shell:  |
-    /root/bin/dbaascli dbhome create --version 19000 --bp OCT2020 --ohome_name wc_DB199_201020_ecc5c4 --noprompt YES
+    /root/bin/dbaascli dbhome create --version {{ dbhome_version }} --bp {{ dbhome_bp }} --ohome_name {{ dbhome_name }} --noprompt YES
   register: 'dbhome_create_result'
 - debug:
     msg: '{{ dbhome_create_result }}'

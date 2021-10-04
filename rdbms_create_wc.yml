@@ -1,15 +1,40 @@
 - name:
   hosts: 'FPP'
   tasks:
-    check client prerequisties
+
+    - name: 'Check Client Prerequistes'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'check_client_prereq.yml'
+      vars:
+        identity_file: 'path_to_key'
+        target_cluster_node: 'target_node'
+
 
 - name:
-  hosts: 'db host'
+  hosts: '{{ hostgroup_exadata }}'
   tasks:
-    create fresh home on db host (if does not already exist)
+    
+    # TO DO: when to know if we're using prexisting??
+    - name: 'Create New DB Home'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'create_dbhome.yml'
 
 - name:
   hosts: 'FPP'
   tasks:
-    register working copy
-    confirm working copy was added
+    
+    - name: 'Create Working Copy'
+      include_role:
+        name: 'fpp_rdbms'
+        tasks_from: 'rdbms_create_wc.yml'
+
+- name:
+  hosts: '{{ hostgroup_exadata }}'
+  tasks:
+    
+    - name: 'Purge Temp DB Home'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'purge_dbhome.yml'

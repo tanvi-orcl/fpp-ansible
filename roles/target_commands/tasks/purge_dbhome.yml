@@ -1,11 +1,9 @@
 
-db pull path if variable is defined and not in output of check command
-
-- name: 'create dbhome'
+- name: 'purge dbhome'
   become: 'true'
   become_user: 'root'
   shell:  |
-    /root/bin/dbaascli dbhome purge -hname wc_DB199_201020_ecc5c4 --noprompt YES
-  register: 'dbhome_create_result'
+    /root/bin/dbaascli dbhome purge --hname {{ dbhome_name }} --noprompt YES
+  register: 'dbhome_purge_result'
 - debug:
-    msg: '{{ dbhome_create_result }}'
+    msg: '{{ dbhome_purge_result }}'

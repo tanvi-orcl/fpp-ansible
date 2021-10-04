@@ -6,6 +6,9 @@
       include_role:
         name: 'fpp_common'
         tasks_from: 'check_client_prereq.yml'
+      vars:
+        identity_file: 'path_to_key'
+        target_cluster_node: 'target_node'
 
 - name:
   hosts: '{{ hostgroup_exadata }}'
@@ -15,6 +18,8 @@
       include_role:
         name: 'target_commands'
         tasks_from: 'create_dbhome.yml'
+      vars:
+        dbhome_name: 'temp4image'
     
     - name: 'Pull Map Values'
       include_role:
@@ -44,3 +49,5 @@
       include_role:
         name: 'target_commands'
         tasks_from: 'purge_dbhome.yml'
+      vars:
+          dbhome_name: 'temp4image'

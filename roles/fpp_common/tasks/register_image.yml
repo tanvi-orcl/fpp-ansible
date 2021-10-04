@@ -1,12 +1,9 @@
-- name: 'Register Image {{ image }}'
+- name: 'Register Image {{ image_name }}'
   become: 'true'
-  become_user: '{{ user }}'
+  become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    /{{ user_mount_point }}/app/rhp/rhphome/bin/rhpctl register image 
-        -image {{ image }} 
-        -getfromOSS /{{ user_mount_point }}/app/rhp/admin/maps/{{ map }} 
-        -imagetype {{ imagetype }}
-  register: create_rdbms_image_result
+    /u01/app/rhp/rhphome/bin/rhpctl register image -image {{ image_name }} -getfromOSS /u01/app/rhp/admin/maps/{{ image_map }} -imagetype {{ image_type }}
+  register: 'register_image_result'
 - debug:
-    msg: "{{ create_rdbms_image_result }}"
+    msg: '{{ register_image_result }}'

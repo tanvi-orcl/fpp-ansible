@@ -3,7 +3,7 @@
   become_user: '{{ user }}'
   become_method: 'sudo'
   shell: |
-    /{{ user_mount_point }}/app/rhp/rhphome/bin/rhpctl move database 
+    /u01/app/rhp/rhphome/bin/rhpctl move database 
         -dbname {{ dbname }} 
         -sourcewc {{ sourcewc }} 
         -patchedwc {{ patchedwc }} 

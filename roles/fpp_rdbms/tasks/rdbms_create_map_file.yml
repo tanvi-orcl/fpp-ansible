@@ -1,0 +1,2 @@
+# map file should be in
+/db/{{ image_name }}.map

@@ -5,7 +5,7 @@ gi_home_eval
   become_user: '{{ user }}'
   become_method: 'sudo'
   shell: |
-    /{{ user_mount_point }}/app/rhp/rhphome/bin/rhpctl move gihome
+    /u01/app/rhp/rhphome/bin/rhpctl move gihome
         -sourcewc {{ sourcewc }} 
         -destwc {{ destwc }} 
         -direct 
