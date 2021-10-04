@@ -1,0 +1,9 @@
+- name: 'Create GI Home'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  shell: |
+    /var/opt/oracle/managed/exapatch/mcimgsetup -image_name {{ image_name }}.zip.gpg -dbname grid -container {{ container }} -outfile /tmp/fpp_{{ image_name }}_stage.json -force_patch 0 -ignore_exachk 1 -skip_exachk_exec 1 -exclude_chks A98AD732FD50F308E040E50A1EC01B2C
+  register: 'create_gi_home_result'
+- debug:
+    msg: '{{ create_gi_home_result }}'
