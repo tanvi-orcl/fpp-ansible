@@ -1,6 +1,6 @@
 
 
-- name: 'Add RDBMS Workingcopy {{ workingcopy }}'
+- name: 'Add RDBMS Workingcopy wc_{{ image_name }}_{{ cluster_name }}'
   include_role:
     name: 'fpp_common'
     tasks_from: 'add_wc.yml'
@@ -11,4 +11,12 @@
 - debug:
     msg: '{{ add_rdbms_wc_result }}'
 
-query workingcopy!!
+- name: 'Query RDBMS Workingcopy wc_{{ image_name }}_{{ cluster_name }}'
+  include_role:
+    name: 'fpp_common'
+    tasks_from: 'query_wc.yml'
+  vars:
+    working_copy_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+  register: 'query_rdbms_wc_result'
+- debug:
+    msg: '{{ query_rdbms_wc_result }}'

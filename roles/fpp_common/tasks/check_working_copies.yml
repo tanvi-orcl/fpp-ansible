@@ -1,9 +1,0 @@
-- name: 'Check FPP Working Copy'
-  become: 'true'
-  become_user: '{{ user }}'
-  become_method: 'sudo'
-  shell: |
-    /u01/app/rhp/rhphome/bin/rhpctl query workingcopy
-  register: check_working_copy_result
-- debug:
-    msg: "{{ check_working_copy_result }}"
