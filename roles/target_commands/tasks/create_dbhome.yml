@@ -1,6 +1,8 @@
 
 db pull path if variable is defined and not in output of check command
 
+# TO DO: cswlib download if not present (should be check first?)
+
 - name: 'cswlib download'
   become: 'true'
   become_user: 'root'

@@ -1,23 +1,46 @@
 - name:
   hosts: 'FPP'
   tasks:
-    check client prerequisties (fpp common)
+
+    - name: 'Check Client Prerequistes'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: 'db host'
+  hosts: '{{ hostgroup_exadata }}'
   tasks:
-    cswlib download if not present (should be check first?)
-    create fresh home on db host
-    set .oraenv and pull values to be used for map
+    
+    - name: 'Create Temp DB Home'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'create_dbhome.yml'
+    
+    - name: 'Pull Map Values'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'map_determinations.yml'
+
 
 - name:
   hosts: 'FPP'
   tasks:
-    create map file
-    register image to FPP server
-    query image to confirm successful
+    
+    - name: 'Create Map File'
+      include_role:
+        name: 'fpp_rdbms'
+        tasks_from: 'rdbms_create_map_file.yml'
+    
+    - name: 'Register Image'
+      include_role:
+        name: 'fpp_rdbms'
+        tasks_from: 'rdbms_register_image.yml'
 
 - name:
-  hosts: 'db host'
+  hosts: '{{ hostgroup_exadata }}'
   tasks:
-    purge temp image
+    
+    - name: 'Purge Temp DB Home'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'purge_dbhome.yml'
