@@ -1,10 +1,29 @@
 - name: 'Patch Database {{ db_name }}'
-  become: 'true'
-  become_user: 'oracle'
-  become_method: 'sudo'
-  shell: |
-    /u01/app/rhp/rhphome/bin/rhpctl move database -dbname {{ db_name }} -sourcewc {{ source_wc }} -patchedwc {{ patched_wc }} -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo {{ eval }}
-  register: 'patch_rdbms_result'
+  include_role:
+    name: 'fpp_common'
+    tasks_from: 'patch.yml'
+  vars:
+    move_type: 'database'
+    db_info: '-dbname {{ db_name }}'
+    ignorewcpatches: ''
+    forcerolling: ''
+    eval: '-eval'
+  register: 'patch_db_result'
 - debug:
-    msg: '{{ patch_rdbms_result }}'
+    msg: '{{ patch_db_result }}'
+
+- name: 'Patch Database {{ db_name }}'
+  include_role:
+    name: 'fpp_common'
+    tasks_from: 'patch.yml'
+  vars:
+    move_type: 'database'
+    db_info: '-dbname {{ db_name }}'
+    ignorewcpatches: ''
+    forcerolling: ''
+    eval: ''
+  register: 'patch_db_result'
+- debug:
+    msg: '{{ patch_db_result }}'
     
+# TO DO: CHECK WC TO SEE IF SUCCESS

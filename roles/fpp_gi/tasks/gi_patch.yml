@@ -1,24 +1,32 @@
-gi_home_eval
 
-- name: 'Patch GI'
-  become: 'true'
-  become_user: '{{ user }}'
-  become_method: 'sudo'
-  shell: |
-    /u01/app/rhp/rhphome/bin/rhpctl move gihome
-        -sourcewc {{ sourcewc }} 
-        -destwc {{ destwc }} 
-        -direct 
-        -targetnode {{ targetnode }} 
-        -auth sshkey 
-        -arg1 user:opc 
-        -arg2 identity_file:{{ identity_file }} 
-        -arg3 sudo_location:/bin/sudo 
-        {{ ignorewcpatches }}
-        {{ forcerolling }}
-        {{ eval }}
+
+- name: 'Patch GI Image'
+  include_role:
+    name: 'fpp_common'
+    tasks_from: 'patch.yml'
+  vars:
+    move_type: 'gihome'
+    db_info: ''
+    ignorewcpatches: '-ignorewcpatches'
+    forcerolling: ''
+    eval: '-eval'
   register: 'patch_gi_result'
 - debug:
-    msg: '{{ patch_gi_result }}''
+    msg: '{{ patch_gi_result }}'
 
-check working copy
+- name: 'Patch GI Image'
+  include_role:
+    name: 'fpp_common'
+    tasks_from: 'patch.yml'
+  vars:
+    move_type: 'gihome'
+    db_info: ''
+    ignorewcpatches: '-ignorewcpatches'
+    forcerolling: ''
+    eval: ''
+  register: 'patch_gi_result'
+- debug:
+    msg: '{{ patch_gi_result }}'
+
+
+# TO DO: Check working copy to see if successful

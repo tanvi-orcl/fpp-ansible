@@ -23,10 +23,10 @@
 
     # TO DO: Don't need to check prereqs multiple times - figure out how to structure
 
-    - name: 'Patch Database'
+    - name: 'Patch GI'
       include_role:
-        name: 'fpp_rdbms'
-        tasks_from: 'rdbms_patch.yml'
+        name: 'fpp_gi'
+        tasks_from: 'gi_patch.yml'
       vars:
         source_wc: 'wc_{{ source_image }}_{{ cluster_name }}'
         patched_wc: 'wc_{{ image_name }}_{{ cluster_name }}'
