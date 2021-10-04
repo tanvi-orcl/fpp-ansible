@@ -1,9 +1,9 @@
-- name: 'Add Workingcopy {{ working_copy_name }}'
+- name: 'Add Workingcopy {{ wc_name }}'
   become: 'true'
   become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    /u01/app/rhp/rhphome/bin/rhpctl add workingcopy -workingcopy {{ working_copy_name }} -image {{ image_name }} -skipcopy -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo -path {{ path }} -groups {{ groups }} {{ add_wc_parameters }} 
+    /u01/app/rhp/rhphome/bin/rhpctl add workingcopy -workingcopy {{ wc_name }} -image {{ image_name }} -skipcopy -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo -path {{ path }} -groups {{ groups }} {{ add_wc_parameters }} 
   register: 'add_wc_result'
 - debug:
     msg: '{{ add_wc_result }}'

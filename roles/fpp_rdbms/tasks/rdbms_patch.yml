@@ -1,20 +1,10 @@
-- name: 'Patch Database {{ dbname }}'
+- name: 'Patch Database {{ db_name }}'
   become: 'true'
-  become_user: '{{ user }}'
+  become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    /u01/app/rhp/rhphome/bin/rhpctl move database 
-        -dbname {{ dbname }} 
-        -sourcewc {{ sourcewc }} 
-        -patchedwc {{ patchedwc }} 
-        -direct 
-        -targetnode {{ targetnode }} 
-        -auth sshkey 
-        -arg1 user:opc 
-        -arg2 identity_file:{{ identity_file }} 
-        -arg3 sudo_location:/bin/sudo 
-        {{ eval }}
-  register: patch_rdbms_result
+    /u01/app/rhp/rhphome/bin/rhpctl move database -dbname {{ db_name }} -sourcewc {{ source_wc }} -patchedwc {{ patched_wc }} -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo {{ eval }}
+  register: 'patch_rdbms_result'
 - debug:
-    msg: "{{ patch_rdbms_result }}"
+    msg: '{{ patch_rdbms_result }}'
     

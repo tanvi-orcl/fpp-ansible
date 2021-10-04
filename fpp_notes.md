@@ -60,7 +60,7 @@ How-to Patch (Apply RU) a Grid Infrastructure Using FPP for ExaCC
     Pre-job --> separate, optional
 2. Does the -eval check if both old and new db homes are working copies? Working copy command run from the FPP node and not the db home after ssh-ing into the database homes? What is the difference between the commands? One has an additional -workingcopy
     Running from the fpp node
-    -workingcopy {{ working_copy_name }}
+    -workingcopy {{ wc_name }}
 4. Executing as opc user? --> oracle user
 
 Database home --> templates/image registered with FPP --> working copy of that image. Determination to move to column from that home from another home
