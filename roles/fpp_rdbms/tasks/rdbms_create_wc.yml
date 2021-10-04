@@ -5,7 +5,8 @@
     name: 'fpp_common'
     tasks_from: 'add_wc.yml'
   vars:
-    add_wc_parameters: '-skipclone -oraclebase /u01/app/oracle -user oracle'
+    working_copy_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+    add_wc_parameters: '-skipclone -oraclebase {{ oracle_base }} -user oracle'
   register: 'add_rdbms_wc_result'
 - debug:
     msg: '{{ add_rdbms_wc_result }}'

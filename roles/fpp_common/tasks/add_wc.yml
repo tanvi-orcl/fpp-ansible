@@ -4,11 +4,11 @@
   become_method: 'sudo'
   shell: |
     /u01/app/rhp/rhphome/bin/rhpctl add workingcopy  
-        -workingcopy {{ workingcopy }} 
-        -image {{ image }} 
+        -workingcopy {{ working_copy_name }} 
+        -image {{ image_name }} 
         -skipcopy  
         -direct 
-        -targetnode {{ targetnode }} 
+        -targetnode {{ target_node }} 
         -auth sshkey 
         -arg1 user:opc 
         -arg2 identity_file:{{ identity_file }} 

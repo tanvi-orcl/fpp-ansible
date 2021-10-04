@@ -1,6 +1,5 @@
-# assert that image is defined
 
-- name: 'Create RDBMS Image {{ image }}'
+- name: 'Register RDBMS Image {{ image }}'
   include_role:
     name: 'fpp_common'
     tasks_from: 'register_image.yml'

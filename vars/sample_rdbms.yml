@@ -1,11 +1,19 @@
 # client prerequistes
 identity_file: 'path_to_key'
-target_cluster_node: 'target_node'
+target_node: 'target_node'
 
 # new home
 dbhome_version: '19000'
 dbhome_bp: 'APR2021'
 
 # register image
-image_name: DB1911_210420
+image_name: 'DB1911_210420'
+
+##########
+
+cluster_name: 'ecc5c4'
+# also using target_node, image_name, identity file
+path: '/u01/app/oracle/product/19.0.0.0/dbhome_1'
+oracle_base: '/u01/app/oracle'
+groups: 'OSDBA=dba...'
 

@@ -6,10 +6,6 @@
       include_role:
         name: 'fpp_common'
         tasks_from: 'check_client_prereq.yml'
-      vars:
-        identity_file: 'path_to_key'
-        target_cluster_node: 'target_node'
-
 
 - name:
   hosts: '{{ hostgroup_exadata }}'
