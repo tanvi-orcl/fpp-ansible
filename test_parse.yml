@@ -1,0 +1,17 @@
+# ansible-playbook test_parse.yml --extra-vars "patch_numbers=31106577;\n30805558;Database\n30703508;OCW PATCH SET UPDATE"
+
+- name:
+  hosts: 'localhost'
+  tasks:
+
+    - debug:
+        msg: '{{ patch_numbers }}'
+    - set_fact:
+        patch_numbers_list: '{{ patch_numbers | regex_findall("^[0-9]+", multiline=True, ignorecase=True) }}'
+
+- name:
+  hosts: 'localhost'
+  tasks:
+
+    - debug:
+        msg: '{{ patch_numbers_list }}'
