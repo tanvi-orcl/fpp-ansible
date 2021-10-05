@@ -1,0 +1,16 @@
+{
+    "19120EE": [
+        {
+            "version": "19.0.0.0.0",
+            "ru_version": "19.11.0.0.0",
+            "aru_id": "226",
+            "groups": "OSDBA=dba,OSOPER=racoper,OSDG=dba,OSKM=dba,OSRAC=dba", 
+            "patches": "30310195,29780459,32327208,32327201,31335037,30432118,31732095,32490416,32399816,32579761,32545013",
+            "lspatches_bugs": "/u02/app/rhp/admin/maps/db/DB1911_210420_bugs.lst", 
+            "nonrolling_patches": "",
+            "image_type": "db",
+            "image": "DB1911_210420.zip.gpg", 
+            "image_name": "DB1911_210420.zip.gpg"
+        } 
+    ]
+}

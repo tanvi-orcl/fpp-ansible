@@ -14,10 +14,7 @@
     - name: 'Patch GI Home'
       include_role:
         name: 'target_commands'
-        tasks_from: 'patch_gi.yml'
-
-# TO DO: Create GI Home Zip File
-# Upload Encrypted File to Object Storage
+        tasks_from: 'patched_gi_zip.yml'
 
 - name:
   hosts: 'FPP'
