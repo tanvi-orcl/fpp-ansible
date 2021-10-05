@@ -2,7 +2,28 @@
 
 # TO DO: set .oraenv and make sure we have $ORACLE_HOME
 
-# TO DO: GROUP COMMANDS
+- name: 'Group Name Options'
+  become: 'true'
+  become_user: 'oracle'
+  shell:  |
+    $ORACLE_HOME/bin/osdbagrp -h
+  register: 'osdbagrp_options'
+- debug:
+    msg: '{{ osdbagrp_options }}'
+- set_fact:
+    osdbagrp_options_list: '{{ osdbagrp_options | regex_findall("-[a-z]") }}'
+
+- name: 'Group Name Command'
+  become: 'true'
+  become_user: 'oracle'
+  shell:  |
+    $ORACLE_HOME/bin/osdbagrp {{ item }}
+  loop: '{{ osdbagrp_options_list }}'
+  register: 'osdbagrp_names_result'
+- debug:
+    msg: '{{ osdbagrp_names_result }}'
+
+# TO DO: Finish group commands - string together / add group name
 
 - name: 'Parse Patch Numbers'
   become: 'true'

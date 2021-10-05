@@ -1,17 +1,19 @@
-# ansible-playbook test_parse.yml --extra-vars "patch_numbers=31106577;\n30805558;Database\n30703508;OCW PATCH SET UPDATE"
+# ansible-playbook test_parse.yml --extra-vars "parse_input=31106577;\n30805558;Database\n30703508;OCW PATCH SET UPDATE"
+# ansible-playbook test_parse.yml --extra-vars "parse_input='Usage: /u02/app/oracle/product/19.0.0.0/dbhome_6/bin/osdbagrp -a | -d | -o | -b | -g | -k | -r'"
 
 - name:
   hosts: 'localhost'
   tasks:
 
     - debug:
-        msg: '{{ patch_numbers }}'
+        msg: '{{ parse_input }}'
     - set_fact:
-        patch_numbers_list: '{{ patch_numbers | regex_findall("^[0-9]+", multiline=True, ignorecase=True) }}'
+        parse_input_list: '{{ parse_input | regex_findall("-[a-z]") }}'
+        #parse_input_list: '{{ parse_input | regex_findall("^[0-9]+", multiline=True, ignorecase=True) }}'
 
 - name:
   hosts: 'localhost'
   tasks:
 
     - debug:
-        msg: '{{ patch_numbers_list }}'
+        msg: '{{ parse_input_list }}'
