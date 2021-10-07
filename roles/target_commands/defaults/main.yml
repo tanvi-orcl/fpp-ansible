@@ -1,5 +1,7 @@
 user: 'oracle'
 rhpctl_path: ''
 
+name_dict: ['-a': 'OSDBA']
+osdbagrp_names: ''
 
 

@@ -2,6 +2,35 @@
 
 # TO DO: set .oraenv and make sure we have $ORACLE_HOME
 
+
+# TO DO: Finish group commands - string together / add group name
+
+- name: 'Parse Patch Numbers'
+  become: 'true'
+  become_user: 'oracle'
+  shell:  |
+    $ORACLE_HOME/OPatch/opatch lspatches
+  register: 'patch_numbers'
+- debug:
+    msg: '{{ patch_numbers }}'
+- set_fact:
+    patch_numbers_list: '{{ patch_numbers | regex_findall("^[0-9]+", multiline=True, ignorecase=True) }}'
+
+# Bug List
+
+- name: 'Bug List'
+  become: 'true'
+  become_user: 'oracle'
+  shell:  |
+    $ORACLE_HOME/OPatch/opatch lspatches -bugs > /tmp/{{ image_name }}_bugs.lst
+    scp /tmp/{{ image_name }}_bugs.lst 
+  register: 'bugs_list_result'
+- debug:
+    msg: '{{ bugs_list_result }}'
+
+
+# Group Names
+
 - name: 'Group Name Options'
   become: 'true'
   become_user: 'oracle'
@@ -20,28 +49,24 @@
     $ORACLE_HOME/bin/osdbagrp {{ item }}
   loop: '{{ osdbagrp_options_list }}'
   register: 'osdbagrp_names_result'
-- debug:
-    msg: '{{ osdbagrp_names_result }}'
 
-# TO DO: Finish group commands - string together / add group name
+- name: 'For Grid'
+  block:
+    - name: Add to Map when Possible
+      set_fact:
+        osdbagrp_names: '{{ osdbagrp_names }}' + '{{ name_dict[item.item] }}={{ item.stdout }},'
+      when: item.stdout != '' and item.item in [-a, -d, -o]
+      loop: '{{ osdbagrp_names_result.results }}'
+  when: type == 'grid'
 
-- name: 'Parse Patch Numbers'
-  become: 'true'
-  become_user: 'oracle'
-  shell:  |
-    $ORACLE_HOME/OPatch/opatch lspatches
-  register: 'patch_numbers'
-- debug:
-    msg: '{{ patch_numbers }}'
-- set_fact:
-    patch_numbers_list: '{{ patch_numbers | regex_findall("^[0-9]+", multiline=True, ignorecase=True) }}'
+- name: 'For RDBMS'
+  block:
+    - name: Add to Map when Possible
+      set_fact:
+        osdbagrp_names: '{{ osdbagrp_names }}' + '{{ name_dict[item.item] }}={{ item.stdout }},'
+      when: item.stdout != ''
+      loop: '{{ osdbagrp_names_result.results }}'
+  when: type == 'rdbms'
 
-- name: 'Bug List'
-  become: 'true'
-  become_user: 'oracle'
-  shell:  |
-    $ORACLE_HOME/OPatch/opatch lspatches -bugs > /tmp/{{ image_name }}_bugs.lst
-    scp /tmp/{{ image_name }}_bugs.lst 
-  register: 'bugs_list_result'
 - debug:
-    msg: '{{ bugs_list_result }}'
+    msg: '{{ osdbagrp_names }}'
