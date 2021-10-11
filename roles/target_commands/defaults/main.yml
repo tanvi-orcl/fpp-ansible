@@ -1,7 +1,22 @@
 user: 'oracle'
 rhpctl_path: ''
 
-name_dict: ['-a': 'OSDBA']
+name_dict: 
+  -a:
+    group_name: 'aOSDBA'
+  -d:
+    group_name: 'dOSDBA'
+  -o:
+    group_name: 'oOSDBA'
+  -b:
+    group_name: 'bOSDBA'
+  -g:
+    group_name: 'gOSDBA'
+  -k:
+    group_name: 'kOSDBA'
+  -r:
+    group_name: 'rOSDBA'
+
 osdbagrp_names: ''
 
 

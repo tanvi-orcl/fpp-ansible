@@ -5,28 +5,28 @@
 
 # TO DO: Finish group commands - string together / add group name
 
-- name: 'Parse Patch Numbers'
-  become: 'true'
-  become_user: 'oracle'
-  shell:  |
-    $ORACLE_HOME/OPatch/opatch lspatches
-  register: 'patch_numbers'
-- debug:
-    msg: '{{ patch_numbers }}'
-- set_fact:
-    patch_numbers_list: '{{ patch_numbers | regex_findall("^[0-9]+", multiline=True, ignorecase=True) }}'
+# - name: 'Parse Patch Numbers'
+#   become: 'true'
+#   become_user: 'oracle'
+#   shell:  |
+#     $ORACLE_HOME/OPatch/opatch lspatches
+#   register: 'patch_numbers'
+# - debug:
+#     msg: '{{ patch_numbers }}'
+# - set_fact:
+#     patch_numbers_list: '{{ patch_numbers | regex_findall("^[0-9]+", multiline=True, ignorecase=True) }}'
 
 # Bug List
 
-- name: 'Bug List'
-  become: 'true'
-  become_user: 'oracle'
-  shell:  |
-    $ORACLE_HOME/OPatch/opatch lspatches -bugs > /tmp/{{ image_name }}_bugs.lst
-    scp /tmp/{{ image_name }}_bugs.lst 
-  register: 'bugs_list_result'
-- debug:
-    msg: '{{ bugs_list_result }}'
+# - name: 'Bug List'
+#   become: 'true'
+#   become_user: 'oracle'
+#   shell:  |
+#     $ORACLE_HOME/OPatch/opatch lspatches -bugs > /tmp/{{ image_name }}_bugs.lst
+#     scp /tmp/{{ image_name }}_bugs.lst 
+#   register: 'bugs_list_result'
+# - debug:
+#     msg: '{{ bugs_list_result }}'
 
 
 # Group Names
@@ -34,39 +34,55 @@
 - name: 'Group Name Options'
   become: 'true'
   become_user: 'oracle'
+  ignore_errors: 'yes'
   shell:  |
-    $ORACLE_HOME/bin/osdbagrp -h
+    source /home/oracle/tstdb3.env
+    $ORACLE_HOME/bin/osdbagrp h
   register: 'osdbagrp_options'
 - debug:
     msg: '{{ osdbagrp_options }}'
 - set_fact:
-    osdbagrp_options_list: '{{ osdbagrp_options | regex_findall("-[a-z]") }}'
+    osdbagrp_options_list: '{{ osdbagrp_options.stderr | regex_findall("-[a-z]") }}'
+- debug:
+    msg: '{{ osdbagrp_options_list }}'
 
 - name: 'Group Name Command'
   become: 'true'
   become_user: 'oracle'
   shell:  |
+    source /home/oracle/tstdb3.env
     $ORACLE_HOME/bin/osdbagrp {{ item }}
   loop: '{{ osdbagrp_options_list }}'
   register: 'osdbagrp_names_result'
-
-- name: 'For Grid'
-  block:
-    - name: Add to Map when Possible
-      set_fact:
-        osdbagrp_names: '{{ osdbagrp_names }}' + '{{ name_dict[item.item] }}={{ item.stdout }},'
-      when: item.stdout != '' and item.item in [-a, -d, -o]
-      loop: '{{ osdbagrp_names_result.results }}'
-  when: type == 'grid'
-
-- name: 'For RDBMS'
-  block:
-    - name: Add to Map when Possible
-      set_fact:
-        osdbagrp_names: '{{ osdbagrp_names }}' + '{{ name_dict[item.item] }}={{ item.stdout }},'
-      when: item.stdout != ''
-      loop: '{{ osdbagrp_names_result.results }}'
-  when: type == 'rdbms'
-
 - debug:
-    msg: '{{ osdbagrp_names }}'
+    msg: '{{ osdbagrp_names_result }}'
+
+
+- name: Add to Map when Possible
+  set_fact:
+    osdbagrp_names: '{{ osdbagrp_names }}{{ name_dict[item.item].group_name }}={{ item.stdout }},'
+  when: item.stdout != ''
+  loop: '{{ osdbagrp_names_result.results }}'
+- debug:
+    msg: '{{ osdbagrp_names[:-1] }}'
+
+# - name: 'For Grid'
+#   block:
+#     - name: Add to Map when Possible
+#       set_fact:
+#         osdbagrp_names: '{{ osdbagrp_names }} + {{ name_dict[item.item] }}={{ item.stdout }},'
+#       when: item.stdout != '' and item.item in [-a, -d, -o]
+#       loop: '{{ osdbagrp_names_result.results }}'
+#   when: type == 'grid'
+
+# - name: 'For RDBMS'
+#   block:
+#     - name: Add to Map when Possible
+#       set_fact:
+#         osdbagrp_names: '{{ osdbagrp_names }} + {{ name_dict[item.item] }}={{ item.stdout }},'
+#       when: item.stdout != ''
+#       loop: '{{ osdbagrp_names_result.results }}'
+#   when: type == 'rdbms'
+
+# - debug:
+#     msg: '{{ osdbagrp_names }}'
