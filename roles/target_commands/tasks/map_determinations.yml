@@ -1,20 +1,16 @@
 
-
 # TO DO: set .oraenv and make sure we have $ORACLE_HOME
 
-
-# TO DO: Finish group commands - string together / add group name
-
-# - name: 'Parse Patch Numbers'
-#   become: 'true'
-#   become_user: 'oracle'
-#   shell:  |
-#     $ORACLE_HOME/OPatch/opatch lspatches
-#   register: 'patch_numbers'
-# - debug:
-#     msg: '{{ patch_numbers }}'
-# - set_fact:
-#     patch_numbers_list: '{{ patch_numbers | regex_findall("^[0-9]+", multiline=True, ignorecase=True) }}'
+- name: 'Parse Patch Numbers'
+  become: 'true'
+  become_user: 'oracle'
+  shell:  |
+    $ORACLE_HOME/OPatch/opatch lspatches
+  register: 'patch_numbers'
+- debug:
+    msg: '{{ patch_numbers }}'
+- set_fact:
+    patch_numbers_list: '{{ patch_numbers | regex_findall("^[0-9]+", multiline=True, ignorecase=True) }}'
 
 # Bug List
 
@@ -57,34 +53,25 @@
 - debug:
     msg: '{{ osdbagrp_names_result }}'
 
+- name: 'For RDBMS'
+  block:
+    - name: Add to Map when Possible
+      set_fact:
+        osdbagrp_names: '{{ osdbagrp_names }}{{ name_dict[item.item].group_name }}={{ item.stdout }},'
+      when: item.stdout != ''
+      loop: '{{ osdbagrp_names_result.results }}'
+  when: image_type == 'ORACLEDBSOFTWARE'
 
-- name: Add to Map when Possible
-  set_fact:
-    osdbagrp_names: '{{ osdbagrp_names }}{{ name_dict[item.item].group_name }}={{ item.stdout }},'
-  when: item.stdout != ''
-  loop: '{{ osdbagrp_names_result.results }}'
+- name: 'For Grid'
+  block:
+    - name: Add to Map when Possible
+      set_fact:
+        osdbagrp_names: '{{ osdbagrp_names }}{{ name_dict[item.item].group_name }}={{ item.stdout }},'
+      when: item.stdout != '' and item.item in grid_options
+      loop: '{{ osdbagrp_names_result.results }}'
+  when: image_type == 'ORACLEGISOFTWARE'
+
 - set_fact:
     osdbagrp_names: '{{ osdbagrp_names[:-1] }}'
 - debug:
     msg: '{{ osdbagrp_names }}'
-
-# - name: 'For Grid'
-#   block:
-#     - name: Add to Map when Possible
-#       set_fact:
-#         osdbagrp_names: '{{ osdbagrp_names }} + {{ name_dict[item.item] }}={{ item.stdout }},'
-#       when: item.stdout != '' and item.item in [-a, -d, -o]
-#       loop: '{{ osdbagrp_names_result.results }}'
-#   when: type == 'grid'
-
-# - name: 'For RDBMS'
-#   block:
-#     - name: Add to Map when Possible
-#       set_fact:
-#         osdbagrp_names: '{{ osdbagrp_names }} + {{ name_dict[item.item] }}={{ item.stdout }},'
-#       when: item.stdout != ''
-#       loop: '{{ osdbagrp_names_result.results }}'
-#   when: type == 'rdbms'
-
-# - debug:
-#     msg: '{{ osdbagrp_names }}'

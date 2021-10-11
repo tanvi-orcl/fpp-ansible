@@ -22,6 +22,8 @@
       include_role:
         name: 'target_commands'
         tasks_from: 'map_determinations.yml'
+      vars:
+        image_type: 'ORACLEDBSOFTWARE'
 
 
 - name:
