@@ -14,15 +14,15 @@
 
 # Bug List
 
-# - name: 'Bug List'
-#   become: 'true'
-#   become_user: 'oracle'
-#   shell:  |
-#     $ORACLE_HOME/OPatch/opatch lspatches -bugs > /tmp/{{ image_name }}_bugs.lst
-#     scp /tmp/{{ image_name }}_bugs.lst 
-#   register: 'bugs_list_result'
-# - debug:
-#     msg: '{{ bugs_list_result }}'
+- name: 'Bug List'
+  become: 'true'
+  become_user: 'oracle'
+  shell:  |
+    $ORACLE_HOME/OPatch/opatch lspatches -bugs > /tmp/{{ image_name }}_bugs.lst
+    scp /tmp/{{ image_name }}_bugs.lst 
+  register: 'bugs_list_result'
+- debug:
+    msg: '{{ bugs_list_result }}'
 
 
 # Group Names
