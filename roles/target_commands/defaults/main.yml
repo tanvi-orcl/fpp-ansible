@@ -24,4 +24,13 @@ grid_options:
   - '-d'
   - '-o'
 
+db_options:
+  - '-a'
+  - '-d'
+  - '-o'
+  - 'b'
+  - 'g'
+  - 'k'
+  - 'r'
+
 

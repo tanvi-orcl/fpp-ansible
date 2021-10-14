@@ -23,7 +23,8 @@
         name: 'target_commands'
         tasks_from: 'map_determinations.yml'
       vars:
-        image_type: 'ORACLEDBSOFTWARE'
+        image_type: 'db'
+        osdbagrp_options: db_options
 
 
 - name:
