@@ -1,5 +1,4 @@
 user: 'oracle'
-rhpctl_path: ''
 
 name_dict: 
   -a:

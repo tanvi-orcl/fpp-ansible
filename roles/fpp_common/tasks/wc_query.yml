@@ -3,7 +3,7 @@
   become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    /u01/app/rhp/rhphome/bin/rhpctl query workingcopy -workingcopy {{ wc_name }}
+    {{ rhpctl_path }} query workingcopy -workingcopy {{ wc_name }}
   register: 'query_wc_result'
 - debug:
     msg: '{{ query_wc_result }}'

@@ -1,5 +1,5 @@
 user: 'oracle'
-rhpctl_path: ''
+rhpctl_path: '/u01/app/rhp/rhphome/bin/rhpctl'
 
 
 
