@@ -2,21 +2,21 @@
 # TO DO: set .oraenv and make sure we have $ORACLE_HOME
 # source /home/oracle/tstdb3.env
 
-# - name: 'Parse Patch Numbers'
-#   become: 'true'
-#   become_user: 'oracle'
-#   shell:  |
-#     source /home/oracle/tstdb3.env
-#     $ORACLE_HOME/OPatch/opatch lspatches
-#   register: 'patch_numbers'
-# - debug:
-#     msg: '{{ patch_numbers.stdout_lines }}'
-# - set_fact:
-#     patch_numbers_list: '{{ patch_numbers.stdout_lines | regex_findall("[0-9]{8};", multiline=True) }}'
-# - set_fact:
-#     patch_numbers_list: '{{ patch_numbers_list | join("") }}'  
-# - debug:
-#     msg: '{{ patch_numbers_list }}'
+- name: 'Parse Patch Numbers'
+  become: 'true'
+  become_user: 'oracle'
+  shell:  |
+    source /home/oracle/tstdb3.env
+    $ORACLE_HOME/OPatch/opatch lspatches
+  register: 'patch_numbers'
+- debug:
+    msg: '{{ patch_numbers.stdout_lines }}'
+- set_fact:
+    patch_numbers_list: '{{ patch_numbers.stdout_lines | regex_findall("[0-9]{8};", multiline=True) }}'
+- set_fact:
+    patch_numbers_list: '{{ patch_numbers_list | join("") }}'  
+- debug:
+    msg: '{{ patch_numbers_list }}'
 
 # Bug List
 
