@@ -1,17 +1,4 @@
-# ansible-playbook test_parse.yml --extra-vars "parse_input=31106577;\n30805558;Database\n30703508;OCW PATCH SET UPDATE"
-# ansible-playbook test_parse.yml --extra-vars "parse_input='Usage: /u02/app/oracle/product/19.0.0.0/dbhome_6/bin/osdbagrp -a | -d | -o | -b | -g | -k | -r'"
-
-# - name:
-#   hosts: 'localhost'
-#   tasks:
-
-#     - debug:
-#         msg: '{{ parse_input }}'
-#     - set_fact:
-#         parse_input_list: '{{ parse_input | regex_findall("-[a-z]") }}'
-#         #parse_input_list: '{{ parse_input | regex_findall("^[0-9]+", multiline=True, ignorecase=True) }}'
-#     - debug:
-#         msg: '{{ parse_input_list }}'
+# ansible-playbook -i inventory test_parse.yml --extra-vars oracle_home=/u02/app/oracle/product/19.0.0.0/dbhome_10
 
 - name:
   hosts: 'x8m'

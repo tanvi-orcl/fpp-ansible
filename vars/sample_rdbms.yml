@@ -1,3 +1,5 @@
+hostgroup: 'x8m'
+
 # client prerequistes
 identity_file: 'path_to_key'
 target_node: 'target_node'
@@ -13,12 +15,12 @@ image_name: 'DB1911_210420'
 
 cluster_name: 'ecc5c4'
 # also using target_node, image_name, identity_file
-path: '/u01/app/oracle/product/19.0.0.0/dbhome_1'
-oracle_base: '/u01/app/oracle'
-groups: 'OSDBA=dba...'
+oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
+path: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
+oracle_base: '/u02/app/oracle'
 
 ##########
 
 source_image: 'DB1911_210420'
 # also using image_name (as new image), cluster_name, target_node, identity_file
-db_name: 'db1'
+db_name: 'tstdb3'

@@ -8,7 +8,7 @@
         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ hostgroup_exadata }}'
+  hosts: '{{ hostgroup }}'
   tasks:
     
     # TO DO: when to know if we're using prexisting??
@@ -27,7 +27,7 @@
         tasks_from: 'rdbms_create_wc.yml'
 
 - name:
-  hosts: '{{ hostgroup_exadata }}'
+  hosts: '{{ hostgroup }}'
   tasks:
     
     - name: 'Purge Temp DB Home'

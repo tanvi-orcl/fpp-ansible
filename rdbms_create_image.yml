@@ -1,14 +1,14 @@
-- name:
-  hosts: 'FPP'
-  tasks:
+# - name:
+#   hosts: 'FPP'
+#   tasks:
 
-    - name: 'Check Client Prerequistes'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'check_client_prereq.yml'
+#     - name: 'Check Client Prerequistes'
+#       include_role:
+#         name: 'fpp_common'
+#         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ hostgroup_exadata }}'
+  hosts: '{{ hostgroup }}'
   tasks:
     
     - name: 'Create Temp DB Home'
@@ -16,15 +16,12 @@
         name: 'target_commands'
         tasks_from: 'create_dbhome.yml'
       vars:
-        dbhome_name: 'temp4image'
+        dbhome_name: 'temp4image2'
     
-    - name: 'Pull Map Values'
+    - name: 'Determine DB Home Map Values'
       include_role:
         name: 'target_commands'
         tasks_from: 'map_determinations.yml'
-      vars:
-        image_type: 'db'
-        osdbagrp_options: db_options
 
 
 - name:
@@ -42,7 +39,7 @@
         tasks_from: 'rdbms_register_image.yml'
 
 - name:
-  hosts: '{{ hostgroup_exadata }}'
+  hosts: '{{ hostgroup }}'
   tasks:
     
     - name: 'Purge Temp DB Home'

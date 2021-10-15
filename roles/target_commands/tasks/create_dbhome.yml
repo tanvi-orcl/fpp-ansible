@@ -1,12 +1,10 @@
 
-# db pull path if variable is defined and not in output of check command
-
-# TO DO: cswlib download if not present (should be check first?)
+# TO DO: cswlib download if version not present (should this be checked first?)
 - name: 'cswlib download'
   become: 'true'
   become_user: 'root'
   shell:  |
-    /root/bin/dbaascli cswlib download --version {{ dbhome_version }} --bp {{ dbhome_bp }}
+    /bin/dbaascli cswlib download --version {{ dbhome_version }} --bp {{ dbhome_bp }}
   register: 'cswlib_download_result'
 - debug:
     msg: '{{ cswlib_download_result }}'
@@ -15,7 +13,11 @@
   become: 'true'
   become_user: 'root'
   shell:  |
-    /root/bin/dbaascli dbhome create --version {{ dbhome_version }} --bp {{ dbhome_bp }} --ohome_name {{ dbhome_name }} --noprompt YES
+    /bin/dbaascli dbhome create --version {{ dbhome_version }} --bp {{ dbhome_bp }} --ohome_name {{ dbhome_name }} --noprompt YES
   register: 'dbhome_create_result'
 - debug:
     msg: '{{ dbhome_create_result }}'
+- set_fact:
+    oracle_home: '{{ dbhome_create_result.stdout_lines | regex_findall(regexp, multiline=True) }}'
+    vars:
+      regexp: 'oracle_home=([0-9]{8})'

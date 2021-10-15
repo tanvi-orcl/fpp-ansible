@@ -2,19 +2,19 @@ user: 'oracle'
 
 name_dict: 
   -a:
-    group_name: 'aOSDBA'
+    group_name: 'OSASM'
   -d:
-    group_name: 'dOSDBA'
+    group_name: 'OSDBA'
   -o:
-    group_name: 'oOSDBA'
+    group_name: 'OSOPER'
   -b:
-    group_name: 'bOSDBA'
+    group_name: 'OSBACKUP'
   -g:
-    group_name: 'gOSDBA'
+    group_name: 'OSDG'
   -k:
-    group_name: 'kOSDBA'
+    group_name: 'OSKM'
   -r:
-    group_name: 'rOSDBA'
+    group_name: 'OSRAC'
 
 osdbagrp_names: ''
 
@@ -22,14 +22,5 @@ grid_options:
   - '-a'
   - '-d'
   - '-o'
-
-db_options:
-  - '-a'
-  - '-d'
-  - '-o'
-  - 'b'
-  - 'g'
-  - 'k'
-  - 'r'
 
 

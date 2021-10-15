@@ -1,7 +1,14 @@
 
+Questions
+- Move GI Method? 
+- When do we create a new home? 
+- Which hosts do we have to run each set of tasks on (follow-up from question about image registry from session)
+- . oraenv (how do they know $ORACLE_HOME value)
+- what do you feel is the BASE information they would have? What else can be extrapolated? 
+
+
 - fresh home with current settings installed on exadata server to get metadata without risking changed configurations
 - map created from that info on fpp server, image registered, working copy created
-
 
 
 Notes from FiServ Testing Sessions
@@ -15,7 +22,7 @@ Map Files
  - groups --> -h not working 
 
  - Master GI File - how often would it be updated? might not be work the risk to be adding lines to it... often a source of error if could write incorrectly
- - What is the timeline for how often each map file will be created / updated? They would only create a new one what there is a new patch to do right? --> TBD. Relying on DBAAS tooling to lay down the hole and then recording metadata about it. But as we do a move from old home to new home. We look at the current 
+ - What is the timeline for how often each map file will be created / updated? They would only create a new one what there is a new patch right? --> TBD. Relying on DBAAS tooling to lay down the hole and then recording metadata about it. But as we do a move from old home to new home. We look at the current 
  1 image: many working copies 
 
  Lifecycle
