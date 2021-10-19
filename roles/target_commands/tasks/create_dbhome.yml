@@ -17,7 +17,16 @@
   register: 'dbhome_create_result'
 - debug:
     msg: '{{ dbhome_create_result }}'
+
+- name: 'check if dbhome created'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    /bin/dbaascli dbhome info --hname {{ dbhome_name }} --noprompt YES
+  register: 'dbhome_info_result'
+- debug:
+    msg: '{{ dbhome_info_result }}'
 - set_fact:
-    oracle_home: '{{ dbhome_create_result.stdout_lines | regex_findall(regexp, multiline=True) }}'
-    vars:
-      regexp: 'oracle_home=([0-9]{8})'
+    oracle_home: '{{ dbhome_info_result.stdout | regex_findall("HOME_LOC=(.+?)\n") | first }}'
+- debug:
+    msg: '{{ oracle_home }}'

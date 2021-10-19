@@ -15,9 +15,9 @@ image_name: 'DB1911_210420'
 
 cluster_name: 'ecc5c4'
 # also using target_node, image_name, identity_file
-oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
-path: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
-oracle_base: '/u02/app/oracle'
+#oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
+#path: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
+#oracle_base: '/u02/app/oracle'
 
 ##########
 
