@@ -7,23 +7,23 @@
 #         name: 'fpp_common'
 #         tasks_from: 'check_client_prereq.yml'
 
-- name:
-  hosts: '{{ hostgroup }}'
-  tasks:
+# - name:
+#   hosts: '{{ hostgroup }}'
+#   tasks:
     
-    - name: 'Create Temp DB Home'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'create_dbhome.yml'
-      vars:
-        dbhome_name: 'temp4image4'
+#     - name: 'Create Temp DB Home'
+#       include_role:
+#         name: 'target_commands'
+#         tasks_from: 'create_dbhome.yml'
+#       vars:
+#         dbhome_name: 'temp4image2'
     
-    - name: 'Determine DB Home Map Values'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'map_determinations.yml'
-      vars:
-        image_type: 'db'
+#     - name: 'Determine DB Home Map Values'
+#       include_role:
+#         name: 'target_commands'
+#         tasks_from: 'map_determinations.yml'
+#       vars:
+#         image_type: 'db'
 
 
 # - name:
@@ -44,9 +44,14 @@
   hosts: '{{ hostgroup }}'
   tasks:
     
-    - name: 'Purge Temp DB Home'
+    - name: 'Create Map File'
       include_role:
-        name: 'target_commands'
-        tasks_from: 'purge_dbhome.yml'
-      vars:
-          dbhome_name: 'temp4image4'
+        name: 'fpp_rdbms'
+        tasks_from: 'rdbms_create_map_file.yml'
+
+    # - name: 'Purge Temp DB Home'
+    #   include_role:
+    #     name: 'target_commands'
+    #     tasks_from: 'purge_dbhome.yml'
+    #   vars:
+    #       dbhome_name: 'temp4image2'

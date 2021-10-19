@@ -1,2 +1,8 @@
-# map file should be in
-/db/{{ image_name }}.map
+
+- name: 'Add Map File'
+  include_role:
+    name: 'fpp_common'
+    tasks_from: 'copy_map.yml'
+  vars:
+    location: '/db/{{ image_name }}.map'
+    image_type: 'db'

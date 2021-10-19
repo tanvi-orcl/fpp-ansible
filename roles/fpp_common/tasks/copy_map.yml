@@ -1,0 +1,4 @@
+- name: Copy Template
+  template:
+    src: 'test_map.json'
+    dest: '/tmp/{{ location }}'

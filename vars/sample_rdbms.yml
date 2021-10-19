@@ -9,6 +9,7 @@ dbhome_version: '19000'
 dbhome_bp: 'APR2021'
 
 # register image
+image_id: '19110EE'
 image_name: 'DB1911_210420'
 
 ##########
@@ -18,9 +19,14 @@ cluster_name: 'ecc5c4'
 #oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
 #path: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
 #oracle_base: '/u02/app/oracle'
+patch_numbers: '12345678,12345678'
+osdbagrp_names: 'OSDBA=dba'
+
 
 ##########
 
 source_image: 'DB1911_210420'
 # also using image_name (as new image), cluster_name, target_node, identity_file
 db_name: 'tstdb3'
+map_container: 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/5GGx7KhW-qVUWW89KjJEn4sM7eEGmrVULM7R1H3vuienQWttWPOBxT2LTTwueXn1/n/orasenatdoracledigital01/b/Ansible/o/fiserv_gi_maps.json'
+

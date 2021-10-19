@@ -6,15 +6,15 @@
     $ORACLE_HOME/OPatch/opatch lspatches
   environment:
     ORACLE_HOME: '{{ oracle_home }}'
-  register: 'patch_numbers'
+  register: 'opatch_result'
 - debug:
-    msg: '{{ patch_numbers.stdout_lines }}'
+    msg: '{{ opatch_result }}'
 - set_fact:
-    patch_numbers_list: '{{ patch_numbers.stdout_lines | regex_findall("([0-9]{8});", multiline=True) }}'
+    patch_numbers: '{{ opatch_result.stdout_lines | regex_findall("([0-9]{8});", multiline=True) }}'
 - set_fact:
-    patch_numbers_list: '{{ patch_numbers_list | join(",") }}'  
+    patch_numbers: '{{ patch_numbers | join(",") }}'  
 - debug:
-    msg: '{{ patch_numbers_list }}'
+    msg: '{{ patch_numbers }}'
 
 # Bug List
 

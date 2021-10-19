@@ -1,1 +1,40 @@
-# TO DO: Create Map Files
+
+- name: 'Add Map File'
+  include_role:
+    name: 'fpp_common'
+    tasks_from: 'copy_map.yml'
+  vars:
+    location: '/gi/{{ image_name }}.map'
+    image_type: 'gi'
+
+- name: Load New Map From Uploaded File
+  slurp:
+    src: '/tmp/gi/{{ image_name }}.map'
+  register: 'new_image_map'
+- debug:
+      msg: '{{ new_image_map.content|b64decode|from_json }}'
+
+- name: Load Master Map From Container
+  delegate_to: 'localhost'
+  get_url:
+    url: '{{ map_container }}'
+    dest: './'
+  register: 'master_map'
+- name: Load Master Map From File
+  delegate_to: 'localhost'
+  slurp:
+    src: './fiserv_gi_maps.json'
+  register: 'master_map'
+- debug:
+      msg: '{{ master_map.content|b64decode|from_json }}'
+
+- name: Appening New GI Map
+  set_fact:
+    updated_master_map: '{{ master_map.content|b64decode|from_json | default([]) | combine(new_image_map.content|b64decode|from_json) }}'
+- debug:
+    var: updated_master_map
+
+- name: write var to file   # TO DO: Write to ObjectStorage
+  copy: 
+    content: '{{ updated_master_map | to_nice_json }}'
+    dest: /tmp/db/master_map.map
