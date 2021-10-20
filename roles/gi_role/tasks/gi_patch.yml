@@ -29,4 +29,4 @@
     msg: '{{ patch_gi_result }}'
 
 
-# TO DO: Check working copy to see if successful
+# TO DO: Use rhpctl query workingcopy -workingcopy <new WC name>.  The entry for 'Software only' should state 'false'.  Until the move completes it will state true.
