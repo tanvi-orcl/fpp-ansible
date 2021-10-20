@@ -3,7 +3,7 @@
 - name: 'Add Map File'
   include_role:
     name: 'fpp_common'
-    tasks_from: 'copy_map.yml'
+    tasks_from: 'create_map_file.yml'
   vars:
     location: '/root/tmp/db/{{ image_name }}.map'
     image_type: 'db'

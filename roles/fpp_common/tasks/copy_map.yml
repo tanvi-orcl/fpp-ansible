@@ -1,7 +1,0 @@
-- name: Copy Template
-  become: 'true'
-  become_user: 'root'
-  become_method: 'sudo'
-  template:
-    src: 'test_map.json'
-    dest: '{{ location }}'

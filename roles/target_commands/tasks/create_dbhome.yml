@@ -1,22 +1,22 @@
 
 # TO DO: cswlib download if version not present (should this be checked first?)
-# - name: 'cswlib download'
-#   become: 'true'
-#   become_user: 'root'
-#   shell:  |
-#     /bin/dbaascli cswlib download --version {{ dbhome_version }} --bp {{ dbhome_bp }}
-#   register: 'cswlib_download_result'
-# - debug:
-#     msg: '{{ cswlib_download_result }}'
+- name: 'cswlib download'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    /bin/dbaascli cswlib download --version {{ dbhome_version }} --bp {{ dbhome_bp }}
+  register: 'cswlib_download_result'
+- debug:
+    msg: '{{ cswlib_download_result }}'
 
-# - name: 'create dbhome'
-#   become: 'true'
-#   become_user: 'root'
-#   shell:  |
-#     /bin/dbaascli dbhome create --version {{ dbhome_version }} --bp {{ dbhome_bp }} --ohome_name {{ dbhome_name }} --noprompt YES
-#   register: 'dbhome_create_result'
-# - debug:
-#     msg: '{{ dbhome_create_result }}'
+- name: 'create dbhome'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    /bin/dbaascli dbhome create --version {{ dbhome_version }} --bp {{ dbhome_bp }} --ohome_name {{ dbhome_name }} --noprompt YES
+  register: 'dbhome_create_result'
+- debug:
+    msg: '{{ dbhome_create_result }}'
 
 - name: 'check if dbhome created'
   become: 'true'

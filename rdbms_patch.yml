@@ -25,7 +25,7 @@
 
     - name: 'Patch Database'
       include_role:
-        name: 'fpp_rdbms'
+        name: 'rdbms'
         tasks_from: 'rdbms_patch.yml'
       vars:
         source_wc: 'wc_{{ source_image }}_{{ cluster_name }}'

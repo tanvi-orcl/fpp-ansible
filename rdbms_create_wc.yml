@@ -23,7 +23,7 @@
     
     - name: 'Create Working Copy'
       include_role:
-        name: 'fpp_rdbms'
+        name: 'rdbms'
         tasks_from: 'rdbms_create_wc.yml'
 
 - name:
