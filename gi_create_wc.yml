@@ -1,5 +1,5 @@
 - name:
-  hosts: 'FPP'
+  hosts: 'fpp'
   tasks:
 
     - name: 'Check Client Prerequistes'
@@ -18,7 +18,7 @@
         tasks_from: 'create_gihome.yml'
 
 - name:
-  hosts: 'FPP'
+  hosts: 'fpp'
   tasks:
     
     - name: 'Create Working Copy'

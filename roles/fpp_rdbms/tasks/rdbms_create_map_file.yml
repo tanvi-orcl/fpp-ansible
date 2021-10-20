@@ -1,8 +1,9 @@
+# TO DO: Update Paths from Test Node to FPP
 
 - name: 'Add Map File'
   include_role:
     name: 'fpp_common'
     tasks_from: 'copy_map.yml'
   vars:
-    location: '/db/{{ image_name }}.map'
+    location: '/root/tmp/db/{{ image_name }}.map'
     image_type: 'db'

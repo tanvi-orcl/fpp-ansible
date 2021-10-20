@@ -1,5 +1,5 @@
 # - name:
-#   hosts: 'FPP'
+#   hosts: 'fpp'
 #   tasks:
 
 #     - name: 'Check Client Prerequistes'
@@ -11,47 +11,42 @@
 #   hosts: '{{ hostgroup }}'
 #   tasks:
     
-#     - name: 'Create Temp DB Home'
-#       include_role:
-#         name: 'target_commands'
-#         tasks_from: 'create_dbhome.yml'
-#       vars:
-#         dbhome_name: 'temp4image2'
+    # - name: 'Create Temp DB Home'
+    #   include_role:
+    #     name: 'target_commands'
+    #     tasks_from: 'create_dbhome.yml'
+    #   vars:
+    #     dbhome_name: 'temp4image2'
     
-#     - name: 'Determine DB Home Map Values'
-#       include_role:
-#         name: 'target_commands'
-#         tasks_from: 'map_determinations.yml'
-#       vars:
-#         image_type: 'db'
+    # - name: 'Determine DB Home Map Values'
+    #   include_role:
+    #     name: 'target_commands'
+    #     tasks_from: 'map_determinations.yml'
+    #   vars:
+    #     image_type: 'db'
 
-
-# - name:
-#   hosts: 'FPP'
-#   tasks:
-    
-#     - name: 'Create Map File'
-#       include_role:
-#         name: 'fpp_rdbms'
-#         tasks_from: 'rdbms_create_map_file.yml'
-    
-#     - name: 'Register Image'
-#       include_role:
-#         name: 'fpp_rdbms'
-#         tasks_from: 'rdbms_register_image.yml'
 
 - name:
-  hosts: '{{ hostgroup }}'
+  hosts: 'fpp'
   tasks:
     
     - name: 'Create Map File'
       include_role:
         name: 'fpp_rdbms'
         tasks_from: 'rdbms_create_map_file.yml'
+    
+    # - name: 'Register Image'
+    #   include_role:
+    #     name: 'fpp_rdbms'
+    #     tasks_from: 'rdbms_register_image.yml'
+
+# - name:
+#   hosts: '{{ hostgroup }}'
+#   tasks:
 
     # - name: 'Purge Temp DB Home'
     #   include_role:
     #     name: 'target_commands'
     #     tasks_from: 'purge_dbhome.yml'
     #   vars:
-    #       dbhome_name: 'temp4image2'
+    #       dbhome_name: 'temp4image3'

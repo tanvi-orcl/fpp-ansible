@@ -1,5 +1,5 @@
 - name:
-  hosts: 'FPP'
+  hosts: 'fpp'
   tasks:
 
     - name: 'Check Client Prerequistes'

@@ -1,5 +1,5 @@
 {
-    "19120EE": [
+    "TEST2": [
         {
             "version": "{{ version }}",
             "ru_version": "{{ ru_version }}",

@@ -1,5 +1,5 @@
 - name:
-  hosts: 'FPP'
+  hosts: 'fpp'
   tasks:
 
     - name: 'Check Client Prerequistes'
@@ -17,7 +17,7 @@
         tasks_from: 'patched_gi_zip.yml'
 
 - name:
-  hosts: 'FPP'
+  hosts: 'fpp'
   tasks:
     
     - name: 'Create Map File'
