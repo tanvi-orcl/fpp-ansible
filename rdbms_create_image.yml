@@ -18,10 +18,15 @@
       vars:
         dbhome_name: 'temp4image2'
     
-    - name: 'Determine DB Home Map Values'
+    - name: 'Find Patch and Bug Data'
       include_role:
         name: 'target_commands'
-        tasks_from: 'map_determinations.yml'
+        tasks_from: 'map_data_patch.yml'
+
+    - name: 'Find DB Groups'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'map_data_groups.yml'
       vars:
         image_type: 'db'
 

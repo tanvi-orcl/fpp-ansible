@@ -1,0 +1,31 @@
+
+- name: 'Parse Patch Numbers'
+  become: 'true'
+  become_user: 'oracle'
+  shell:  |
+    $ORACLE_HOME/OPatch/opatch lspatches
+  environment:
+    ORACLE_HOME: '{{ oracle_home }}'
+  register: 'opatch_result'
+- debug:
+    msg: '{{ opatch_result }}'
+- set_fact:
+    patch_numbers: '{{ opatch_result.stdout_lines | regex_findall("([0-9]{8});", multiline=True) }}'
+- set_fact:
+    patch_numbers: '{{ patch_numbers | join(",") }}'  
+- debug:
+    msg: '{{ patch_numbers }}'
+
+# Bug List
+
+# - name: 'Bug List'
+#   become: 'true'
+#   become_user: 'oracle'
+#   shell:  |
+#     $ORACLE_HOME/OPatch/opatch lspatches -bugs > /tmp/{{ image_name }}_bugs.lst
+#   environment:
+#     ORACLE_HOME: '{{ oracle_home }}'
+#   register: 'bugs_list_result'
+# - debug:
+#     msg: '{{ bugs_list_result }}'
+# # scp /tmp/{{ image_name }}_bugs.lst 

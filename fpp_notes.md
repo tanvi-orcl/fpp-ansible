@@ -3,26 +3,17 @@ Questions
 - Move GI Method? 
 - When do we create a new home? 
 - Which hosts do we have to run each set of tasks on (follow-up from question about image registry from session)
-- . oraenv (how do they know $ORACLE_HOME value)
 - what do you feel is the BASE information they would have? What else can be extrapolated? 
-
 
 - fresh home with current settings installed on exadata server to get metadata without risking changed configurations
 - map created from that info on fpp server, image registered, working copy created
 
-
 Notes from FiServ Testing Sessions
 - Their naming standards: dbhome1_191200, dbhome1_182400, dbhome1_12201_210720 (version 12), dbhome1_191200_12345678 (one off patch)
-- Need to run db tasks from the db itself
 - Will be using centrify or cyberark to get the keys
 
-Map Files
- - setting . oraenv to ORACLE_HOME --> how do we get ansible to enter in values in response? expectd?
- - gather image details -> this is of the temporary image completed right? How do you know the version, etc - or do you know it before? 
- - groups --> -h not working 
-
- - Master GI File - how often would it be updated? might not be work the risk to be adding lines to it... often a source of error if could write incorrectly
  - What is the timeline for how often each map file will be created / updated? They would only create a new one what there is a new patch right? --> TBD. Relying on DBAAS tooling to lay down the hole and then recording metadata about it. But as we do a move from old home to new home. We look at the current 
+ 
  1 image: many working copies 
 
  Lifecycle
@@ -47,17 +38,7 @@ How to Patch a DB
 TASKS
 
 How-to Create RDBMS Images using FPP for ExaCC
-- To figure out: Run from FPP or Exadata??
 - dbaascli download / create fresh RDBMS home commands need to be run as root
-- {"ORACLE_HOME_NAME":"temp4image","ORACLE_HOME":"/u02/app/oracle/product/19.0.0.0/dbhome_7"}
-    ---------- END OF PLUGIN RESULT ----------
-- register image --> Complete: TRUE
-How-to Create Workingcopies of RDBMS Images using FPP for ExaCC
-How-to Patch (Apply RU) to a Database Using FPP for ExaCC 
-
-How-to Create GI Images using FPP for ExaCC
-How-to Create Workingcopies of GI Images using FPP for ExaCC
-How-to Patch (Apply RU) a Grid Infrastructure Using FPP for ExaCC
 
 19.13 version database
 - new 19.13 DB Home, will need to create an image from that. If they add patches to it next week, they'll need to create a new image from that. However, they shouldn't be doing that. This is an image we're going to take and test. Okay, we're happy with it, etc. etc. 

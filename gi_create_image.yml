@@ -16,10 +16,15 @@
         name: 'target_commands'
         tasks_from: 'patched_gi_zip.yml'
     
-    - name: 'Determine Grid Map Values'
+    - name: 'Find Patch and Bug Data'
       include_role:
         name: 'target_commands'
-        tasks_from: 'map_determinations.yml'
+        tasks_from: 'map_data_patch.yml'
+
+    - name: 'Find GI Groups'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'map_data_groups.yml'
       vars:
         image_type: 'gi'
 

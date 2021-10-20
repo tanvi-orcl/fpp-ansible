@@ -21,6 +21,7 @@ cluster_name: 'ecc5c4'
 #oracle_base: '/u02/app/oracle'
 patch_numbers: '12345678,12345678'
 osdbagrp_names: 'OSDBA=dba'
+prexisting: 'false'
 
 
 ##########

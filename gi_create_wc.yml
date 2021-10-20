@@ -11,11 +11,16 @@
   hosts: '{{ hostgroup }}'
   tasks:
     
-    # TO DO: when to know if we're using prexisting??
     - name: 'Create New GI Home'
       include_role:
         name: 'target_commands'
         tasks_from: 'create_gihome.yml'
+    
+    # TO DO: will have to query ORACLE_HOME to pull group data. Or, could change current method to pull from map file.
+    - name: 'Find GI Groups'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'map_data_groups.yml'
 
 - name:
   hosts: 'fpp'
@@ -23,14 +28,5 @@
     
     - name: 'Create Working Copy'
       include_role:
-        name: 'fpp_rdbms'
-        tasks_from: 'rdbms_create_wc.yml'
-
-- name:
-  hosts: '{{ hostgroup }}'
-  tasks:
-    
-    - name: 'Purge Temp DB Home'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'purge_dbhome.yml'
+        name: 'gi_role'
+        tasks_from: 'gi_create_wc.yml'
