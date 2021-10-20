@@ -1,4 +1,6 @@
 
+# Create Individual Map File 
+
 - name: 'Add Map File'
   include_role:
     name: 'fpp_common'
@@ -6,6 +8,9 @@
   vars:
     location: '/root/tmp/gi/{{ image_name }}.map'
     image_type: 'gi'
+
+
+# Update Master Map File 
 
 - name: Pull New Map Content From Uploaded File
   become: 'true'

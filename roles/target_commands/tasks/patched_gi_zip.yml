@@ -1,5 +1,9 @@
 
-- name: 'patched zip gi'
+# TO DO:
+# figure out how to define ORACLE_HOME
+# figure out if the exclude_file_path is static and can be permanently defined here
+
+- name: 'Create GI Home Zip File'
   become: 'true'
   become_user: 'root'
   shell:  |
@@ -7,16 +11,22 @@
     cd $ORACLE_HOME
     zip -r {{ target_zip_file_path }} .* * -x "..*" -x@{{ exclude_file_path }}
     /bin/gpg --yes --batch --passphrase 'AdbCsPatching$' -c {{ target_zip_file_path }}
-    curl -T {{ target_zip_file_path }}.gpg {{ storage_url }}
   register: 'patched_gi_zip_result'
 - debug:
     msg: '{{ patched_gi_zip_result }}'
 
+# TO DO: 
+# figure out if container url is a folder (set up as single object right now in map)
+
+- name: 'Upload encrypted image file to object store'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    curl -T {{ target_zip_file_path }}.gpg {{ storage_url }}
+  register: 'upload_result'
+- debug:
+    msg: '{{ upload_result }}'
 
 # TO DO:
-# figure out if ORACLE_HOME IS ALREADY DEFINED BY PREVIOUS ACTION
+# make sure oracle_home defined for map determinations
 
-# figure out what the target_zip_file_path should be / if we can replace it with
-# something like /tmp/{{ grid_name }}
-
-# figure out if the exclude_file_path is static and can be permanently defined here
