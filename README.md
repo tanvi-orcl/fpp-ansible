@@ -66,9 +66,11 @@ This codebase contains a set of playbooks that can be used individually or combi
 - 
 - Variables
     - hostgroup
-    - identity_file, target_node - for client prereqs
-    - dbhome_version, dbhome_bp - to create temp home
-    - image_id, image_name - to register image
+    - db_name (a4db0_iad3zx) - to patch, TO DO: might change to list of DBs)
+    - identity_file  (/path/to/file) - for client prereqs, to move db
+    - target_node (ecc5c4n1) - for client prereqs, to move db
+    - source_wc (wc_DB199_201020_legacy_ecc5c4) - for move, can't discover name from image/cluster in case multiple
+    - patched_wc (wc_DB199_201020_ecc5c4) - for move, can't discover name from image/cluster in case multiple
 
 **gi_create_image.yml**
 - 

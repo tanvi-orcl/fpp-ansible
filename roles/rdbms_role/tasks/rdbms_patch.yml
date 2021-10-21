@@ -1,4 +1,4 @@
-- name: 'Patch Database {{ db_name }}'
+- name: 'Patch Database {{ db_name }} EVAL'
   include_role:
     name: 'fpp_common'
     tasks_from: 'patch.yml'
@@ -8,9 +8,9 @@
     ignorewcpatches: ''
     forcerolling: ''
     eval: '-eval'
-  register: 'patch_db_result'
+  register: 'patch_db_eval_result'
 - debug:
-    msg: '{{ patch_db_result }}'
+    msg: '{{ patch_db_eval_result }}'
 
 - name: 'Patch Database {{ db_name }}'
   include_role:
@@ -25,5 +25,3 @@
   register: 'patch_db_result'
 - debug:
     msg: '{{ patch_db_result }}'
-    
-# TO DO: CHECK WC TO SEE IF SUCCESS

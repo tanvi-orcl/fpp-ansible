@@ -2,6 +2,8 @@
   hosts: 'fpp'
   tasks:
 
+    # TO DO: Don't need to check prereqs multiple times - figure out how to structure. Maybe a flag to indicate already checked?
+
     - name: 'Check Client Prerequistes'
       include_role:
         name: 'fpp_common'
@@ -21,15 +23,13 @@
       vars:
         wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
 
-    # TO DO: Don't need to check prereqs multiple times - figure out how to structure. Maybe a flag to indicate already checked?
+    # TO DO: Loop through for a list of databases? Or run each playbook once per database?
 
     - name: 'Patch Database'
       include_role:
         name: 'rdbms'
         tasks_from: 'rdbms_patch.yml'
-      vars:
-        source_wc: 'wc_{{ source_image }}_{{ cluster_name }}'
-        patched_wc: 'wc_{{ image_name }}_{{ cluster_name }}'
+
 
 # TO DO: Confirm database was moved to the new patched home/workingcopy using 'dbaascli dbhome info --hname <home name>'.
-# To be run from db host?
+# To be run from db host? --> if not run from rdbms role
