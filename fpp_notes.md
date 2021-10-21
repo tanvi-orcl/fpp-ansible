@@ -1,3 +1,17 @@
+Moving it
+- DB --> each DB (if unmanaged, make wc and then use source_wc)
+- GI --> once per Cluster (if unmanaged, source_home)
+    - right now rollback works if both wc, need to make it work for unmanaged so that customer is comfortable for that first wave --> FPP team working on this
+    - move failed right off the bat because using ACFS. GI Processes have to stop in the old home and start in the new home.
+        - should consider using an agent
+        - if not, can use batches field in move command: olsnodes
+
+[2:11 PM] Speaker, Roy (Hagerstown)
+    systemctl stop crond - on all 4 nodes
+​[2:11 PM] Speaker, Roy (Hagerstown)
+    *both nodes
+​[2:11 PM] Speaker, Roy (Hagerstown)
+    /linux/stoptools.sh - on both nodes
 
 Questions
 - Move GI Method? 

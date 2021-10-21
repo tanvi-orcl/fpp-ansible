@@ -1,4 +1,5 @@
 
+# TO DO: Check if WC already exists with Query WC. If it does, give it a different name.
 
 - name: 'Add RDBMS Workingcopy wc_{{ image_name }}_{{ cluster_name }}'
   include_role:
