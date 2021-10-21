@@ -7,10 +7,10 @@
             "image_type": "{{ image_type }}",
             "image_name": "{{ image_name }}.zip.gpg",
             "image": "{{ image_name }}.zip.gpg",
-            "patches": "{{ patch_numbers }}", 
+            "patches": "{{ patches }}", 
             "lspatches_bugs": "/u01/app/rhp/admin/maps/{{ bug_path }}", 
             "nonrolling_patches": "",
-            "groups": "{{ osdbagrp_names }}" 
+            "groups": "{{ groups }}" 
         }
     ]
 }

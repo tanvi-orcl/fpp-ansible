@@ -1,13 +1,20 @@
 
-# TO DO: Check if WC already exists with Query WC. If it does, give it a different name.
+
+# TO DO: Would Oracle Base always be /u0[0-9]/app/oracle ?
+
+- set_fact:
+    wc_name: '{{ hostvars[hostname]["wc_name"] }}'
+    path: '{{ hostvars[hostname]["oracle_home"] }}'
 
 - name: 'Add RDBMS Workingcopy wc_{{ image_name }}_{{ cluster_name }}'
   include_role:
     name: 'fpp_common'
     tasks_from: 'add_wc.yml'
   vars:
-    wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
-    add_wc_parameters: '-skipclone -oraclebase {{ oracle_base }} -user oracle'
+    wc_name: '{{ wc_name }}'
+    path: '{{ path }}'
+    add_wc_parameters: '-skipclone -oraclebase {{ path | regex_search("/u0[1-9]/app/oracle") }} -user oracle'
+    groups: '{{ hostvars[hostname]["osdbagrp_names"] }}'
   register: 'add_rdbms_wc_result'
 - debug:
     msg: '{{ add_rdbms_wc_result }}'
@@ -17,7 +24,7 @@
     name: 'fpp_common'
     tasks_from: 'query_wc.yml'
   vars:
-    wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+    wc_name: '{{ wc_name }}'
   register: 'query_rdbms_wc_result'
 - debug:
     msg: '{{ query_rdbms_wc_result }}'

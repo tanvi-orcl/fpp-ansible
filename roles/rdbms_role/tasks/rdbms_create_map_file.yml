@@ -13,5 +13,5 @@
     image_tag: '{{ ru_version_tag[:5] }}EE'
     ru_version: '{{ hostvars[hostname]["ru_version"] }}'
     image_type: 'db'
-    patch_numbers: '{{ hostvars[hostname]["patch_numbers"] }}'
-    osdbagrp_names: '{{ hostvars[hostname]["osdbagrp_names"] }}'
+    patches: '{{ hostvars[hostname]["patch_numbers"] }}'
+    groups: '{{ hostvars[hostname]["osdbagrp_names"] }}'

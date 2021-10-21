@@ -11,7 +11,7 @@
         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: 'x8m'
+  hosts: '{{ hostgroup }}'
   tasks:
     
     - name: 'Create Temp DB Home'

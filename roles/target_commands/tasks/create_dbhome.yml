@@ -2,7 +2,8 @@
 - set_fact:
     dbhome_version: '{{ version | regex_replace("\.", "") }}'
 
-# TO DO: cswlib download if version not present (should this be checked first?)
+# TO DO: cswlib download if version not present (should this be checked first? okay to do it everytime? should maybe just do it for image?)
+
 - name: 'cswlib download'
   become: 'true'
   become_user: 'root'

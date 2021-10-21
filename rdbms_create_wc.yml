@@ -15,13 +15,20 @@
   hosts: '{{ hostgroup }}'
   tasks:
     
+    # TO DO: QUERY TO MAKE SURE WC IS UNIQUE - Set new name if not unique
+
+    - set_fact:
+        wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+
     - name: 'Create New DB Home'
       include_role:
         name: 'target_commands'
         tasks_from: 'create_dbhome.yml'
+      vars:
+        dbhome_name: '{{ wc_name }}'
       when: prexisting == 'false'
 
-    # TO DO: will have to query ORACLE_HOME to pull group data. Or, could change current method to pull from map file.
+    # TO DO: make sure we should be doing this twice and not using image information?
     - name: 'Find DB Groups'
       include_role:
         name: 'target_commands'
