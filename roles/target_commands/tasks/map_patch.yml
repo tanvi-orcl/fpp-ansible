@@ -10,11 +10,11 @@
 - debug:
     msg: '{{ opatch_result }}'
 - set_fact:
-    patch_numbers: '{{ opatch_result.stdout_lines | regex_findall("([0-9]{8});", multiline=True) }}'
-- set_fact:
-    patch_numbers: '{{ patch_numbers | join(",") }}'  
+    patch_numbers: '{{ opatch_result.stdout_lines | regex_findall("([0-9]{8});", multiline=True) | join(",") }}' 
 - debug:
-    msg: '{{ patch_numbers }}'
+    var: 'patch_numbers'
+
+# TO DO: Test out scp for bug list
 
 # Bug List
 

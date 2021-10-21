@@ -48,4 +48,4 @@
 - set_fact:
     osdbagrp_names: '{{ osdbagrp_names[:-1] }}'
 - debug:
-    msg: '{{ osdbagrp_names }}'
+    var: 'osdbagrp_names'

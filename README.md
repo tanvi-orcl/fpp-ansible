@@ -4,17 +4,11 @@ This ansible project allows for FPP execution for Fiserv.
 
 ## Getting Started
 
-### Using Ansible with OCI
-
-Follow the instructions on this documentation to make sure you are set-up to use ansible with the OCI modules. Be sure to create the OCI Config file: https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/ansiblegetstarted.htm.
-
 ## Playbook Execution
 
 ### Inventory
 
-If running a playbook locally, edit the inventory file in this github repo. Add your different Exadata hosts under different groups. Be sure to add in any required ssh args. Check the sample_inventory file for an example or refer to https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#inventory-basics-formats-hosts-and-groups for more information. 
-
-If running a playbook from rundeck, import the hosts. 
+If running a playbook locally, edit the inventory file in this github repo. Add your FPP host and your Exadata hosts under different groups. Be sure to add in any required ssh args. Check the sample_inventory file for an example or refer to https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#inventory-basics-formats-hosts-and-groups for more information. 
 
 ### Variables
 
@@ -31,10 +25,6 @@ Feel free to refer to sample_database.yml, sample_database_home.yml, sample_exac
     - hostgroup: Host group to run DB operations on. Currently only required for PDB operations or Script Copying/Execution (other playbooks are for provisioning so use localhost).
     - additional variables: Sensitive variables (such as passwords) should be only defined at runtime, not stored in a file. Check out the Playbooks below for instructions on which plays require additional variables.
 
-### Creating a Workflow
-
-Creating a workflow instead of running an individual job allows you to automate a longer process. For example, linking together DB Home Set-Up + Database Set-Up + Scripting. These playbooks are individual since as a user, you might often want to set-up just a database on an existing home, but you might want to automate the initial creation.
-
 
 ## Ansible Codebase
 
@@ -47,93 +37,58 @@ This codebase contains a set of playbooks that can be used individually or combi
 
 ### Playbooks
 
-**basic_test.yml**
-- Tests if your ansible environment has been set-up correctly. If running from localhost, pulls network services information to check if your OCI credentials are working and pulls compartment information to check if your variable file was defined. If running from a host, runs a simple shell command to make sure the inventory has been set-up correctly.
+**rdbms_create_image.yml**
+- 
 - Variables
-    - vars_file
-        - compartment_id
-    - hostgroup (localhost or the name of a group from your inventory)
+    - hostgroup (cluster1)
+    - identity_file  (/path/to/file) - for client prereqs
+    - target_node (cluster1n1) - for client prereqs
+    - version (19.0.0.0) - to create temp home, for map file
+    - dbhome_bp (APR2021) - to create temp home
+    - image_name (DB1911_210420) - for map file, to register image
+    - aru_id (226) - for map file
+- Calculated variables: dbhome_version for temp home, oracle_home for finding map values, image_tag and ru_version for map
 
-**rdbms_create.yml**
-- Creates a new database. Assumes that the database home has already been created.
+**rdbms_create_wc.yml**
+- 
 - Variables
-    - vars_file
-        - CDBname
-        - workload_tag (optional prefix)
-        - auto_backup_window
-        - recovery_window_in_days
-        - rdbms_home_name or rdbms_home_id (note: if using rdbms_home_name, include vm cluster information for discovery)
-        - compartment_id
-    - rdbms_admin_password
-
-**rdbms_home_create.yml**
-- Creates a new database home. Assumes that the VM cluster has already been created.
-- Variables
-    - vars_file
-        - rdbms_home_name
-        - workload_tag (optional prefix)
-        - rdbms_version
-        - vm_cluster_name or vm_cluster_id (note: if using vm_cluster_name, include exadata information for discovery)
-        - exadata_type ('exacs' or 'exacc')
-        - compartment_id
-
-**rdbms_terminate.yml**
-- Terminates a database.
-- Variables
-    - vars_file
-        - CDBname
-        - workload_tag (optional prefix)
-        - rdbms_home_name or rdbms_home_id (note: if using rdbms_home_name, include vm cluster information for discovery)
-        - compartment_id
-
-**rdbms_home_terminate.yml**
-- Terminates a database home.
-- Variables
-    - vars_file
-        - rdbms_home_name
-        - workload_tag (optional prefix)
-        - vm_cluster_name or vm_cluster_id (note: if using vm_cluster_name, include exadata information for discovery)
-        - exadata_type ('exacs' or 'exacc')
-        - compartment_id
-
-**rdbms_backup.yml**
-- Creates a standlone backup for ExaCS. Creates a backup destination (if backup_destination_id is not provided and adds backup destination to DB for ExaCC.
-- Variables
-    - vars_file
-        - CDBname/workload_tag or database_id (note: if using CDBname, include db home information / compartment id for discovery)
-        - exadata_type ('exacs' or 'exacc')
-        - If exacc, additional values based on backup destination type (check sample_exacc.yml)
-
-**rdbms_setup_script.yml**
-- Unarchives newdb zip file and runs DB setup scripts.
-- Variables
-    - vars_file
     - hostgroup
+    - identity_file, target_node - for client prereqs
+    - dbhome_version, dbhome_bp - to create temp home
+    - image_id, image_name - to register image
 
-**prdbms_create.yml**
-- Creates a new pdb. Assumes that the database has already been created.
+**rdbms_patch.yml**
+- 
 - Variables
-    - vars_file
-        - PDBname
-        - CDBname
-        - workload_tag (optional prefix)
-        - rdbms_home_name or rdbms_home_id (note: if using rdbms_home_name, include vm cluster information for discovery)
-        - compartment_id
-        - oracle_sid
     - hostgroup
-    - prdbms_admin_password
-    - rdbms_wallet_password
+    - identity_file, target_node - for client prereqs
+    - dbhome_version, dbhome_bp - to create temp home
+    - image_id, image_name - to register image
 
-**prdbms_delete.yml**
-- Deletes the pdb on an existing database.
+**gi_create_image.yml**
+- 
 - Variables
-    - vars_file
-        - PDBname
-        - CDBname
-        - workload_tag (optional prefix)
-        - rdbms_home_name or rdbms_home_id (note: if using rdbms_home_name, include vm cluster information for discovery)
-        - compartment_id
     - hostgroup
+    - identity_file, target_node - for client prereqs
+    - dbhome_version, dbhome_bp - to create temp home
+    - image_id, image_name - to register image
+
+**gi_create_wc.yml**
+- 
+- Variables
+    - hostgroup
+    - identity_file, target_node - for client prereqs
+    - dbhome_version, dbhome_bp - to create temp home
+    - image_id, image_name - to register image
+
+**gi_patch.yml**
+- 
+- Variables
+    - hostgroup
+    - identity_file, target_node - for client prereqs
+    - dbhome_version, dbhome_bp - to create temp home
+    - image_id, image_name - to register image
+
 
 ## Additional Resources
 

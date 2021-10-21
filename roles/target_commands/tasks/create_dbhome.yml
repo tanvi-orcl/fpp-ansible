@@ -1,4 +1,7 @@
 
+- set_fact:
+    dbhome_version: '{{ version | regex_replace("\.", "") }}'
+
 # TO DO: cswlib download if version not present (should this be checked first?)
 - name: 'cswlib download'
   become: 'true'
@@ -8,6 +11,11 @@
   register: 'cswlib_download_result'
 - debug:
     msg: '{{ cswlib_download_result }}'
+- set_fact:
+    cswlib_download_errors: '{{ cswlib_download_result.stdout | regex_search("ERROR:.+") }}'
+- assert:
+    that: cswlib_download_errors == ""
+    fail_msg: '{{ cswlib_download_errors }}'
 
 - name: 'create dbhome'
   become: 'true'
@@ -26,7 +34,11 @@
   register: 'dbhome_info_result'
 - debug:
     msg: '{{ dbhome_info_result }}'
+
 - set_fact:
     oracle_home: '{{ dbhome_info_result.stdout | regex_findall("HOME_LOC=(.+?)\n") | first }}'
+    ru_version: '{{ dbhome_info_result.stdout | regex_findall("VERSION=(.+?)\n") | first }}'
 - debug:
-    msg: '{{ oracle_home }}'
+    var: 'oracle_home'
+- debug:
+    var: 'ru_version'

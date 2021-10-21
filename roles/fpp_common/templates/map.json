@@ -1,12 +1,12 @@
 {
-    "TEST2": [
+    "{{ image_tag }}": [
         {
             "version": "{{ version }}",
             "ru_version": "{{ ru_version }}",
             "aru_id": "{{ aru_id }}",
             "image_type": "{{ image_type }}",
             "image_name": "{{ image_name }}.zip.gpg",
-            "image": "{{ image }}.zip.gpg",
+            "image": "{{ image_name }}.zip.gpg",
             "patches": "{{ patch_numbers }}", 
             "lspatches_bugs": "/u01/app/rhp/admin/maps/{{ bug_path }}", 
             "nonrolling_patches": "",

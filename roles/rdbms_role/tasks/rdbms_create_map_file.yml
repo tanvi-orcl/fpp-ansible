@@ -1,9 +1,17 @@
-# TO DO: Update Paths from Test Node to FPP
 
+# TO DO: See if this operation can be done in one step
+- set_fact:
+    ru_version_tag: '{{ hostvars[hostname]["ru_version"] | regex_replace("\.", "") }}'
+
+# TO DO: Update Paths from Test Node to FPP
 - name: 'Add Map File'
   include_role:
     name: 'fpp_common'
     tasks_from: 'create_map_file.yml'
   vars:
-    location: '/root/tmp/db/{{ image_name }}.map'
+    map_dest: '/root/tmp/db/{{ image_name }}.map'
+    image_tag: '{{ ru_version_tag[:5] }}EE'
+    ru_version: '{{ hostvars[hostname]["ru_version"] }}'
     image_type: 'db'
+    patch_numbers: '{{ hostvars[hostname]["patch_numbers"] }}'
+    osdbagrp_names: '{{ hostvars[hostname]["osdbagrp_names"] }}'

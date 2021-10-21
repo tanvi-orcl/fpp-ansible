@@ -3,7 +3,5 @@
   become_user: 'root'
   become_method: 'sudo'
   template:
-    src: 'test_map.json'
+    src: 'map.json'
     dest: '{{ map_dest }}'
-
-# TO DO: Replace with real map and make sure all values getting passed in

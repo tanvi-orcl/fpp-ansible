@@ -1,27 +1,31 @@
 hostgroup: 'x8m'
+hostname: '10.0.10.225'  # TO DO: Figure out how to setup with hostgroup vs. hostname
 
 # client prerequistes
 identity_file: 'path_to_key'
 target_node: 'target_node'
 
 # new home
-dbhome_version: '19000'
+version: '19.0.0.0'   # TO DO: Is it okay if it is one less 0 for map file?
 dbhome_bp: 'APR2021'
 
 # register image
-image_id: '19110EE'
-image_name: 'DB1911_210420'
+image_name: 'DB1911_210420'   # TO DO: do we already know it's image 19.11? Or should we just submit the month and calculate the first part
+aru_id: '226'
 
-##########
-
-cluster_name: 'ecc5c4'
-# also using target_node, image_name, identity_file
+###### TESTING VALUES
+bug_path: 'bug_path'
+#cluster_name: 'ecc5c4'
 #oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
 #path: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
 #oracle_base: '/u02/app/oracle'
-patch_numbers: '12345678,12345678'
-osdbagrp_names: 'OSDBA=dba'
-prexisting: 'false'
+#patch_numbers: '12345678,12345678'
+#osdbagrp_names: 'OSDBA=dba'
+#prexisting: 'false'
+
+##########
+
+
 
 
 ##########

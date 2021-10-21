@@ -11,7 +11,7 @@
         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ hostgroup }}'
+  hosts: 'x8m'
   tasks:
     
     - name: 'Create Temp DB Home'
@@ -19,17 +19,17 @@
         name: 'target_commands'
         tasks_from: 'create_dbhome.yml'
       vars:
-        dbhome_name: 'temp4image2'
+        dbhome_name: 'temp4image1'
     
     - name: 'Find Patch and Bug Data'
       include_role:
         name: 'target_commands'
-        tasks_from: 'map_data_patch.yml'
+        tasks_from: 'map_patch.yml'
 
     - name: 'Find DB Groups'
       include_role:
         name: 'target_commands'
-        tasks_from: 'map_data_groups.yml'
+        tasks_from: 'map_groups.yml'
       vars:
         image_type: 'db'
 
@@ -57,4 +57,4 @@
         name: 'target_commands'
         tasks_from: 'purge_dbhome.yml'
       vars:
-          dbhome_name: 'temp4image3'
+          dbhome_name: 'temp4image1'
