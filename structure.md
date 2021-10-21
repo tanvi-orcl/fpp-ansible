@@ -15,7 +15,7 @@ Create Temp Image --> Pull Data into Map --> Register Image
 
 Create new DB Home (updated) --> new Working Copy
 - general execution
-- once per new home per cluster (vm1_1, vm1_2)
+- once per new home per cluster (vm1_1, vm1_2) - 1 image: many working copies 
     - might have two different homes on the same cluster (and therefore 2 working copies)
     - query working copy --> make sure it doesn't exist and if it does exist, create next name
 

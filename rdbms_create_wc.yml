@@ -1,3 +1,7 @@
+# This playbook adds a new working copy. It will need to be run once per dbhome per cluster. 
+# Create New DB Home (to be used for working copy) will only run if prexisting is false.
+# Prexisting should be true only for initial setup, to convert existing homes to wc. 
+
 - name:
   hosts: 'fpp'
   tasks:
@@ -15,7 +19,7 @@
       include_role:
         name: 'target_commands'
         tasks_from: 'create_dbhome.yml'
-      when: prexisting == 'false'         # prexisting will be true only for initial setup, to convert existing homes to wc.
+      when: prexisting == 'false'
 
     # TO DO: will have to query ORACLE_HOME to pull group data. Or, could change current method to pull from map file.
     - name: 'Find DB Groups'

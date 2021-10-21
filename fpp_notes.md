@@ -12,9 +12,7 @@ Notes from FiServ Testing Sessions
 - Their naming standards: dbhome1_191200, dbhome1_182400, dbhome1_12201_210720 (version 12), dbhome1_191200_12345678 (one off patch)
 - Will be using centrify or cyberark to get the keys
 
- - What is the timeline for how often each map file will be created / updated? They would only create a new one what there is a new patch right? --> TBD. Relying on DBAAS tooling to lay down the hole and then recording metadata about it. But as we do a move from old home to new home. We look at the current 
  
- 1 image: many working copies 
 
  Lifecycle
  1. Create Image
@@ -36,9 +34,6 @@ How to Patch a DB
 4. What are we doing about the current homes that are not working copies? - trying to figure out if that's a big enough edge case where I should address it 
 
 TASKS
-
-How-to Create RDBMS Images using FPP for ExaCC
-- dbaascli download / create fresh RDBMS home commands need to be run as root
 
 19.13 version database
 - new 19.13 DB Home, will need to create an image from that. If they add patches to it next week, they'll need to create a new image from that. However, they shouldn't be doing that. This is an image we're going to take and test. Okay, we're happy with it, etc. etc. 
