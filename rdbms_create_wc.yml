@@ -18,7 +18,12 @@
     # TO DO: QUERY TO MAKE SURE WC IS UNIQUE - Set new name if not unique
 
     - set_fact:
+        when: prexisting == 'false'
         wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+
+    # TO DO: should we be doing cswlib? does the name change when a new version comes out?
+    # If not automatically doing a cswlib, should probably still do a check to make sure version is there!
+    # and then run cswlib if not.
 
     - name: 'Create New DB Home'
       include_role:
@@ -28,8 +33,8 @@
         dbhome_name: '{{ wc_name }}'
       when: prexisting == 'false'
 
-    # TO DO: make sure we should be doing this twice and not using image information?
     - name: 'Find DB Groups'
+      when: 'osdbagrp_names' is not defined
       include_role:
         name: 'target_commands'
         tasks_from: 'map_data_groups.yml'

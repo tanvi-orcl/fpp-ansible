@@ -3,7 +3,7 @@
         {
             "version": "{{ version }}",
             "ru_version": "{{ ru_version }}",
-            "aru_id": "{{ aru_id }}",
+            "aru_id": "226",
             "image_type": "{{ image_type }}",
             "image_name": "{{ image_name }}.zip.gpg",
             "image": "{{ image_name }}.zip.gpg",

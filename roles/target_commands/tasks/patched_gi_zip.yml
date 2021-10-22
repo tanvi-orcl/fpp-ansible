@@ -1,7 +1,9 @@
 
 # TO DO:
-# figure out how to define ORACLE_HOME
+# figure out how to define ORACLE_HOME (grid home)
 # figure out if the exclude_file_path is static and can be permanently defined here
+
+# TO DO: copying exclude file over to temp folder in exa server
 
 - name: 'Create GI Home Zip File'
   become: 'true'

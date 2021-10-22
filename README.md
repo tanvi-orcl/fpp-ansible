@@ -46,7 +46,6 @@ This codebase contains a set of playbooks that can be used individually or combi
     - version (19.0.0.0) - to create temp home, for map file
     - dbhome_bp (APR2021) - to create temp home
     - image_name (DB1911_210420) - for map file, to register image
-    - aru_id (226) - for map file
 - Calculated variables: dbhome_version, oracle_home for finding map values, image_tag, ru_version
 
 **rdbms_create_wc.yml**
@@ -55,11 +54,13 @@ This codebase contains a set of playbooks that can be used individually or combi
     - hostgroup - for inventory
     - identity_file  (/path/to/file) - for client prereqs, to add wc
     - target_node (ecc5c4n1) - for client prereqs, to add wc
-    - prexisting (true or false) - indicates whether to create a new home or use existing
     - version (19.0.0.0) - to create new home and add wc
     - dbhome_bp (APR2021) - to create new home and add wc
     - cluster_name (ecc5c4) - to create new home and add wc
     - image_name (DB1911_210420) - to create new home and add wc
+    - prexisting (true or false) - indicates whether to create a new home or use existing
+    - wc_name: OPTIONAL, if using prexisting home and setting it up as working copy
+    - osdbagrp_names: OPTIONAL, if want to use custom groups instead of defaults
 - Calculated variables: wc_name, path, oraclebase
 
 **rdbms_patch.yml**

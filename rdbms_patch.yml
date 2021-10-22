@@ -24,6 +24,10 @@
         wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
 
     # TO DO: Loop through for a list of databases? Or run each playbook once per database?
+    # All databases on a cluster? All databases on a specific home? --> srvctl command
+    # All databases of a certain version on a cluster/home?
+    # Single database by name? 
+    # Realistically, different DBs will have different downtimes... so they should have a good idea. 
 
     - name: 'Patch Database'
       include_role:
