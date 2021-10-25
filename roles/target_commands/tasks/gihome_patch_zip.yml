@@ -1,5 +1,10 @@
-# TO DO:
-# figure out how to finally grid command. How do we find oracle_home of grid home? Is it necessary?
+
+- name: 'Check Map Determinations Parsing'
+  when: oracle_home is not defined
+  include_tasks: 'oracle_home.yml'
+  vars:
+    db_regex: '+ASM[0-9]'
+
 - name: 'Patch GI'
   become: 'true'
   become_user: 'root'
