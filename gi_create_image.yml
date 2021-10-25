@@ -14,8 +14,6 @@
   hosts: '{{ hostgroup }}'
   tasks:
     
-    # TO DO: figure out if it should be patch grid (based on oracle docs)
-    
     - name: 'Patch GI Home'
       include_role:
         name: 'target_commands'

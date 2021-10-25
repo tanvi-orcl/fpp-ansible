@@ -1,5 +1,4 @@
 
-# TO DO: See if this operation can be done in one step
 - set_fact:
     ru_version_tag: '{{ hostvars[hostname]["ru_version"] | regex_replace("\.", "") }}'
 
