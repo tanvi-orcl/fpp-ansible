@@ -13,7 +13,7 @@
 - name:
   hosts: '{{ hostgroup }}'
   tasks:
-    
+
     - name: 'Patch GI Home'
       include_role:
         name: 'target_commands'

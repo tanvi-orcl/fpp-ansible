@@ -1,4 +1,3 @@
-
 # TO DO:
 # figure out how to finally grid command. How do we find oracle_home of grid home? Is it necessary?
 - name: 'Patch GI'
@@ -10,14 +9,23 @@
 - debug:
     msg: '{{ patched_gi_result }}'
 
+- name: 'Copy File to Host'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  copy:
+    src: 'exclude_file'
+    dest: '{{ oracle_home }}'
+  register: 'copy_script_result'
+- debug:
+    msg: '{{ copy_script_result }}'
 
-# TO DO: copying exclude file over to temp folder in exa server
 - name: 'Create Zip File'
   become: 'true'
   become_user: 'root'
   shell:  |
     cd {{ oracle_home }}
-    zip -r {{ target_zip_file_path }} .* * -x "..*" -x@{{ exclude_file_path }}
+    zip -r {{ target_zip_file_path }} .* * -x "..*" -x@{{ oracle_home }}/{{ exclude_file }}
     /bin/gpg --yes --batch --passphrase 'AdbCsPatching$' -c {{ target_zip_file_path }}
   register: 'gi_zip_result'
 - debug:
