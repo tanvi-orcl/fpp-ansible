@@ -6,9 +6,9 @@
   become_user: 'root'
   shell:  |
     /root/bin/dbaascli patch grid upgrade --version {{ grid_version }} --targethome {{ oracle_home }}
-  register: 'patched_gi_zip_result'
+  register: 'patched_gi_result'
 - debug:
-    msg: '{{ patched_gi_zip_result }}'
+    msg: '{{ patched_gi_result }}'
 
 
 # TO DO: copying exclude file over to temp folder in exa server
@@ -19,21 +19,9 @@
     cd {{ oracle_home }}
     zip -r {{ target_zip_file_path }} .* * -x "..*" -x@{{ exclude_file_path }}
     /bin/gpg --yes --batch --passphrase 'AdbCsPatching$' -c {{ target_zip_file_path }}
-  register: 'patched_gi_zip_result'
+  register: 'gi_zip_result'
 - debug:
-    msg: '{{ patched_gi_zip_result }}'
-
-- name: 'Create GI Home Zip File'
-  become: 'true'
-  become_user: 'root'
-  shell:  |
-    /root/bin/dbaascli patch db apply --patchid {{ patch_id }} --oh {{ patch_oh }} --noprompt YES
-    cd $ORACLE_HOME
-    zip -r {{ target_zip_file_path }} .* * -x "..*" -x@{{ exclude_file_path }}
-    /bin/gpg --yes --batch --passphrase 'AdbCsPatching$' -c {{ target_zip_file_path }}
-  register: 'patched_gi_zip_result'
-- debug:
-    msg: '{{ patched_gi_zip_result }}'
+    msg: '{{ gi_zip_result }}'
 
 # TO DO: 
 # figure out if container url is a folder (set up as single object right now in map)
@@ -46,7 +34,4 @@
   register: 'upload_result'
 - debug:
     msg: '{{ upload_result }}'
-
-# TO DO:
-# make sure oracle_home defined for map determinations
 
