@@ -67,7 +67,7 @@ This codebase contains a set of playbooks that can be used individually or combi
 - 
 - Variables
     - hostgroup
-    - db_name (a4db0_iad3zx) - to patch, TO DO: might change to list of DBs)
+    - db_name (a4db0_iad3zx) - to patch
     - identity_file  (/path/to/file) - for client prereqs, to move db
     - target_node (ecc5c4n1) - for client prereqs, to move db
     - source_wc (wc_DB199_201020_legacy_ecc5c4) - for move, can't discover name from image/cluster in case multiple

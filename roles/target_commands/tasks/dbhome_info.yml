@@ -1,0 +1,16 @@
+- name: 'check dbhome'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    /bin/dbaascli dbhome info --hname {{ dbhome_name }} --noprompt YES
+  register: 'dbhome_info_result'
+- debug:
+    msg: '{{ dbhome_info_result }}'
+
+- set_fact:
+    oracle_home: '{{ dbhome_info_result.stdout | regex_findall("HOME_LOC=(.+?)\n") | first }}'
+    ru_version: '{{ dbhome_info_result.stdout | regex_findall("VERSION=(.+?)\n") | first }}'
+- debug:
+    var: 'oracle_home'
+- debug:
+    var: 'ru_version'

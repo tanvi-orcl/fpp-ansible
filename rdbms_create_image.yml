@@ -17,10 +17,19 @@
     - name: 'Create Temp DB Home'
       include_role:
         name: 'target_commands'
-        tasks_from: 'create_dbhome.yml'
+        tasks_from: 'dbhome_create.yml'
       vars:
         dbhome_name: 'temp4image1'
     
+    - name: 'Check Temp DB Home'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'dbhome_info.yml'
+      vars:
+        dbhome_name: 'temp4image1'
+    
+    # TO do: figure out image name
+
     - name: 'Find Patch and Bug Data'
       include_role:
         name: 'target_commands'

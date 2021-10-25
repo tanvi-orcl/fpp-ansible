@@ -19,7 +19,6 @@
       vars:
         dbhome_name: 'wc_{{ image_name }}_{{ cluster_name }}'
     
-    # TO DO: will have to query ORACLE_HOME to pull group data. Or, could change current method to pull from map file.
     - name: 'Find GI Groups'
       include_role:
         name: 'target_commands'

@@ -24,11 +24,20 @@
     # TO DO: should we be doing cswlib? does the name change when a new version comes out?
     # If not automatically doing a cswlib, should probably still do a check to make sure version is there!
     # and then run cswlib if not.
+    # DAVE
 
     - name: 'Create New DB Home'
       include_role:
         name: 'target_commands'
-        tasks_from: 'create_dbhome.yml'
+        tasks_from: 'dbhome_create.yml'
+      vars:
+        dbhome_name: '{{ wc_name }}'
+      when: prexisting == 'false'
+    
+    - name: 'Check if new DB Home created'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'dbhome_info.yml'
       vars:
         dbhome_name: '{{ wc_name }}'
       when: prexisting == 'false'
