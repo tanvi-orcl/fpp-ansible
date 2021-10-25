@@ -2,26 +2,26 @@
   hosts: 'fpp'
   tasks:
 
-    - name: 'Check Client Prerequistes'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'check_client_prereq.yml'
-    
-    - name: 'Check if Source Home is WC'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'wc_query.yml'
-      vars:
-        wc_name: 'wc_{{ source_image }}_{{ cluster_name }}'
-    
-    - name: 'Check if New Home is WC'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'wc_query.yml'
-      vars:
-        wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
-
-    # TO DO: Don't need to check prereqs multiple times - figure out how to structure
+    - block:
+      - name: 'Check Client Prerequistes'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'check_client_prereq.yml'
+      
+      - name: 'Check if Source Home is WC'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'wc_query.yml'
+        vars:
+          wc_name: 'wc_{{ source_image }}_{{ cluster_name }}'
+      
+      - name: 'Check if New Home is WC'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'wc_query.yml'
+        vars:
+          wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+    when: check_prereq is defined and check_prereq == 'true'
 
     - name: 'Patch GI'
       include_role:

@@ -1,33 +1,28 @@
-# TO DO: Loop through for a list of databases? Or run each playbook once per database?
-# All databases on a cluster? All databases on a specific home? --> srvctl command
-# All databases of a certain version on a cluster/home?
-# Single database by name? 
-# Realistically, different DBs will have different downtimes... so they should have a good idea. 
-    
-# IMPACTS HOW WE CHECK PREREQS (DOESNT NEED TO BE DONE FOR EVERY DB, JUST EVERY HOME) AND CHECK IF DB CREATED
 
 - name:
   hosts: 'fpp'
   tasks:
 
-    - name: 'Check Client Prerequistes'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'check_client_prereq.yml'
-    
-    - name: 'Check if Source Home is WC'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'wc_query.yml'
-      vars:
-        wc_name: 'wc_{{ source_image }}_{{ cluster_name }}'
-    
-    - name: 'Check if New Home is WC'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'wc_query.yml'
-      vars:
-        wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+    - block:
+      - name: 'Check Client Prerequistes'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'check_client_prereq.yml'
+      
+      - name: 'Check if Source Home is WC'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'wc_query.yml'
+        vars:
+          wc_name: 'wc_{{ source_image }}_{{ cluster_name }}'
+      
+      - name: 'Check if New Home is WC'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'wc_query.yml'
+        vars:
+          wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+    when: check_prereq is defined and check_prereq == 'true'
 
     - name: 'Patch Database'
       include_role:
@@ -39,7 +34,9 @@
   hosts: '{{ hostgroup }}'
   tasks:
 
-    - name: 'Patch Database'
+    - name: 'Check Database'
       include_role:
         name: 'target_commands'
         tasks_from: 'dbhome_info.yml'
+    
+    # TO do: Check output for software: yes
