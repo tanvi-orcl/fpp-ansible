@@ -1,6 +1,6 @@
 
 - set_fact:
-    ru_version_tag: '{{ hostvars[hostname]["ru_version"] | regex_replace("\.", "") }}'
+    ru_version_tag: '{{ hostvars[target_node]["ru_version"] | regex_replace("\.", "") }}'
 
 - name: 'Add Map File'
   include_role:
@@ -9,7 +9,7 @@
   vars:
     map_dest: '/root/tmp/db/{{ image_name }}.map'
     image_tag: '{{ ru_version_tag[:5] }}EE'
-    ru_version: '{{ hostvars[hostname]["ru_version"] }}'
+    ru_version: '{{ hostvars[target_node]["ru_version"] }}'
     image_type: 'db'
-    patches: '{{ hostvars[hostname]["patch_numbers"] }}'
-    groups: '{{ hostvars[hostname]["osdbagrp_names"] }}'
+    patches: '{{ hostvars[target_node]["patch_numbers"] }}'
+    groups: '{{ hostvars[target_node]["osdbagrp_names"] }}'

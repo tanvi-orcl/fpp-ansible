@@ -2,8 +2,7 @@
   become: 'true'
   become_user: 'root'
   shell:  |
-    ORACLE_HOME="$(awk -F : ' $1 ~ /^{{ db_regex }}$/ {print $2}' /etc/oratab)"
-    echo $ORACLE_HOME
+    echo $(awk -F : ' $1 ~ /^{{ db_regex }}$/ {print $2}' /etc/oratab)
   register: 'oracle_home_result'
 - set_fact:
     oracle_home: '{{ oracle_home_result.stdout }}'

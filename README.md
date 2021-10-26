@@ -41,8 +41,8 @@ This codebase contains a set of playbooks that can be used individually or combi
 - 
 - Runtime Variables
     - hostgroup - for inventory
-    - identity_file  (/path/to/file) - for client prereqs
     - target_node (ecc5c4n1) - for client prereqs
+    - identity_file  (/path/to/file) - for client prereqs
     - version (19.0.0.0) - to create temp home, for map file
     - dbhome_bp (APR2021) - to create temp home
     - image_name (DB1911_210420) - for map file, to register image
@@ -77,7 +77,11 @@ This codebase contains a set of playbooks that can be used individually or combi
 - 
 - Variables
     - hostgroup
-    - identity_file, target_node - for client prereqs
+    - target_node - for client prereqs
+    - identity_file
+    - grid_version - to patch/upgrade grid
+    - oracle_home (OPTIONAL) - provide if multiple grid homes, otherwise will use default
+    - image_name
     - dbhome_version, dbhome_bp - to create temp home
     - image_id, image_name - to register image
 

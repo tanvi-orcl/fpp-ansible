@@ -4,11 +4,11 @@
 # DAVE
 
 - set_fact:
-    wc_name: '{{ hostvars[hostname]["wc_name"] }}'
-    path: '{{ hostvars[hostname]["oracle_home"] }}'
+    wc_name: '{{ hostvars[target_node]["wc_name"] }}'
+    path: '{{ hostvars[target_node]["oracle_home"] }}'
 
 - set_fact:
-    osdbagrp_names: '{{ hostvars[hostname]["osdbagrp_names"] }}'
+    osdbagrp_names: '{{ hostvars[target_node]["osdbagrp_names"] }}'
   when: osdbagrp_names is not defined
 
 - name: 'Add RDBMS Workingcopy wc_{{ image_name }}_{{ cluster_name }}'

@@ -14,20 +14,25 @@
   hosts: '{{ hostgroup }}'
   tasks:
 
-    - name: 'Patch GI Home'
+    - name: 'Update GI Home'
       include_role:
         name: 'target_commands'
-        tasks_from: 'gihome_patch_zip.yml'
+        tasks_from: 'gihome_update.yml'
     
+    - name: 'Set Oracle Home to updated value'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'oracle_home.yml'
+
     - name: 'Find Patch and Bug Data'
       include_role:
         name: 'target_commands'
-        tasks_from: 'map_data_patch.yml'
+        tasks_from: 'map_patch.yml'
 
     - name: 'Find GI Groups'
       include_role:
         name: 'target_commands'
-        tasks_from: 'map_data_groups.yml'
+        tasks_from: 'map_groups.yml'
       vars:
         image_type: 'gi'
 

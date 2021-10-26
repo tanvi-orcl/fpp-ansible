@@ -5,14 +5,14 @@
   vars:
     db_regex: '+ASM[0-9]'
 
-- name: 'Patch GI'
+- name: 'Upgrade GI'
   become: 'true'
   become_user: 'root'
   shell:  |
     /root/bin/dbaascli patch grid upgrade --version {{ grid_version }} --targethome {{ oracle_home }}
-  register: 'patched_gi_result'
+  register: 'upgrade_gi_result'
 - debug:
-    msg: '{{ patched_gi_result }}'
+    msg: '{{ upgrade_gi_result }}'
 
 - name: 'Copy File to Host'
   become: 'true'
@@ -29,12 +29,23 @@
   become: 'true'
   become_user: 'root'
   shell:  |
-    cd {{ oracle_home }}
-    zip -r {{ target_zip_file_path }} .* * -x "..*" -x@{{ oracle_home }}/{{ exclude_file }}
-    /bin/gpg --yes --batch --passphrase 'AdbCsPatching$' -c {{ target_zip_file_path }}
+    nohup zip -r /tmp/{{ image_name }}.zip .* * -x "..*" -x@{{ oracle_home }}/{{ exclude_file }} >~/zip{{ image_name }}.out 2>~/zip{{ image_name }}.err &
+  args:
+    chdir: '{{ oracle_home }}'
   register: 'gi_zip_result'
 - debug:
     msg: '{{ gi_zip_result }}'
+
+- name: 'Encrypt Zip File'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    /bin/gpg --yes --batch --passphrase 'AdbCsPatching$' -c /tmp/{{ image_name }}.zip
+  args:
+    chdir: '{{ oracle_home }}'
+  register: 'gi_encrypt_result'
+- debug:
+    msg: '{{ gi_encrypt_result }}'
 
 # TO DO: 
 # figure out if container url is a folder (set up as single object right now in map)
@@ -43,7 +54,7 @@
   become: 'true'
   become_user: 'root'
   shell:  |
-    curl -T {{ target_zip_file_path }}.gpg {{ storage_url }}
+    curl -T /tmp/{{ image_name }}.zip.gpg {{ map_container }}
   register: 'upload_result'
 - debug:
     msg: '{{ upload_result }}'
