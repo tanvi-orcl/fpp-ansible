@@ -20,7 +20,7 @@
   become_method: 'sudo'
   copy:
     src: 'exclude_file'
-    dest: '{{ oracle_home }}'
+    dest: '/root/tmp'
   register: 'copy_script_result'
 - debug:
     msg: '{{ copy_script_result }}'
@@ -29,7 +29,7 @@
   become: 'true'
   become_user: 'root'
   shell:  |
-    nohup zip -r /tmp/{{ image_name }}.zip .* * -x "..*" -x@{{ oracle_home }}/{{ exclude_file }} >~/zip{{ image_name }}.out 2>~/zip{{ image_name }}.err &
+    nohup zip -r /root/tmp/{{ image_name }}.zip .* * -x "..*" -x@/root/tmp/{{ exclude_file }} >~/zip{{ image_name }}.out 2>~/zip{{ image_name }}.err &
   args:
     chdir: '{{ oracle_home }}'
   register: 'gi_zip_result'

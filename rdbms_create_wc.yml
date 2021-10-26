@@ -10,21 +10,28 @@
       include_role:
         name: 'fpp_common'
         tasks_from: 'check_client_prereq.yml'
+    
+    - name: 'Check if WC Exists'
+      when: wc_name is not defined
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_query.yml'
+      vars:
+        wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+    
+    # EDGE CASE TO DO: Fail and input custom name if already exists
 
 - name:
   hosts: '{{ hostgroup }}'
   tasks:
-    
-    # TO DO: QUERY TO MAKE SURE WC IS UNIQUE - Set new name if not unique
 
     - set_fact:
-        when: prexisting == 'false'
         wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+      when: prexisting == 'false' and wc_name is not defined
 
-    # TO DO: should we be doing cswlib? does the name change when a new version comes out?
+    # DAVE TO DO: should we be doing cswlib? does the name change when a new version comes out?
     # If not automatically doing a cswlib, should probably still do a check to make sure version is there!
     # and then run cswlib if not.
-    # DAVE
 
     - name: 'Create New DB Home'
       include_role:

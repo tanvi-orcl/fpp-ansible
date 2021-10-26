@@ -2,6 +2,7 @@
 - set_fact:
     ru_version_tag: '{{ hostvars[target_node]["ru_version"] | regex_replace("\.", "") }}'
 
+
 - name: 'Add Map File'
   include_role:
     name: 'fpp_common'

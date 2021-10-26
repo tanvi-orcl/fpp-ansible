@@ -11,13 +11,16 @@
         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ hostgroup }}'
+  hosts: '{{ target_node }}'
   tasks:
+
+    - set_fact:
+        image_name: '{{ grid_version | regex.s'[0-9]+\.'
 
     - name: 'Update GI Home'
       include_role:
         name: 'target_commands'
-        tasks_from: 'gihome_update.yml'
+        tasks_from: 'gihome_upgrade.yml'
     
     - name: 'Set Oracle Home to updated value'
       include_role:
