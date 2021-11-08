@@ -16,7 +16,7 @@ name_dict:
   -r:
     group_name: 'OSRAC'
 
-osdbagrp_names: ''
+osdbagrp_data: ''
 
 grid_options:
   - '-a'

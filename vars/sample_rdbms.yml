@@ -18,8 +18,8 @@ bug_path: 'bug_path'
 #path: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
 #oracle_base: '/u02/app/oracle'
 #patch_numbers: '12345678,12345678'
-#osdbagrp_names: 'OSDBA=dba'
-#prexisting: 'false'
+#osdbagrp_groups: 'OSDBA=dba'
+#prexisting_home: 'false'
 
 ##########
 

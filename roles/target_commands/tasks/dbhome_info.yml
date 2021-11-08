@@ -1,6 +1,7 @@
 - name: 'check dbhome'
   become: 'true'
   become_user: 'root'
+  become_method: 'sudo'
   shell:  |
     /bin/dbaascli dbhome info --hname {{ dbhome_name }} --noprompt YES
   register: 'dbhome_info_result'
@@ -15,17 +16,17 @@
 - debug:
     var: 'ru_version'
 
-# - name: 'Pull Oracle Base'
-#   become: 'true'
-#   become_user: 'root'
-#   shell:  |
-#     /bin/dbaascli dbhome info --hname {{ dbhome_name }} --noprompt YES
-#   args:
-#     chdir: '{{ oracle_home }}/bin'
-#   environment:
-#     ORACLE_HOME: '{{ oracle_home }}'
-#   register: 'oracle_base_result'
-# - debug:
-#     msg: '{{ oracle_base_result }}'
-# - set_fact:
-#     oracle_base: '{{ oracle_base_result }}'
+- name: 'Pull Oracle Base'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    ./orabase
+  args:
+    chdir: '{{ oracle_home }}/bin'
+  environment:
+    ORACLE_HOME: '{{ oracle_home }}'
+  register: 'oracle_base_result'
+- debug:
+    msg: '{{ oracle_base_result }}'
+- set_fact:
+    oracle_base: '{{ oracle_base_result.stdout }}'

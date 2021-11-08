@@ -14,7 +14,7 @@
     ru_version: '{{ hostvars[target_node]["ru_version"] }}'
     image_type: 'gi'
     patches: '{{ hostvars[target_node]["patch_numbers"] }}'
-    groups: '{{ hostvars[target_node]["osdbagrp_names"] }}'
+    groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
 
 
 # Update Master Map File 

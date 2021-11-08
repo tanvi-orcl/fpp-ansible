@@ -1,8 +1,6 @@
 exadata_host: 'fiservdb'
 fpp_host: 'fiservfpp'
 target_node: 'ecc9c3n1'
-
-# client prerequistes
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 
 # new home
@@ -12,15 +10,18 @@ dbhome_bp: 'APR2021'
 # register image
 image_name: 'DB1911_210420_tst2'   # TO DO: do we already know it's image 19.11? Or should we just submit the month and calculate the first part
 
+# working copy:
+prexisting_home: 'true'
+wc_name: 'wc_DB1911_210420_tst2_ecc9c3'
+cluster_name: 'ecc9c3'  # currently just for naming conventions
+
 ###### TESTING VALUES
-bug_path: 'bug_path'
-#cluster_name: 'ecc5c4'
 #oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
 #path: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
 #oracle_base: '/u02/app/oracle'
 #patch_numbers: '12345678,12345678'
-#osdbagrp_names: 'OSDBA=dba'
-#prexisting: 'false'
+#osdbagrp_groups: 'OSDBA=dba'
+#prexisting_home: 'false'
 
 ##########
 

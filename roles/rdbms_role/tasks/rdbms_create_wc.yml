@@ -1,31 +1,20 @@
 
 - set_fact:
     wc_name: '{{ hostvars[target_node]["wc_name"] }}'
-    path: '{{ hostvars[target_node]["oracle_home"] }}'
-
+  when: wc_name is not defined
 - set_fact:
-    osdbagrp_names: '{{ hostvars[target_node]["osdbagrp_names"] }}'
-  when: osdbagrp_names is not defined
+    osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
+  when: osdbagrp_groups is not defined
 
-- name: 'Add RDBMS Workingcopy wc_{{ image_name }}_{{ cluster_name }}'
+- name: 'Add RDBMS Workingcopy {{ wc_name }}'
   include_role:
     name: 'fpp_common'
-    tasks_from: 'add_wc.yml'
+    tasks_from: 'wc_add.yml'
   vars:
-    wc_name: '{{ wc_name }}'
-    path: '{{ path }}'
+    path: '{{ hostvars[target_node]["oracle_home"] }}'
     add_wc_parameters: '-skipclone -oraclebase {{ hostvars[target_node]["oracle_base"] }} -user oracle'
-    groups: '{{ osdbagrp_names }}'
-  register: 'add_rdbms_wc_result'
-- debug:
-    msg: '{{ add_rdbms_wc_result }}'
 
-- name: 'Query RDBMS Workingcopy wc_{{ image_name }}_{{ cluster_name }}'
+- name: 'Query RDBMS Workingcopy {{ wc_name }}'
   include_role:
     name: 'fpp_common'
-    tasks_from: 'query_wc.yml'
-  vars:
-    wc_name: '{{ wc_name }}'
-  register: 'query_rdbms_wc_result'
-- debug:
-    msg: '{{ query_rdbms_wc_result }}'
+    tasks_from: 'wc_query.yml'

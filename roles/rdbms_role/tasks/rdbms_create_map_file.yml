@@ -11,4 +11,4 @@
     image_map: 'db/{{ image_name }}.map'
     ru_version: '{{ hostvars[target_node]["ru_version"] }}'
     patches: '{{ hostvars[target_node]["patch_numbers"] }}'
-    osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_names"] }}'
+    osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'

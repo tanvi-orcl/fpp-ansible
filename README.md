@@ -37,12 +37,14 @@ This codebase contains a set of playbooks that can be used individually or combi
 
 ### Playbooks
 
+- exadata_host (fiservdb)
+- fpp_host (fiservfpp)
+
 **rdbms_create_image.yml**
 - 
 - Runtime Variables
-    - hostgroup - for inventory
-    - target_node (ecc5c4n1) - for client prereqs
-    - identity_file  (/path/to/file) - for client prereqs
+    - target_node (ecc9c3n1)
+    - identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
     - version (19.0.0.0) - to create temp home, for map file
     - dbhome_bp (APR2021) - to create temp home
     - image_name (DB1911_210420) - for map file, to register image
@@ -50,17 +52,18 @@ This codebase contains a set of playbooks that can be used individually or combi
 **rdbms_create_wc.yml**
 - 
 - Variables
-    - hostgroup - for inventory
-    - identity_file  (/path/to/file) - for client prereqs, to add wc
-    - target_node (ecc5c4n1) - for client prereqs, to add wc
-    - version (19.0.0.0) - to create new home and add wc
-    - dbhome_bp (APR2021) - to create new home and add wc
-    - cluster_name (ecc5c4) - to create new home and add wc
+    - target_node (ecc9c3n1)
+    - identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
+    - prexisting_home (true or false) - indicates whether to create a new home or use existing
+        - if false: 
+            - version (19.0.0.0) - to create new home and add wc
+            - dbhome_bp (APR2021) - to create new home and add wc
+        - if true: 
+            - wc_name
     - image_name (DB1911_210420) - to create new home and add wc
-    - prexisting (true or false) - indicates whether to create a new home or use existing
-    - wc_name: OPTIONAL, if using prexisting home and setting it up as working copy
-    - osdbagrp_names: OPTIONAL, if want to use custom groups instead of defaults
-- Calculated variables: wc_name, path, oraclebase
+    - cluster_name (ecc5c4) - to create new home and add wc - currently just for naming conventions
+    - wc_name: OPTIONAL, if want to use a custom name or if using preexisting_home
+    - osdbagrp_groups: OPTIONAL, if want to use custom groups instead of defaults
 
 **rdbms_patch.yml**
 - 

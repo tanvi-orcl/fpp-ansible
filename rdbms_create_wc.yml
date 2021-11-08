@@ -1,25 +1,24 @@
 # This playbook adds a new working copy. It will need to be run once per dbhome per cluster. 
-# Create New DB Home (to be used for working copy) will only run if prexisting is false.
+# Create New DB Home (to be used for working copy) will only run if prexisting_home is false.
 # Prexisting should be true only for initial setup, to convert existing homes to wc. 
 
-- name:
-  hosts: '{{ fpp_host }}'
-  tasks:
+# - name:
+#   hosts: '{{ fpp_host }}'
+#   tasks:
 
-    - name: 'Check Client Prerequistes'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'check_client_prereq.yml'
+#     # - name: 'Check Client Prerequistes'
+#     #   include_role:
+#     #     name: 'fpp_common'
+#     #     tasks_from: 'check_client_prereq.yml'
     
-    - name: 'Check if WC Exists'
-      when: wc_name is not defined
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'wc_query.yml'
-      vars:
-        wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
-    
-    # EDGE CASE TO DO: Fail and input custom name if already exists
+#     # EDGE CASE TO DO: Check if WC Exists. Fail and input custom name if already exists
+#     - name: 'Check if WC Exists'
+#       when: wc_name is not defined
+#       include_role:
+#         name: 'fpp_common'
+#         tasks_from: 'wc_query.yml'
+#       vars:
+#         wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
 
 - name:
   hosts: '{{ exadata_host }}'
@@ -27,7 +26,7 @@
 
     - set_fact:
         wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
-      when: prexisting == 'false' and wc_name is not defined
+      when: wc_name is not defined
 
     # DAVE TO DO: should we be doing cswlib? does the name change when a new version comes out?
     # If not automatically doing a cswlib, should probably still do a check to make sure version is there!
@@ -39,21 +38,22 @@
         tasks_from: 'dbhome_create.yml'
       vars:
         dbhome_name: '{{ wc_name }}'
-      when: prexisting == 'false'
+      when: prexisting_home == 'false'
     
-    - name: 'Check if new DB Home created'
+    - name: 'DB Home Info'
       include_role:
         name: 'target_commands'
         tasks_from: 'dbhome_info.yml'
       vars:
         dbhome_name: '{{ wc_name }}'
-      when: prexisting == 'false'
 
     - name: 'Find DB Groups'
-      when: 'osdbagrp_names' is not defined
+      when: osdbagrp_groups is not defined
       include_role:
         name: 'target_commands'
-        tasks_from: 'map_data_groups.yml'
+        tasks_from: 'map_groups.yml'
+      vars:
+        image_type: 'rdbms'
 
 - name:
   hosts: '{{ fpp_host }}'

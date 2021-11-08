@@ -4,7 +4,7 @@
             "image_type": "{{ image_type }}",
             "patches": "{{ patch_numbers }}", 
             "nonrolling_patches": "",
-            "groups": "{{ osdbagrp_names }}" 
+            "groups": "{{ osdbagrp_groups }}" 
         }
     ]
 }
