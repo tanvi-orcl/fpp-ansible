@@ -34,7 +34,7 @@
         osdbagrp_names: '{{ osdbagrp_names }}{{ name_dict[item.item].group_name }}={{ item.stdout }},'
       when: item.stdout != ''
       loop: '{{ osdbagrp_names_result.results }}'
-  when: image_type == 'db'
+  when: image_type == 'rdbms'
 
 - name: 'For Grid'
   block:

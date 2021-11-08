@@ -1,5 +1,5 @@
 - name:
-  hosts: 'fpp'
+  hosts: '{{ fpp_host }}'
   tasks:
 
     - block:

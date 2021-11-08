@@ -8,9 +8,9 @@
             "image_name": "{{ image_name }}.zip.gpg",
             "image": "{{ image_name }}.zip.gpg",
             "patches": "{{ patches }}", 
-            "lspatches_bugs": "/u01/app/rhp/admin/maps/{{ bug_path }}", 
+            "lspatches_bugs": "{{ fpp_maps }}/{{ image_type }}/{{ image_name }}_bugs.lst", 
             "nonrolling_patches": "",
-            "groups": "{{ groups }}" 
+            "groups": "{{ osdbagrp_groups }}" 
         }
     ]
 }

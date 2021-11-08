@@ -3,7 +3,7 @@
 # Prexisting should be true only for initial setup, to convert existing homes to wc. 
 
 - name:
-  hosts: 'fpp'
+  hosts: '{{ fpp_host }}'
   tasks:
 
     - name: 'Check Client Prerequistes'
@@ -22,7 +22,7 @@
     # EDGE CASE TO DO: Fail and input custom name if already exists
 
 - name:
-  hosts: '{{ hostgroup }}'
+  hosts: '{{ exadata_host }}'
   tasks:
 
     - set_fact:
@@ -56,7 +56,7 @@
         tasks_from: 'map_data_groups.yml'
 
 - name:
-  hosts: 'fpp'
+  hosts: '{{ fpp_host }}'
   tasks:
     
     - name: 'Create Working Copy'

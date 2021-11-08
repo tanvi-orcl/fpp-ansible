@@ -1,6 +1,6 @@
 
 - name:
-  hosts: 'fpp'
+  hosts: '{{ fpp_host }}'
   tasks:
 
     - block:
@@ -31,7 +31,7 @@
 
 
 - name:
-  hosts: '{{ hostgroup }}'
+  hosts: '{{ exadata_host }}'
   tasks:
 
     - name: 'Check Database'

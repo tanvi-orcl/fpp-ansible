@@ -2,9 +2,9 @@
 - name: 'Register RDBMS Image {{ image_name }}'
   include_role:
     name: 'fpp_common'
-    tasks_from: 'register_image.yml'
+    tasks_from: 'image_register.yml'
   vars:
-    map: 'db/{{ image_name }}.map'
+    image_map: 'db/{{ image_name }}.map'
     image_type: 'ORACLEDBSOFTWARE'
   register: 'create_rdbms_image_result'
 - debug:
@@ -13,7 +13,7 @@
 - name: 'Query RDBMS Image {{ image_name }}'
   include_role:
     name: 'fpp_common'
-    tasks_from: 'query_image.yml'
+    tasks_from: 'image_query.yml'
   register: 'query_rdbms_image_result'
 - debug:
     msg: '{{ query_rdbms_image_result }}'

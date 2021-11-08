@@ -1,6 +1,6 @@
 
 - name:
-  hosts: 'fpp'
+  hosts: '{{ fpp_host }}'
   tasks:
 
     - name: 'Check Client Prerequistes'
@@ -9,7 +9,7 @@
         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ hostgroup }}'
+  hosts: '{{ exadata_host }}'
   tasks:
     
     - name: 'Create New GI Home'
@@ -25,7 +25,7 @@
         tasks_from: 'map_data_groups.yml'
 
 - name:
-  hosts: 'fpp'
+  hosts: '{{ fpp_host }}'
   tasks:
     
     - name: 'Create Working Copy'

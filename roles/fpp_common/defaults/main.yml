@@ -1,5 +1,8 @@
-user: 'oracle'
-rhpctl_path: '/u01/app/rhp/rhphome/bin/rhpctl'
+
+fpp_rhpctl: '/u02/app/fpp/fpphome/bin/rhpctl'
+fpp_maps: '/u02/app/fpp/admin/maps'
+
+#fpp_rhpctl: '/u01/app/rhp/rhphome/bin/rhpctl'
 
 
 

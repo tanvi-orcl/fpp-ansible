@@ -1,0 +1,1 @@
+- cannot access /var/opt/oracle/managed/exapatch/mcpostpatch: where is it?

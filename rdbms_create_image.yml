@@ -1,17 +1,17 @@
 # This playbook creates and registers a new rdbms image. It will only need to be run once 
 # per image so be sure the hostgroup specified only contains one cluster.
 
-- name:
-  hosts: 'fpp'
-  tasks:
+# - name:
+#   hosts: '{{ fpp_host }}'
+#   tasks:
 
-    - name: 'Check Client Prerequistes'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'check_client_prereq.yml'
+#     - name: 'Check Client Prerequistes'
+#       include_role:
+#         name: 'fpp_common'
+#         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ hostgroup }}'
+  hosts: '{{ exadata_host }}'
   tasks:
     
     - name: 'Create Temp DB Home'
@@ -19,32 +19,32 @@
         name: 'target_commands'
         tasks_from: 'dbhome_create.yml'
       vars:
-        dbhome_name: 'temp4image1'
+        dbhome_name: 'temp4image3'
     
     - name: 'Check Temp DB Home'
       include_role:
         name: 'target_commands'
         tasks_from: 'dbhome_info.yml'
       vars:
-        dbhome_name: 'temp4image1'
+        dbhome_name: 'temp4image3'
     
-    # TO do: figure out image name
+    # TO DO: auto create image name!
 
     - name: 'Find Patch and Bug Data'
       include_role:
         name: 'target_commands'
-        tasks_from: 'map_patch.yml'
+        tasks_from: 'map_data.yml'
 
     - name: 'Find DB Groups'
       include_role:
         name: 'target_commands'
         tasks_from: 'map_groups.yml'
       vars:
-        image_type: 'db'
+        image_type: 'rdbms'
 
 
 - name:
-  hosts: 'fpp'
+  hosts: '{{ fpp_host }}'
   tasks:
     
     - name: 'Create Map File'
@@ -58,12 +58,12 @@
         tasks_from: 'rdbms_register_image.yml'
 
 - name:
-  hosts: '{{ hostgroup }}'
+  hosts: '{{ exadata_host }}'
   tasks:
 
     - name: 'Purge Temp DB Home'
       include_role:
         name: 'target_commands'
-        tasks_from: 'purge_dbhome.yml'
+        tasks_from: 'dbhome_purge.yml'
       vars:
-          dbhome_name: 'temp4image1'
+          dbhome_name: 'temp4image3'

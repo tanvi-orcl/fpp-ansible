@@ -2,7 +2,7 @@
 # once per image so be sure the hostgroup specified only contains one cluster.
 
 - name:
-  hosts: 'fpp'
+  hosts: '{{ fpp_host }}'
   tasks:
 
     - name: 'Check Client Prerequistes'
@@ -30,7 +30,7 @@
     - name: 'Find Patch and Bug Data'
       include_role:
         name: 'target_commands'
-        tasks_from: 'map_patch.yml'
+        tasks_from: 'map_data.yml'
 
     - name: 'Find GI Groups'
       include_role:
@@ -40,7 +40,7 @@
         image_type: 'gi'
 
 - name:
-  hosts: 'fpp'
+  hosts: '{{ fpp_host }}'
   tasks:
     
     - name: 'Create Map File'

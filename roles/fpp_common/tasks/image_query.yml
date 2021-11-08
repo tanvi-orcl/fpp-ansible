@@ -3,7 +3,7 @@
   become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    {{ rhpctl_path }} query image -image {{ image_name }}
+    {{ fpp_rhpctl }} query image -image {{ image_name }}
   register: 'query_image_result'
 - debug:
     msg: '{{ query_image_result }}'

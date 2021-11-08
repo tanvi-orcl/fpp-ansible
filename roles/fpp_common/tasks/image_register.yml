@@ -3,7 +3,7 @@
   become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    {{ rhpctl_path }} register image -image {{ image_name }} -getfromOSS /u01/app/rhp/admin/maps/{{ image_map }} -imagetype {{ image_type }}
+    {{ fpp_rhpctl }} register image -image {{ image_name }} -getfromOSS {{ fpp_maps }}/{{ image_map }} -imagetype {{ image_type }}
   register: 'register_image_result'
 - debug:
     msg: '{{ register_image_result }}'

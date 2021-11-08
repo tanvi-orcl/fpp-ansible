@@ -38,9 +38,6 @@ GI Zip/Working Copy
  - Zip: What is it, how is it being used?
  - what does mcimgsetup command do? DB working copy doesn't need it?
     - Has a json outfile. It has the groups that should be used. 
- 
-How to Patch a DB
- - "optionally this can be omitted and all dbs will be moved" Is this something we should handle or avoid? --> avoid, best practice is one by one 
 
 1. Any differences between ExaCC vs. ExaCS --> don't think so, because dbaas tooling
 2. What is the general timeline? How often will each task be completed. My understanding is that a new patch comes out --> you create the map file --> register the image --> and then will need to create workingcopy --> and then you will patch. All three tasks are always done together right? You never would just do one? 

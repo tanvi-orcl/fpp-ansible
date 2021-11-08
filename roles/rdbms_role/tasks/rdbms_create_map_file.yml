@@ -1,16 +1,14 @@
-
 - set_fact:
     ru_version_tag: '{{ hostvars[target_node]["ru_version"] | regex_replace("\.", "") }}'
-
 
 - name: 'Add Map File'
   include_role:
     name: 'fpp_common'
     tasks_from: 'create_map_file.yml'
   vars:
-    map_dest: '/root/tmp/db/{{ image_name }}.map'
-    image_tag: '{{ ru_version_tag[:5] }}EE'
-    ru_version: '{{ hostvars[target_node]["ru_version"] }}'
     image_type: 'db'
+    image_tag: '{{ ru_version_tag[:5] }}EE'
+    image_map: 'db/{{ image_name }}.map'
+    ru_version: '{{ hostvars[target_node]["ru_version"] }}'
     patches: '{{ hostvars[target_node]["patch_numbers"] }}'
-    groups: '{{ hostvars[target_node]["osdbagrp_names"] }}'
+    osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_names"] }}'
