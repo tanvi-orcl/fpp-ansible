@@ -2,30 +2,38 @@
 # Create New DB Home (to be used for working copy) will only run if prexisting_home is false.
 # Prexisting should be true only for initial setup, to convert existing homes to wc. 
 
-# - name:
-#   hosts: '{{ fpp_host }}'
-#   tasks:
+- name:
+  hosts: '{{ fpp_host }}'
+  tasks:
 
-#     # - name: 'Check Client Prerequistes'
-#     #   include_role:
-#     #     name: 'fpp_common'
-#     #     tasks_from: 'check_client_prereq.yml'
+    # - name: 'Check Client Prerequistes'
+    #   include_role:
+    #     name: 'fpp_common'
+    #     tasks_from: 'check_client_prereq.yml'
     
-#     # EDGE CASE TO DO: Check if WC Exists. Fail and input custom name if already exists
-#     - name: 'Check if WC Exists'
-#       when: wc_name is not defined
-#       include_role:
-#         name: 'fpp_common'
-#         tasks_from: 'wc_query.yml'
-#       vars:
-#         wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+    - set_fact:
+        wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+      when: wc_name is not defined
+
+    - name: 'Check if WC Exists'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_query.yml'
+      vars:
+        ignore_errors: 'yes'
+    - set_fact:
+        query_wc_error_result: '{{ query_wc_result.stdout | regex_search("does not exist") }}'
+    - assert:
+        that: query_wc_error_result != ""
+        fail_msg: 'Working copy with name {{ wc_name }} already exists. Run again with custom wc_name provided.'
+    
 
 - name:
   hosts: '{{ exadata_host }}'
   tasks:
 
     - set_fact:
-        wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+        wc_name: '{{ hostvars[fpp_host]["wc_name"] }}'
       when: wc_name is not defined
 
     # DAVE TO DO: should we be doing cswlib? does the name change when a new version comes out?
@@ -58,7 +66,7 @@
 - name:
   hosts: '{{ fpp_host }}'
   tasks:
-    
+
     - name: 'Create Working Copy'
       include_role:
         name: 'rdbms_role'

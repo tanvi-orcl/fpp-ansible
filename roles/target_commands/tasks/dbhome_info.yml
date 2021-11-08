@@ -16,9 +16,10 @@
 - debug:
     var: 'ru_version'
 
-- name: 'Pull Oracle Base'
+- name: 'Find Oracle Base'
   become: 'true'
   become_user: 'root'
+  become_method: 'sudo'
   shell:  |
     ./orabase
   args:

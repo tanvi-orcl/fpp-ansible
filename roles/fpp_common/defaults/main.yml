@@ -2,6 +2,8 @@
 fpp_rhpctl: '/u02/app/fpp/fpphome/bin/rhpctl'
 fpp_maps: '/u02/app/fpp/admin/maps'
 
+ignore_errors: 'no'
+
 #fpp_rhpctl: '/u01/app/rhp/rhphome/bin/rhpctl'
 
 

@@ -5,5 +5,6 @@
   shell: |
     {{ fpp_rhpctl }} query workingcopy -workingcopy {{ wc_name }}
   register: 'query_wc_result'
+  ignore_errors: '{{ ignore_errors }}'
 - debug:
     msg: '{{ query_wc_result }}'

@@ -7,3 +7,4 @@
   register: 'register_image_result'
 - debug:
     msg: '{{ register_image_result }}'
+
