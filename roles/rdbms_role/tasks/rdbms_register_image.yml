@@ -5,7 +5,7 @@
     tasks_from: 'image_register.yml'
   vars:
     image_map: 'db/{{ image_name }}.map'
-    image_type: 'ORACLEDBSOFTWARE'
+    software_type: 'ORACLEDBSOFTWARE'
 
 - name: 'Query RDBMS Image {{ image_name }}'
   include_role:

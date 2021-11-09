@@ -6,7 +6,7 @@
     tasks_from: 'image_register.yml'
   vars:
     map: 'gi/{{ image_name }}.map'
-    image_type: 'ORACLEGISOFTWARE'
+    software_type: 'ORACLEGISOFTWARE'
   register: 'create_gi_image_result'
 - debug:
     msg: '{{ create_gi_image_result }}'

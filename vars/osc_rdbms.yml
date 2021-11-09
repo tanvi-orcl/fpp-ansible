@@ -5,14 +5,15 @@ target_node: 'ecc9c3n1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 
 # new home
-version: '19.0.0.0'   # TO DO: Is it okay if it is one less 0 for map file?
-dbhome_bp: 'OCT2021'
+# version: '19.0.0.0'   # TO DO: Is it okay if it is one less 0 for map file?
+# dbhome_bp: 'OCT2021'
 
 # register image
-image_name: 'DB1911_2110_blag'   # TO DO: do we already know it's image 19.11? Or should we just submit the month and calculate the first part
+image_name: 'DB1911_Console1'   # TO DO: do we already know it's image 19.11? Or should we just submit the month and calculate the first part
 
 # working copy:
-prexisting_home: 'false'
+prexisting_home: 'true'
+wc_name: 'wc_consoleHome1'
 cluster_name: 'ecc9c3'  # currently just for naming conventions
 
 ###### TESTING VALUES

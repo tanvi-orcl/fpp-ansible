@@ -1,5 +1,5 @@
 
-- name: 'Check Map Determinations Parsing'
+- name: 'Pull Oracle Home'
   when: oracle_home is not defined
   include_tasks: 'oracle_home.yml'
   vars:

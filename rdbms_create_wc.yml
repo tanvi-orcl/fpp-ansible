@@ -61,7 +61,7 @@
         name: 'target_commands'
         tasks_from: 'map_groups.yml'
       vars:
-        image_type: 'rdbms'
+        image_type: 'db'
 
 - name:
   hosts: '{{ fpp_host }}'

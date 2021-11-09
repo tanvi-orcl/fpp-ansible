@@ -9,59 +9,9 @@
     name: 'fpp_common'
     tasks_from: 'create_map_file.yml'
   vars:
-    map_dest: '/root/tmp/gi/{{ image_name }}.map'
+    image_type: 'grid'
     image_tag: '{{ ru_version_tag[:5] }}EE'
     ru_version: '{{ hostvars[target_node]["ru_version"] }}'
-    image_type: 'gi'
     patches: '{{ hostvars[target_node]["patch_numbers"] }}'
-    groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
-
-
-# Update Master Map File 
-
-- name: Pull New Map Content From Uploaded File
-  become: 'true'
-  become_user: 'root'
-  slurp:
-    src: '/root/tmp/gi/{{ image_name }}.map'    
-  register: 'new_image_map'
-- debug:
-      msg: '{{ new_image_map.content|b64decode|from_json }}'
-
-- name: Load Master Map From Container
-  become: 'true'
-  become_user: 'root'
-  get_url:
-    url: '{{ map_container }}'
-    dest: '/root/tmp/'
-  register: 'master_map'
-- name: Pull Master Map Content From File
-  become: 'true'
-  become_user: 'root'
-  slurp:
-    src: '/root/tmp/fiserv_gi_maps.json'
-  register: 'master_map'
-- debug:
-      msg: '{{ master_map.content|b64decode|from_json }}'
-
-- name: Appending New GI Map
-  set_fact:
-    updated_master_map: '{{ master_map.content|b64decode|from_json | default([]) | combine(new_image_map.content|b64decode|from_json) }}'
-- debug:
-    var: updated_master_map
-
-- name: Write Master Map Content to File
-  become: 'true'
-  become_user: 'root'
-  copy: 
-    content: '{{ updated_master_map | to_nice_json }}'
-    dest: /root/tmp/master_map.json
-- name: Write Master Map File to Container
-  become: 'true'
-  become_user: 'root'
-  shell: 
-    curl -X PUT --data-binary '@/root/tmp/master_map.json' {{ map_container }}
-  register: 'master_map_container'
-- debug:
-      msg: '{{ master_map_container }}'
-  
+    osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
+    image_map_path: 'gi'
