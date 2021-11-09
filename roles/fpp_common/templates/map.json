@@ -8,7 +8,7 @@
             "image_name": "{{ image_name }}.zip.gpg",
             "image": "{{ image_name }}.zip.gpg",
             "patches": "{{ patches }}", 
-            "lspatches_bugs": "{{ fpp_maps }}/{{ image_type }}/{{ image_name }}_bugs.lst", 
+            "lspatches_bugs": "{{ fpp_maps_path }}/{{ image_type }}/{{ image_name }}_bugs.lst", 
             "nonrolling_patches": "",
             "groups": "{{ osdbagrp_groups }}" 
         }

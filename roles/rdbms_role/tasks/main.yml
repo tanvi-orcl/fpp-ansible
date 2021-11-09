@@ -15,4 +15,3 @@
   vars:
     eval: ''
   
-dbaascli dbhome info --hname <home name>'

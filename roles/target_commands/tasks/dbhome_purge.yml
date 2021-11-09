@@ -3,7 +3,7 @@
   become: 'true'
   become_user: 'root'
   shell:  |
-    /bin/dbaascli dbhome purge --hname {{ dbhome_name }} --noprompt YES
+    {{ dbaascli_path }} dbhome purge --hname {{ dbhome_name }} --noprompt YES
   register: 'dbhome_purge_result'
 - debug:
     msg: '{{ dbhome_purge_result }}'

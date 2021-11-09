@@ -1,37 +1,31 @@
 # ansible-playbook -i inventory test_parse.yml --extra-vars oracle_home=/u02/app/oracle/product/19.0.0.0/dbhome_10
 
-- name:
-  hosts: '{{ fpp_host }}'
-  tasks:
-
-    - shell: |
-        hostname
-      register: 'hostname_result'
-    - debug:
-        msg: '{{ hostname_result }}'
-
 # - name:
-#   hosts: 'x8m'
+#   hosts: '{{ fpp_host }}'
 #   tasks:
 
-#     - name: 'Check Map Determinations Parsing'
-#       include_role:
-#         name: 'target_commands'
-#         tasks_from: 'oracle_home.yml'
-#       vars:
-#         db_regex: '+ASM[0-9]'
+#     - shell: |
+#         hostname
+#       register: 'hostname_result'
+#     - debug:
+#         msg: '{{ hostname_result }}'
 
-#     - name: 'Check Map Determinations Parsing'
-#       include_role:
-#         name: 'target_commands'
-#         tasks_from: 'oracle_home.yml'
-#       vars:
-#         db_regex: 'tstdb3_phxcluster'
+- name:
+  hosts: '{{ exadata_hosts }}'
+  tasks:
     
-#     - name: 'Check Map Determinations Parsing'
-#       include_role:
-#         name: 'target_commands'
-#         tasks_from: 'map_groups.yml'
+    - name: 'Check Map Determinations Parsing'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'dbhome_info.yml'
+      vars:
+        dbhome_name: 'OraHome2'
+    
+    - name: 'Check Map Determinations Parsing'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'map_data.yml'
+
 
 
     

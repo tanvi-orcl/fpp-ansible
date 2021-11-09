@@ -12,3 +12,4 @@
     patches: '{{ hostvars[target_node]["patch_numbers"] }}'
     osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
     image_map_path: 'db'
+    db_tmp_path: '{{ hostvars[target_node]["db_tmp_path"] }}'

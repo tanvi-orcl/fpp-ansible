@@ -37,8 +37,8 @@ This codebase contains a set of playbooks that can be used individually or combi
 
 ### Playbooks
 
-- exadata_host (fiservdb)
-- fpp_host (fiservfpp)
+- exadata_hosts (fiservdb)
+- fpp_host (n3db1): should be the specific host and not a group encompassing the host
 
 **rdbms_create_image.yml**
 - 
@@ -54,7 +54,7 @@ This codebase contains a set of playbooks that can be used individually or combi
 - Variables
     - target_node (ecc9c3n1)
     - identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
-    - prexisting_home (true or false) - indicates whether to create a new home or use existing
+    - existing_home (true or false) - indicates whether to create a new home or use existing. Default is false.
         - if false: 
             - version (19.0.0.0) - to create new home and add wc
             - dbhome_bp (APR2021) - to create new home and add wc
@@ -62,7 +62,7 @@ This codebase contains a set of playbooks that can be used individually or combi
             - wc_name
     - image_name (DB1911_210420) - to create new home and add wc
     - cluster_name (ecc5c4) - to create new home and add wc - currently just for naming conventions
-    - wc_name: OPTIONAL, if want to use a custom name or if using preexisting_home
+    - wc_name: OPTIONAL, if want to use a custom name or if using existing_home
     - osdbagrp_groups: OPTIONAL, if want to use custom groups instead of defaults
 
 **rdbms_patch.yml**

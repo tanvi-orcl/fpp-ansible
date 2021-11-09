@@ -1,4 +1,5 @@
-user: 'oracle'
+dbaascli_path: '/bin/dbaascli'
+tmp_path: '/tmp'
 
 name_dict: 
   -a:

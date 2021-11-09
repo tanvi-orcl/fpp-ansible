@@ -1,14 +1,14 @@
 # This playbook creates and registers a new gi image. It will only need to be run 
 # once per image so be sure the hostgroup specified only contains one cluster.
 
-- name:
-  hosts: '{{ fpp_host }}'
-  tasks:
+# - name:
+#   hosts: '{{ fpp_host }}'
+#   tasks:
 
-    - name: 'Check Client Prerequistes'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'check_client_prereq.yml'
+#     - name: 'Check Client Prerequistes'
+#       include_role:
+#         name: 'fpp_common'
+#         tasks_from: 'check_client_prereq.yml'
 
 - name:
   hosts: '{{ target_node }}'
@@ -25,6 +25,7 @@
         tasks_from: 'oracle_home.yml'
       vars:
         db_regex: '+ASM[0-9]'
+      when: oracle_home is not defined
 
     - name: 'Find Patch and Bug Data'
       include_role:

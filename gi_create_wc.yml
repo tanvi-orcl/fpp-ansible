@@ -9,7 +9,7 @@
         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ exadata_host }}'
+  hosts: '{{ exadata_hosts }}'
   tasks:
     
     - name: 'Create New GI Home'

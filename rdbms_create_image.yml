@@ -11,7 +11,7 @@
 #         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ exadata_host }}'
+  hosts: '{{ exadata_hosts }}'
   tasks:
     
     # - name: 'Create Temp DB Home'
@@ -61,7 +61,7 @@
         tasks_from: 'rdbms_register_image.yml'
 
 # - name:
-#   hosts: '{{ exadata_host }}'
+#   hosts: '{{ exadata_hosts }}'
 #   tasks:
 #
     # - name: 'Purge Temp DB Home'

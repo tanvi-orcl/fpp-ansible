@@ -19,7 +19,7 @@ bug_path: 'bug_path'
 #oracle_base: '/u02/app/oracle'
 #patch_numbers: '12345678,12345678'
 #osdbagrp_groups: 'OSDBA=dba'
-#prexisting_home: 'false'
+#existing_home: 'false'
 
 ##########
 
