@@ -2,8 +2,6 @@
 rhpctl_path: '/u02/app/fpp/fpphome/bin/rhpctl'
 fpp_maps_path: '/u02/app/fpp/admin/maps'
 
-db_tmp_path: '/tmp'
-
 ignore_errors: 'no'
 
 #rhpctl_path: '/u01/app/rhp/rhphome/bin/rhpctl'

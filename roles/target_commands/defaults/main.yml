@@ -1,7 +1,6 @@
 dbaascli_path: '/bin/dbaascli'
 gpg_path: '/bin/gpg'
 gi_zip_path: '/acfs01'
-tmp_path: '/tmp'
 
 
 name_dict: 

@@ -4,6 +4,7 @@ fpp_host: 'n3db1'
 gi_host: 'ecc9c3n1'
 target_node: 'ecc9c3n1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
+exa_tmp_path: '/tmp'
 
 # new home
 # version: '19.0.0.0'   # TO DO: Is it okay if it is one less 0 for map file?

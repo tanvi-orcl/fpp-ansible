@@ -21,7 +21,7 @@
   become: 'true'
   become_user: 'oracle'
   shell:  |
-    $ORACLE_HOME/OPatch/opatch lspatches -bugs > {{ tmp_path }}/{{ image_name }}_bugs.lst
+    $ORACLE_HOME/OPatch/opatch lspatches -bugs > {{ exa_tmp_path }}/{{ image_name }}_bugs.lst
   environment:
     ORACLE_HOME: '{{ oracle_home }}'
   register: 'bugs_list_result'

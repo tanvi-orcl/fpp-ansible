@@ -20,7 +20,7 @@
   become_method: 'sudo'
   copy:
     src: 'install_gi.excl'
-    dest: '{{ tmp_path }}'
+    dest: '{{ exa_tmp_path }}'
   register: 'copy_script_result'
 - debug:
     msg: '{{ copy_script_result }}'
@@ -30,7 +30,7 @@
   become_user: 'root'
   become_method: 'sudo'
   shell:  |
-    zip -r {{ gi_zip_path }}/{{ image_name }}.zip .* * -x "..*" -x@{{ tmp_path }}/install_gi.excl >~/zip{{ image_name }}.out 2>~/zip{{ image_name }}.err
+    zip -r {{ gi_zip_path }}/{{ image_name }}.zip .* * -x "..*" -x@{{ exa_tmp_path }}/install_gi.excl >~/zip{{ image_name }}.out 2>~/zip{{ image_name }}.err
   args:
     chdir: '{{ oracle_home }}'
   register: 'gi_zip_result'
