@@ -5,14 +5,14 @@
   vars:
     db_regex: '+ASM[0-9]'
 
-# - name: 'Upgrade GI'
-#   become: 'true'
-#   become_user: 'root'
-#   shell:  |
-#     {{ dbaascli_path }} patch grid upgrade --version {{ grid_version }} --targethome {{ oracle_home }}
-#   register: 'upgrade_gi_result'
-# - debug:
-#     msg: '{{ upgrade_gi_result }}'
+- name: 'Upgrade GI'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    {{ dbaascli_path }} patch grid upgrade --version {{ grid_version }} --targethome {{ oracle_home }}
+  register: 'upgrade_gi_result'
+- debug:
+    msg: '{{ upgrade_gi_result }}'
 
 - name: 'Copy File to Host'
   become: 'true'
@@ -30,34 +30,31 @@
   become_user: 'root'
   become_method: 'sudo'
   shell:  |
-    zip -r ~/{{ image_name }}.zip .* * -x "..*" -x@{{ tmp_path }}/install_gi.excl >~/zip{{ image_name }}.out 2>~/zip{{ image_name }}.err
+    zip -r {{ gi_zip_path }}/{{ image_name }}.zip .* * -x "..*" -x@{{ tmp_path }}/install_gi.excl >~/zip{{ image_name }}.out 2>~/zip{{ image_name }}.err
   args:
     chdir: '{{ oracle_home }}'
   register: 'gi_zip_result'
 - debug:
     msg: '{{ gi_zip_result }}'
-# nohup zip -r {{ tmp_path }}/{{ image_name }}.zip .* * -x "..*" -x@{{ tmp_path }}/install_gi.excl >~/zip{{ image_name }}.out 2>~/zip{{ image_name }}.err &
-
 
 - name: 'Encrypt Zip File'
   become: 'true'
   become_user: 'root'
+  become_method: 'sudo'
   shell:  |
-    /bin/gpg --yes --batch --passphrase 'AdbCsPatching$' -c ~/{{ image_name }}.zip
+    {{ gpg_path }} --yes --batch --passphrase 'AdbCsPatching$' -c {{ gi_zip_path }}/{{ image_name }}.zip
   args:
     chdir: '{{ oracle_home }}'
   register: 'gi_encrypt_result'
 - debug:
     msg: '{{ gi_encrypt_result }}'
 
-# TO DO: 
-# figure out if container url is a folder (set up as single object right now in map)
-
 - name: 'Upload encrypted image file to object store'
   become: 'true'
   become_user: 'root'
+  become_method: 'sudo'
   shell:  |
-    curl -T {{ tmp_path }}/{{ image_name }}.zip.gpg {{ map_container }}
+    curl {{ curl_proxy_command }} -T {{ gi_zip_path }}/{{ image_name }}.zip.gpg {{ container_url }}
   register: 'upload_result'
 - debug:
     msg: '{{ upload_result }}'

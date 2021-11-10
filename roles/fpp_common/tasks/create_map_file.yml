@@ -36,7 +36,7 @@
     become_user: 'root'
     become_method: 'sudo'
     get_url:
-      url: '{{ map_container }}'
+      url: '{{ container_url }}/{{ master_map }}'
       dest: '{{ fpp_maps_path }}/{{ image_map_path }}'
     register: 'master_map'
 
@@ -67,7 +67,7 @@
     become: 'true'
     become_user: 'root'
     shell: 
-      curl -X PUT --data-binary '@{{ fpp_maps_path }}/{{ image_map_path }}/master_map.json' {{ map_container }}
+      curl -X PUT --data-binary '@{{ fpp_maps_path }}/{{ image_map_path }}/master_map.json' {{ container_url }}/{{ master_map }}
     register: 'master_map_container'
   - debug:
         msg: '{{ master_map_container }}'

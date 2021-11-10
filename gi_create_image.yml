@@ -1,23 +1,15 @@
 # This playbook creates and registers a new gi image. It will only need to be run 
 # once per image so be sure the hostgroup specified only contains one cluster.
 
-# - name:
-#   hosts: '{{ fpp_host }}'
-#   tasks:
-
-#     - name: 'Check Client Prerequistes'
-#       include_role:
-#         name: 'fpp_common'
-#         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ target_node }}'
+  hosts: '{{ gi_host }}'
   tasks:
 
-    - name: 'Update GI Home'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'gihome_upgrade.yml'
+    # - name: 'Update GI Home'
+    #   include_role:
+    #     name: 'target_commands'
+    #     tasks_from: 'gihome_upgrade.yml'
     
     - name: 'Set Oracle Home to updated value'
       include_role:
@@ -43,6 +35,11 @@
   hosts: '{{ fpp_host }}'
   tasks:
     
+    # - name: 'Check Client Prerequistes'
+    #   include_role:
+    #     name: 'fpp_common'
+    #     tasks_from: 'check_client_prereq.yml'
+
     - name: 'Create Map File'
       include_role:
         name: 'gi_role'

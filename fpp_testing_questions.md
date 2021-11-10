@@ -1,4 +1,4 @@
-- cannot access /var/opt/oracle/managed/exapatch/mcpostpatch: where is it?
+- cannot access /var/opt/oracle/managed/exapatch/mcpostpatch --> internal tool to be procured
 - purge home: sometimes issues in OCI console
 - should working copies of home not show up in the console...? how else do we add DBs?
 
