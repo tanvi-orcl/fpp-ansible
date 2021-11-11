@@ -1,4 +1,4 @@
-exadata_hosts: 'fiservdb'
+exa_hosts: 'fiservdb'
 # fpp_host: 'fiservfpp'
 fpp_host: 'n3db1'
 gi_host: 'ecc9c3n1'
@@ -7,16 +7,21 @@ identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 exa_tmp_path: '/tmp'
 
 # new home
-# version: '19.0.0.0'   # TO DO: Is it okay if it is one less 0 for map file?
-# dbhome_bp: 'OCT2021'
+version: '19.0.0.0'   # TO DO: Is it okay if it is one less 0 for map file?
+dbhome_bp: 'OCT2021'
 
 # register image
-image_name: 'DB1911_Console1'   # TO DO: do we already know it's image 19.11? Or should we just submit the month and calculate the first part
+image_name: 'DB1911_210420_tst2'   # TO DO: do we already know it's image 19.11? Or should we just submit the month and calculate the first part
 
-# working copy:
-existing_home: 'true'
-wc_name: 'wc_consoleHome1'
+# working copy
+existing_home: 'false'
 cluster_name: 'ecc9c3'  # currently just for naming conventions
+
+# patch
+check_prereq: 'true'
+source_wc: 'wc_DB1911_210420_tst2_ecc9c3'
+patched_wc: 'wc_DB1913_ecc9c3'
+db_name: 'tst1911_mwf_iad'
 
 ###### TESTING VALUES
 #oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
@@ -24,15 +29,3 @@ cluster_name: 'ecc9c3'  # currently just for naming conventions
 #oracle_base: '/u02/app/oracle'
 #patch_numbers: '12345678,12345678'
 #osdbagrp_groups: 'OSDBA=dba'
-#existing_home: 'false'
-
-##########
-
-
-
-
-##########
-
-source_image: 'DB1911_210420'
-# also using image_name (as new image), cluster_name, target_node, identity_file
-db_name: 'tstdb3'

@@ -11,7 +11,7 @@
 #         msg: '{{ hostname_result }}'
 
 - name:
-  hosts: '{{ exadata_hosts }}'
+  hosts: '{{ exa_hosts }}'
   tasks:
     
     - name: 'Check Map Determinations Parsing'

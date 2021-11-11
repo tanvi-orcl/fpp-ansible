@@ -1,7 +1,8 @@
 
 - name: 'Parse Patch Numbers'
   become: 'true'
-  become_user: 'oracle'
+  become_user: '{{ target_user }}'
+  become_method: 'sudo'
   shell:  |
     $ORACLE_HOME/OPatch/opatch lspatches
   environment:
@@ -19,7 +20,8 @@
 
 - name: 'Bug List'
   become: 'true'
-  become_user: 'oracle'
+  become_user: '{{ target_user }}'
+  become_method: 'sudo'
   shell:  |
     $ORACLE_HOME/OPatch/opatch lspatches -bugs > {{ exa_tmp_path }}/{{ image_name }}_bugs.lst
   environment:

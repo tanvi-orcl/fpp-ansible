@@ -4,6 +4,7 @@
   tasks:
 
     - block:
+
       - name: 'Check Client Prerequistes'
         include_role:
           name: 'fpp_common'
@@ -14,29 +15,31 @@
           name: 'fpp_common'
           tasks_from: 'wc_query.yml'
         vars:
-          wc_name: 'wc_{{ source_image }}_{{ cluster_name }}'
+          wc_name: '{{ source_wc }}'
       
       - name: 'Check if New Home is WC'
         include_role:
           name: 'fpp_common'
           tasks_from: 'wc_query.yml'
         vars:
-          wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
-    when: check_prereq is defined and check_prereq == 'true'
+          wc_name: '{{ patched_wc }}'
+
+      when: check_prereq is defined and check_prereq == 'true'
 
     - name: 'Patch Database'
       include_role:
-        name: 'rdbms'
+        name: 'rdbms_role'
         tasks_from: 'rdbms_patch.yml'
 
-
 - name:
-  hosts: '{{ exadata_hosts }}'
+  hosts: '{{ exa_hosts }}'
   tasks:
 
     - name: 'Check Database'
       include_role:
         name: 'target_commands'
         tasks_from: 'dbhome_info.yml'
+      vars:
+        dbhome_name: '{{ patched_wc }}'
     
     # TO do: Check output for software: yes

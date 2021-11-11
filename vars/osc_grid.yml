@@ -1,4 +1,4 @@
-exadata_hosts: 'fiservdb'
+exa_hosts: 'fiservdb'
 # fpp_host: 'fiservfpp'
 fpp_host: 'n3db1'
 target_node: 'ecc9c3n1'

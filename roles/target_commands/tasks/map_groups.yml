@@ -1,7 +1,8 @@
 
 - name: 'Group Name Options'
   become: 'true'
-  become_user: 'oracle'
+  become_user: '{{ target_user }}'
+  become_method: 'sudo'
   ignore_errors: 'yes'
   shell:  |
     $ORACLE_HOME/bin/osdbagrp h
@@ -17,7 +18,8 @@
 
 - name: 'Group Name Command'
   become: 'true'
-  become_user: 'oracle'
+  become_user: '{{ target_user }}'
+  become_method: 'sudo'
   shell:  |
     $ORACLE_HOME/bin/osdbagrp {{ item }}
   environment:

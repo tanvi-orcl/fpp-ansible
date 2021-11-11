@@ -37,7 +37,7 @@ This codebase contains a set of playbooks that can be used individually or combi
 
 ### Playbooks
 
-- exadata_hosts (fiservdb)
+- exa_hosts (fiservdb)
 - fpp_host (n3db1): should be the specific host and not a group encompassing the host
 
 **rdbms_create_image.yml**

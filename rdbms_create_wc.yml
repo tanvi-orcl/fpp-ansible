@@ -29,7 +29,7 @@
     
 
 - name:
-  hosts: '{{ exadata_hosts }}'
+  hosts: '{{ exa_hosts }}'
   tasks:
 
     - set_fact:
@@ -62,6 +62,7 @@
         tasks_from: 'map_groups.yml'
       vars:
         image_type: 'db'
+        target_user: 'oracle'
 
 - name:
   hosts: '{{ fpp_host }}'

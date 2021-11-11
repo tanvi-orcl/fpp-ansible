@@ -2,23 +2,25 @@
 - set_fact:
     dbhome_version: '{{ version | regex_replace("\.", "") }}'
 
-- name: 'cswlib download'
-  become: 'true'
-  become_user: 'root'
-  shell:  |
-    {{ dbaascli_path }} cswlib download --version {{ dbhome_version }} --bp {{ dbhome_bp }}
-  register: 'cswlib_download_result'
-- debug:
-    msg: '{{ cswlib_download_result }}'
-- set_fact:
-    cswlib_download_errors: '{{ cswlib_download_result.stdout | regex_search("ERROR:.+") }}'
-- assert:
-    that: cswlib_download_errors == ""
-    fail_msg: '{{ cswlib_download_errors }}'
+# - name: 'cswlib download'
+#   become: 'true'
+#   become_user: 'root'
+#   become_method: 'sudo'
+#   shell:  |
+#     {{ dbaascli_path }} cswlib download --version {{ dbhome_version }} --bp {{ dbhome_bp }}
+#   register: 'cswlib_download_result'
+# - debug:
+#     msg: '{{ cswlib_download_result }}'
+# - set_fact:
+#     cswlib_download_errors: '{{ cswlib_download_result.stdout | regex_search("ERROR:.+") }}'
+# - assert:
+#     that: cswlib_download_errors == ""
+#     fail_msg: '{{ cswlib_download_errors }}'
 
 - name: 'create dbhome'
   become: 'true'
   become_user: 'root'
+  become_method: 'sudo'
   shell:  |
     {{ dbaascli_path }} dbhome create --version {{ dbhome_version }} --bp {{ dbhome_bp }} --ohome_name {{ dbhome_name }} --noprompt YES
   register: 'dbhome_create_result'

@@ -4,12 +4,14 @@
 
 - name:
   hosts: '{{ gi_host }}'
+  vars:
+    target_user: 'grid'
   tasks:
-
-    # - name: 'Update GI Home'
-    #   include_role:
-    #     name: 'target_commands'
-    #     tasks_from: 'gihome_upgrade.yml'
+    
+    - name: 'Update GI Home and Zip'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'gihome_zip.yml'
     
     - name: 'Set Oracle Home to updated value'
       include_role:

@@ -11,22 +11,21 @@
 #         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ exadata_hosts }}'
+  hosts: '{{ exa_hosts }}'
+  vars:
+    target_user: 'oracle'
+    dbhome_name: 'temp4image1'
   tasks:
     
-    # - name: 'Create Temp DB Home'
-    #   include_role:
-    #     name: 'target_commands'
-    #     tasks_from: 'dbhome_create.yml'
-    #   vars:
-    #     dbhome_name: 'temp4image1'
+    - name: 'Create Temp DB Home'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'dbhome_create.yml'
     
     - name: 'Check Temp DB Home'
       include_role:
         name: 'target_commands'
         tasks_from: 'dbhome_info.yml'
-      vars:
-        dbhome_name: 'consoleHome1'
     
     # TO DO: auto create image name! --> note: would have to pull in fpp_host
     # - set_fact:
@@ -61,12 +60,12 @@
         tasks_from: 'rdbms_register_image.yml'
 
 # - name:
-#   hosts: '{{ exadata_hosts }}'
+#   hosts: '{{ exa_hosts }}'
+#   vars:
+#     dbhome_name: 'temp4image1'
 #   tasks:
-#
-    # - name: 'Purge Temp DB Home'
-    #   include_role:
-    #     name: 'target_commands'
-    #     tasks_from: 'dbhome_purge.yml'
-    #   vars:
-    #       dbhome_name: 'temp4image1'
+
+#     - name: 'Purge Temp DB Home'
+#       include_role:
+#         name: 'target_commands'
+#         tasks_from: 'dbhome_purge.yml'
