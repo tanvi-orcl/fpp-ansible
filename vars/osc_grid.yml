@@ -1,19 +1,20 @@
 exa_hosts: 'fiservdb'
+gi_host: 'fiservdb'
 # fpp_host: 'fiservfpp'
 fpp_host: 'n3db1'
 target_node: 'ecc9c3n1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 exa_tmp_path: '/tmp'
 
-# new home
-# version: '19.0.0.0'   # TO DO: Is it okay if it is one less 0 for map file?
-# dbhome_bp: 'OCT2021'
+# upgrade grid
+grid_version: '19.11.0.0.0'
 
 # register image
+version: '19.0.0.0.0'
 image_name: 'GIHome_tst1'   # TO DO: do we already know it's image 19.11? Or should we just submit the month and calculate the first part
 container_url: 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o/'
 curl_proxy_command: '-x http://140.83.186.195:80'
-master_map: 'fiserv_gi_maps.json'
+master_map: 'gi_master_map.json'
 
 
 # working copy:

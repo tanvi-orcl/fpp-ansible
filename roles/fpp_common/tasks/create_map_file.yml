@@ -16,7 +16,6 @@
     src: 'map.json'
     dest: '{{ fpp_maps_path }}/{{ image_map_path }}/{{ image_name }}.map'
 
-
 # Update Master Map File if GI
 
 - block:
@@ -29,30 +28,29 @@
       src: '{{ fpp_maps_path }}/{{ image_map_path }}/{{ image_name }}.map'    
     register: 'new_image_map'
   - debug:
-        msg: '{{ new_image_map.content|b64decode|from_json }}'
+      msg: '{{ new_image_map.content|b64decode|from_json }}'
 
   - name: Load Master Map From Container
     become: 'true'
     become_user: 'root'
     become_method: 'sudo'
-    get_url:
-      url: '{{ container_url }}/{{ master_map }}'
-      dest: '{{ fpp_maps_path }}/{{ image_map_path }}'
-    register: 'master_map'
+    shell:
+      curl {{ curl_proxy_command }} -o {{ fpp_maps_path }}/{{ image_map_path }}/{{ master_map }} {{ container_url }}{{ master_map }}
+    register: 'curl_master_map'
 
   - name: Pull Master Map Content From File
     become: 'true'
     become_user: 'root'
     become_method: 'sudo'
     slurp:
-      src: '{{ fpp_maps_path }}/{{ image_map_path }}/fiserv_gi_maps.json'
-    register: 'master_map'
+      src: '{{ fpp_maps_path }}/{{ image_map_path }}/{{ master_map }}'
+    register: 'master_map_data'
   - debug:
-        msg: '{{ master_map.content|b64decode|from_json }}'
+      msg: '{{ master_map_data.content|b64decode|from_json }}'
 
   - name: Appending New GI Map
     set_fact:
-      updated_master_map: '{{ master_map.content|b64decode|from_json | default([]) | combine(new_image_map.content|b64decode|from_json) }}'
+      updated_master_map: '{{ master_map_data.content|b64decode|from_json | default([]) | combine(new_image_map.content|b64decode|from_json) }}'
   - debug:
       var: updated_master_map
 
@@ -67,10 +65,10 @@
     become: 'true'
     become_user: 'root'
     shell: 
-      curl -X PUT --data-binary '@{{ fpp_maps_path }}/{{ image_map_path }}/master_map.json' {{ container_url }}/{{ master_map }}
+      curl {{ curl_proxy_command }} -X PUT --data-binary '@{{ fpp_maps_path }}/{{ image_map_path }}/master_map.json' {{ container_url }}{{ master_map }}
     register: 'master_map_container'
   - debug:
-        msg: '{{ master_map_container }}'
+      msg: '{{ master_map_container }}'
 
   when: image_type == 'grid'
   

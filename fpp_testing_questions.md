@@ -18,5 +18,8 @@ Tuesday: Test Error Handling / Edge cases for RDBMS Tasks
 Wednesday:  Test Error Handling / Edge cases for Grid Tasks
 Thursday: Test Out Fiserv Grid Control (specialized script to keep everything up and running)
 Friday: Final Troubleshooting / Clean-Up
+    - execution design
+    - debug statements
+    - names / comments
 
 

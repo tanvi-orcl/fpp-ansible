@@ -80,7 +80,10 @@ This codebase contains a set of playbooks that can be used individually or combi
 - Variables
     - target_node
     - identity_file - for client prereqs
-    - grid_version (19.12.0.0.0) - to patch/upgrade grid
+    - grid_version (19.12.0.0.0) - to patch/upgrade grid and for map file
+    - container_url
+    - master_map
+    - curl_proxy_command
     - oracle_home (OPTIONAL) - provide if multiple grid homes, otherwise will use default
 
 **gi_create_wc.yml**

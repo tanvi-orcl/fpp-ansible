@@ -1,7 +1,7 @@
 - name: 'Get Oracle Home'
   become: 'true'
   become_user: 'root'
-  become_method: 'true'
+  become_method: 'sudo'
   shell:  |
     echo $(awk -F : ' $1 ~ /^{{ db_regex }}$/ {print $2}' /etc/oratab)
   register: 'oracle_home_result'
