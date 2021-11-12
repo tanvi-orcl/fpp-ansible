@@ -5,7 +5,7 @@
     name: 'fpp_common'
     tasks_from: 'image_register.yml'
   vars:
-    map: 'gi/{{ image_name }}.map'
+    image_map_path: 'maps/gi'
     software_type: 'ORACLEGISOFTWARE'
   register: 'create_gi_image_result'
 - debug:

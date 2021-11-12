@@ -4,7 +4,7 @@
     name: 'fpp_common'
     tasks_from: 'image_register.yml'
   vars:
-    image_map: 'db/{{ image_name }}.map'
+    image_map_path: 'maps/db'
     software_type: 'ORACLEDBSOFTWARE'
 
 - name: 'Query RDBMS Image {{ image_name }}'

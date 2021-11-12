@@ -11,7 +11,8 @@
   vars:
     image_type: 'grid'
     image_tag: '{{ ru_version_tag[:5] }}EE'
+    image: '{{ image_name }}.zip.gpg'
     ru_version: '{{ grid_version }}'
     patches: '{{ hostvars[target_node]["patch_numbers"] }}'
     osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
-    image_map_path: 'gi'
+    image_map_path: 'maps/gi'

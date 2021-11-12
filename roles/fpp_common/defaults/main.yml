@@ -1,5 +1,5 @@
 rhpctl_path: '/u02/app/fpp/fpphome/bin/rhpctl'
-fpp_maps_path: '/u02/app/fpp/admin/maps'
+fpp_admin_path: '/u02/app/fpp/admin'
 
 ignore_errors: 'no'
 

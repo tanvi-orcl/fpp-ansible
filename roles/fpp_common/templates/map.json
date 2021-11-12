@@ -6,9 +6,9 @@
             "aru_id": "226",
             "image_type": "{{ image_type }}",
             "image_name": "{{ image_name }}.zip.gpg",
-            "image": "{{ image_name }}.zip.gpg",
+            "image": "{{ image }}",
             "patches": "{{ patches }}", 
-            "lspatches_bugs": "{{ fpp_maps_path }}/{{ image_type }}/{{ image_name }}_bugs.lst", 
+            "lspatches_bugs": "{{ fpp_admin_path }}/{{ image_map_path }}/{{ image_name }}_bugs.lst", 
             "nonrolling_patches": "",
             "groups": "{{ osdbagrp_groups }}" 
         }

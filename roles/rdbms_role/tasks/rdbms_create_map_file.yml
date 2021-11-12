@@ -8,7 +8,8 @@
   vars:
     image_type: 'db'
     image_tag: '{{ ru_version_tag[:5] }}EE'
+    image: '{{ image_name }}.zip.gpg'
     ru_version: '{{ hostvars[target_node]["ru_version"] }}'
     patches: '{{ hostvars[target_node]["patch_numbers"] }}'
     osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
-    image_map_path: 'db'
+    image_map_path: 'maps/db'
