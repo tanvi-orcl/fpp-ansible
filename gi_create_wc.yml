@@ -3,30 +3,57 @@
   hosts: '{{ fpp_host }}'
   tasks:
 
-    - name: 'Check Client Prerequistes'
+    # - name: 'Check Client Prerequistes'
+    #   include_role:
+    #     name: 'fpp_common'
+    #     tasks_from: 'check_client_prereq.yml'
+
+    - set_fact:
+        wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+      when: wc_name is not defined
+
+    - name: 'Check if WC Exists'
       include_role:
         name: 'fpp_common'
-        tasks_from: 'check_client_prereq.yml'
+        tasks_from: 'wc_query.yml'
+      vars:
+        ignore_errors: 'yes'
+    - set_fact:
+        query_wc_error_result: '{{ query_wc_result.stdout | regex_search("does not exist") }}'
+    - assert:
+        that: query_wc_error_result != ""
+        fail_msg: 'Working copy with name {{ wc_name }} already exists. Run again with custom wc_name provided.'
+    
 
 - name:
-  hosts: '{{ exa_hosts }}'
+  hosts: '{{ exa_host }}'
   tasks:
     
+    - set_fact:
+        wc_name: '{{ hostvars[fpp_host]["wc_name"] }}'
+      when: wc_name is not defined
+
     - name: 'Create New GI Home'
       include_role:
         name: 'target_commands'
-        tasks_from: 'create_gihome.yml'
-      vars:
-        dbhome_name: 'wc_{{ image_name }}_{{ cluster_name }}'
-    
-    - name: 'Find GI Groups'
-      when: osdbagrp_groups is not defined
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'map_groups.yml'
-      vars:
-        image_type: 'grid'
-        target_user: 'grid'
+        tasks_from: 'gihome_mcimgsetup.yml'
+
+    # # TO DO: Figure out where to get this info as would be run on original gi zipped
+    # - name: 'Set Oracle Home to updated value'
+    #   include_role:
+    #     name: 'target_commands'
+    #     tasks_from: 'oracle_home.yml'
+    #   vars:
+    #     db_regex: '+ASM[0-9]'
+    #   when: oracle_home is not defined
+    # - name: 'Find GI Groups'
+    #   when: osdbagrp_groups is not defined
+    #   include_role:
+    #     name: 'target_commands'
+    #     tasks_from: 'map_groups.yml'
+    #   vars:
+    #     image_type: 'grid'
+    #     target_user: 'grid'
 
 
 - name:

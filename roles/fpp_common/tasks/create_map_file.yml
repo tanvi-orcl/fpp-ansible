@@ -35,7 +35,7 @@
     become_user: 'root'
     become_method: 'sudo'
     shell:
-      curl {{ curl_proxy_command }} -o {{ fpp_admin_path }}/{{ image_map_path }}/{{ master_map }} {{ container_url }}{{ master_map }}
+      curl {{ curl_proxy_command }} -o {{ fpp_admin_path }}/{{ image_map_path }}/exa_map {{ container_url }}/exa_map
     register: 'curl_master_map'
 
   - name: Pull Master Map Content From File
@@ -43,7 +43,7 @@
     become_user: 'root'
     become_method: 'sudo'
     slurp:
-      src: '{{ fpp_admin_path }}/{{ image_map_path }}/{{ master_map }}'
+      src: '{{ fpp_admin_path }}/{{ image_map_path }}/exa_map'
     register: 'master_map_data'
   - debug:
       msg: '{{ master_map_data.content|b64decode|from_json }}'
@@ -60,12 +60,12 @@
     become_method: 'sudo'
     copy: 
       content: '{{ updated_master_map | to_nice_json }}'
-      dest: '{{ fpp_admin_path }}/{{ image_map_path }}/{{ master_map }}'
+      dest: '{{ fpp_admin_path }}/{{ image_map_path }}/exa_map'
   - name: Write Master Map File to Container
     become: 'true'
     become_user: 'root'
     shell: 
-      curl {{ curl_proxy_command }} -X PUT --data-binary '@{{ fpp_admin_path }}/{{ image_map_path }}/{{ master_map }}' {{ container_url }}{{ master_map }}
+      curl {{ curl_proxy_command }} -X PUT --data-binary '@{{ fpp_admin_path }}/{{ image_map_path }}/exa_map' {{ container_url }}/exa_map
     register: 'master_map_container'
   - debug:
       msg: '{{ master_map_container }}'

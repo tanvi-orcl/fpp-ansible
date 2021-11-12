@@ -37,7 +37,7 @@ This codebase contains a set of playbooks that can be used individually or combi
 
 ### Playbooks
 
-- exa_hosts (fiservdb)
+- exa_host (fiservdb)
 - fpp_host (n3db1): should be the specific host and not a group encompassing the host
 
 **rdbms_create_image.yml**
@@ -69,7 +69,7 @@ This codebase contains a set of playbooks that can be used individually or combi
 - 
 - Variables
     - hostgroup
-    - db_name (a4db0_iad3zx) - to patch
+    - db_unique_name (a4db0_iad3zx) - to patch
     - target_node (ecc5c4n1)
     - identity_file  (/path/to/file) - for client prereqs, to move db
     - source_wc (wc_DB199_201020_legacy_ecc5c4) - for move, can't discover name from image/cluster in case multiple
@@ -82,7 +82,6 @@ This codebase contains a set of playbooks that can be used individually or combi
     - identity_file - for client prereqs
     - grid_version (19.12.0.0.0) - to patch/upgrade grid and for map file
     - container_url
-    - master_map
     - curl_proxy_command
     - oracle_home (OPTIONAL) - provide if multiple grid homes, otherwise will use default
 

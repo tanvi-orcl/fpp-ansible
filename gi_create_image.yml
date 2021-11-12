@@ -3,7 +3,7 @@
 
 
 - name:
-  hosts: '{{ gi_host }}'
+  hosts: '{{ exa_host }}'
   vars:
     target_user: 'grid'
   tasks:

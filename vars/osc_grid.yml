@@ -1,5 +1,4 @@
-exa_hosts: 'fiservdb'
-gi_host: 'fiservdb'
+exa_host: 'fiservdb'
 # fpp_host: 'fiservfpp'
 fpp_host: 'n3db1'
 target_node: 'ecc9c3n1'
@@ -12,13 +11,13 @@ grid_version: '19.11.0.0.0'
 # register image
 version: '19.0.0.0.0'
 image_name: 'GIHome_tst1'   # TO DO: do we already know it's image 19.11? Or should we just submit the month and calculate the first part
-container_url: 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o/'
+container_url: 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o'
 curl_proxy_command: '-x http://140.83.186.195:80'
-master_map: 'gi_master_map.json'
 
 
 # working copy:
 cluster_name: 'ecc9c3'  # currently just for naming conventions
+osdbagrp_groups: 'OSASM=asmadmin,OSDBA=asmdba,OSOPER=asmoper'
 
 ###### TESTING VALUES
 #oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'

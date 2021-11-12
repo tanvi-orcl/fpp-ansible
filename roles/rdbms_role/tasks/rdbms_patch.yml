@@ -1,10 +1,10 @@
-- name: 'Patch Database {{ db_name }} EVAL'
+- name: 'Patch Database {{ db_unique_name }} EVAL'
   include_role:
     name: 'fpp_common'
     tasks_from: 'patch.yml'
   vars:
     move_type: 'database'
-    db_info: '-dbname {{ db_name }}'
+    db_info: '-dbname {{ db_unique_name }}'
     ignorewcpatches: ''
     forcerolling: ''
     eval: '-eval'
@@ -12,13 +12,13 @@
 - debug:
     msg: '{{ patch_db_eval_result }}'
 
-- name: 'Patch Database {{ db_name }}'
+- name: 'Patch Database {{ db_unique_name }}'
   include_role:
     name: 'fpp_common'
     tasks_from: 'patch.yml'
   vars:
     move_type: 'database'
-    db_info: '-dbname {{ db_name }}'
+    db_info: '-dbname {{ db_unique_name }}'
     ignorewcpatches: ''
     forcerolling: ''
     eval: ''

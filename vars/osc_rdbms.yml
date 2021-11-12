@@ -1,7 +1,7 @@
-exa_hosts: 'fiservdb'
+exa_host: 'fiservdb'
 # fpp_host: 'fiservfpp'
 fpp_host: 'n3db1'
-gi_host: 'ecc9c3n1'
+exa_host: 'ecc9c3n1'
 target_node: 'ecc9c3n1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 exa_tmp_path: '/tmp'
@@ -21,7 +21,7 @@ cluster_name: 'ecc9c3'  # currently just for naming conventions
 check_prereq: 'true'
 source_wc: 'wc_DB1911_210420_tst2_ecc9c3'
 patched_wc: 'wc_DB1913_ecc9c3'
-db_name: 'tst1911_mwf_iad'
+db_unique_name: 'tst1911_mwf_iad'
 
 ###### TESTING VALUES
 #oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'

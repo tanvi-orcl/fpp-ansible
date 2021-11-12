@@ -54,7 +54,7 @@
   become_user: 'root'
   become_method: 'sudo'
   shell:  |
-    curl {{ curl_proxy_command }} -T {{ gi_zip_path }}/{{ image_name }}.zip.gpg {{ container_url }}
+    curl {{ curl_proxy_command }} -T {{ gi_zip_path }}/{{ image_name }}.zip.gpg {{ container_url }}/
   register: 'upload_result'
 - debug:
     msg: '{{ upload_result }}'

@@ -32,7 +32,7 @@
         tasks_from: 'rdbms_patch.yml'
 
 - name:
-  hosts: '{{ exa_hosts }}'
+  hosts: '{{ exa_host }}'
   tasks:
 
     - name: 'Check Database'

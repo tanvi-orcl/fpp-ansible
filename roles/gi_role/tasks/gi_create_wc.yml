@@ -1,21 +1,25 @@
 
-- name: 'Add GI Workingcopy wc_{{ image_name }}_{{ cluster_name }}'
+- set_fact:
+    wc_name: '{{ hostvars[target_node]["wc_name"] }}'
+  when: wc_name is not defined
+- set_fact:
+    osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
+  when: osdbagrp_groups is not defined
+
+- name: 'Add GI Workingcopy {{ wc_name }}'
   include_role:
-    name: 'common'
-    tasks_from: 'add_wc.yml'
+    name: 'fpp_common'
+    tasks_from: 'wc_add.yml'
   vars:
-    wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
     add_wc_parameters: '-softwareonly'
   register: 'add_gi_wc_result'
 - debug:
     msg: '{{ add_gi_wc_result }}'
 
-- name: 'Query GI Workingcopy wc_{{ image_name }}_{{ cluster_name }}'
+- name: 'Query GI Workingcopy {{ wc_name }}'
   include_role:
     name: 'fpp_common'
-    tasks_from: 'query_wc.yml'
-  vars:
-    wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+    tasks_from: 'wc_query.yml'
   register: 'query_gi_wc_result'
 - debug:
     msg: '{{ query_gi_wc_result }}'

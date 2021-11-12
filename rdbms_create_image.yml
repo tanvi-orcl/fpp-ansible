@@ -11,7 +11,7 @@
 #         tasks_from: 'check_client_prereq.yml'
 
 - name:
-  hosts: '{{ exa_hosts }}'
+  hosts: '{{ exa_host }}'
   vars:
     target_user: 'oracle'
     dbhome_name: 'temp4image1'
@@ -60,7 +60,7 @@
         tasks_from: 'rdbms_register_image.yml'
 
 # - name:
-#   hosts: '{{ exa_hosts }}'
+#   hosts: '{{ exa_host }}'
 #   vars:
 #     dbhome_name: 'temp4image1'
 #   tasks:
