@@ -5,14 +5,15 @@
   vars:
     db_regex: '+ASM[0-9]'
 
-- name: 'Upgrade GI'
-  become: 'true'
-  become_user: 'root'
-  shell:  |
-    {{ dbaascli_path }} patch grid upgrade --version {{ grid_version }} --targethome {{ oracle_home }}
-  register: 'upgrade_gi_result'
-- debug:
-    msg: '{{ upgrade_gi_result }}'
+# TO DO: TEST OUT UPGRADE
+# - name: 'Upgrade GI'
+#   become: 'true'
+#   become_user: 'root'
+#   shell:  |
+#     {{ dbaascli_path }} patch grid upgrade --version {{ grid_version }} --targethome {{ oracle_home }}
+#   register: 'upgrade_gi_result'
+# - debug:
+#     msg: '{{ upgrade_gi_result }}'
 
 - name: 'Copy File to Host'
   become: 'true'

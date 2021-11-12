@@ -1,18 +1,17 @@
 - purge home / missing working copies: communication issue with OCI console
 
-log file: /var/opt/oracle/log/fpe/grid/11037_mcimgsetup/11037_mcimgsetup_2021-11-12_18:32:36.26940611037.log
+log file: /var/opt/oracle/log/fpe/grid/357256_mcimgsetup/357256_mcimgsetup_2021-11-12_20:05:33.669899357256.log
 
-""Non-ATP env detected ", "oss_patch:Failure cannot get updated information from  https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o/exa_map"
+""Non-ATP env detected "
+2021-11-12 20:07:58.370030 - got image_info
+2021-11-12 20:07:58.370132 - (357256)unable to get image_info for GIHome_tst1.zip.gpg
 
-2021-11-12 18:34:02.481225 - Output from cmd /bin/curl --retry 10 --retry-delay 1 --retry-max-time 20 -sb -H "Accept: application/json" --noproxy "*"  https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o/exa_map  run on localhost  is:
-2021-11-12 18:38:29.758173 - cmd took 267.276624917984 seconds
-2021-11-12 18:38:29.758316 - WARN : non-zero status returned
-  Command: /bin/curl --retry 10 --retry-delay 1 --retry-max-time 20 -sb -H "Accept: application/json" --noproxy "*"  https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o/exa_map 
-  Exit: 7
-  Command has no output
-2021-11-12 18:38:29.758763 - oss_patch:Failure cannot get updated information from  https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o/exa_map
-2021-11-12 18:38:29.758869 - got image_info
-
+2021-11-12 20:07:58.370533 - (357256)unable to get image_info for GIHome_tst1.zip.gpg
+ at /var/opt/oracle/perl_lib/DBAAS/logger.pm line 554.
+	logger::logerr('logger=HASH(0x1aa90a8)', '(357256)unable to get image_info for GIHome_tst1.zip.gpg\x{a}') called at /var/opt/oracle/managed/exapatch/mcimgsetup line 1852
+	main::log_err('unable to get image_info for GIHome_tst1.zip.gpg\x{a}') called at /var/opt/oracle/managed/exapatch/mcimgsetup line 696
+	main::prechecks() called at /var/opt/oracle/managed/exapatch/mcimgsetup line 395
+2021-11-12 20:07:58.370648 - set_responsefile unable to get image_info for GIHome_tst1.zip.gpg
 
 
 clean-up issues
