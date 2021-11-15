@@ -19,7 +19,7 @@
     grep "wc_path" {{ exa_tmp_path }}/fpp_{{ image_name }}_stage.json
   register: 'gi_home_path_result'
 - debug:
-    msg: '{{ gi_home_path_result.stdout }}'
+    msg: '{{ gi_home_path_result }}'
 
 - set_fact:
     oracle_home: '{{ gi_home_path_result.stdout | regex_findall(".+?(/.+).") | first }}'
