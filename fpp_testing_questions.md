@@ -1,10 +1,15 @@
 - purge home / missing working copies: communication issue with OCI console
-
+----------------------------
 log file: /var/opt/oracle/log/fpe/grid/357256_mcimgsetup/357256_mcimgsetup_2021-11-12_20:05:33.669899357256.log
 
 ""Non-ATP env detected "
+
+getting image info for GIHome_tst1.zip.gpg from http://169.254.200.9:2080/dbaas_patch/shome
+
 2021-11-12 20:07:58.370030 - got image_info
 2021-11-12 20:07:58.370132 - (357256)unable to get image_info for GIHome_tst1.zip.gpg
+
+
 
 2021-11-12 20:07:58.370533 - (357256)unable to get image_info for GIHome_tst1.zip.gpg
  at /var/opt/oracle/perl_lib/DBAAS/logger.pm line 554.
@@ -13,7 +18,7 @@ log file: /var/opt/oracle/log/fpe/grid/357256_mcimgsetup/357256_mcimgsetup_2021-
 	main::prechecks() called at /var/opt/oracle/managed/exapatch/mcimgsetup line 395
 2021-11-12 20:07:58.370648 - set_responsefile unable to get image_info for GIHome_tst1.zip.gpg
 
-
+---------------------------
 clean-up issues
 - image_name and wc_name: naming conventions vs. when to specify? esp if wc_name utilizes image_name
 - should there be standalone query image, query wc?

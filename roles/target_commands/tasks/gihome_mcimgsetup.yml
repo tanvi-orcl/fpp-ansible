@@ -1,9 +1,27 @@
-- name: 'Create GI Home'
+
+# - name: 'Create GI Home'
+#   become: 'true'
+#   become_user: 'root'
+#   become_method: 'sudo'
+#   shell: |
+#     {{ mcimgsetup_path }} -image_name {{ image_name }}.zip.gpg -dbname grid -container {{ container_url }} -outfile {{ exa_tmp_path }}/fpp_{{ image_name }}_stage.json -force_patch 0 -ignore_exachk 1 -skip_exachk_exec 1 -exclude_chks A98AD732FD50F308E040E50A1EC01B2C
+#   environment:
+#     HTTPS_PROXY: '{{ curl_https_proxy }}'
+#   register: 'create_gi_home_result'
+# - debug:
+#     msg: '{{ create_gi_home_result }}'
+
+- name: 'GI Home Path'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'
   shell: |
-    {{ mcimgsetup_path }} -image_name {{ image_name }}.zip.gpg -dbname grid -container {{ container_url }} -outfile {{ exa_tmp_path }}/fpp_{{ image_name }}_stage.json -force_patch 0 -ignore_exachk 1 -skip_exachk_exec 1 -exclude_chks A98AD732FD50F308E040E50A1EC01B2C
-  register: 'create_gi_home_result'
+    grep "wc_path" {{ exa_tmp_path }}/fpp_{{ image_name }}_stage.json
+  register: 'gi_home_path_result'
 - debug:
-    msg: '{{ create_gi_home_result }}'
+    msg: '{{ gi_home_path_result.stdout }}'
+
+- set_fact:
+    oracle_home: '{{ gi_home_path_result.stdout | regex_findall(".+?(/.+).") | first }}'
+- debug:
+    var: 'oracle_home'

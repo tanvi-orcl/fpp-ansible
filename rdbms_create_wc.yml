@@ -71,4 +71,4 @@
     - name: 'Create Working Copy'
       include_role:
         name: 'rdbms_role'
-        tasks_from: 'rdbms_create_wc.yml'
+        tasks_from: 'rdbms_add_wc.yml'

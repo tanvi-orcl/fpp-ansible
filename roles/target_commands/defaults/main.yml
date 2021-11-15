@@ -2,6 +2,7 @@ dbaascli_path: '/bin/dbaascli'
 gpg_path: '/bin/gpg'
 gi_zip_path: '/acfs01'
 mcimgsetup_path: '/var/opt/oracle/managed/exapatch/mcimgsetup'
+curl_proxy: 'http://140.83.186.195:80'
 
 name_dict: 
   -a:

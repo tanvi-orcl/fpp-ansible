@@ -35,7 +35,9 @@
     become_user: 'root'
     become_method: 'sudo'
     shell:
-      curl {{ curl_proxy_command }} -o {{ fpp_admin_path }}/{{ image_map_path }}/exa_map {{ container_url }}/exa_map
+      curl -o {{ fpp_admin_path }}/{{ image_map_path }}/exa_map {{ container_url }}/exa_map
+    environment:
+      HTTPS_PROXY: '{{ curl_https_proxy }}'
     register: 'curl_master_map'
 
   - name: Pull Master Map Content From File
@@ -65,7 +67,9 @@
     become: 'true'
     become_user: 'root'
     shell: 
-      curl {{ curl_proxy_command }} -X PUT --data-binary '@{{ fpp_admin_path }}/{{ image_map_path }}/exa_map' {{ container_url }}/exa_map
+      curl -X PUT --data-binary '@{{ fpp_admin_path }}/{{ image_map_path }}/exa_map' {{ container_url }}/exa_map
+    environment:
+      HTTPS_PROXY: '{{ curl_https_proxy }}'
     register: 'master_map_container'
   - debug:
       msg: '{{ master_map_container }}'

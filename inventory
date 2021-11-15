@@ -5,10 +5,10 @@
 129.146.106.116 ansible_user=opc ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_python_interpreter=/usr/bin/python3
 
 [fiservdb]
-ecc9c3n1 ansible_user=opc ansible_ssh_private_key_file=/Users/tvaradha/.ssh/fiserv165299cluster.key ansible_password=pkg81sbw ansible_ssh_common_args='-o ProxyCommand="ssh -v -W %h:%p tvaradha@lz1.us.osc.oracle.com"'
+ecc9c3n1 ansible_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/fiserv165299cluster.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/fiserv165299cluster.key -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
 
 [fiservfpp]
-n3db1 ansible_user=opc ansible_ssh_private_key_file=/Users/tvaradha/.ssh/fiserv165299cluster.key ansible_password=pkg81sbw ansible_ssh_common_args='-o ProxyCommand="ssh -v -W %h:%p tvaradha@lz1.us.osc.oracle.com"'
+n3db1 ansible_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/fiserv165299cluster.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/fiserv165299cluster.key -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
 
 [fiservjump]
 lz1.us.osc.oracle.com ansible_user=tvaradha ansible_password=pkg81sbw

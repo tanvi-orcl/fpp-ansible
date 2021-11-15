@@ -11,6 +11,7 @@
     name: 'fpp_common'
     tasks_from: 'wc_add.yml'
   vars:
+    path: '{{ hostvars[target_node]["oracle_home"] }}'
     add_wc_parameters: '-softwareonly'
   register: 'add_gi_wc_result'
 - debug:
