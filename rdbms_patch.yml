@@ -29,7 +29,7 @@
     - name: 'Patch Database'
       include_role:
         name: 'rdbms_role'
-        tasks_from: 'rdbms_patch.yml'
+        tasks_from: 'rdbms_patch_db.yml'
 
 - name:
   hosts: '{{ exa_host }}'

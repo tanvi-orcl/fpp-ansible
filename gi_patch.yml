@@ -40,4 +40,4 @@
     - name: 'Patch GI'
       include_role:
         name: 'gi_role'
-        tasks_from: 'gi_patch.yml'
+        tasks_from: 'gi_patch_grid.yml'

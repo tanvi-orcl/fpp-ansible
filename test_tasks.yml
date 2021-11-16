@@ -14,17 +14,12 @@
   hosts: '{{ exa_host }}'
   tasks:
     
-    - name: 'Check Map Determinations Parsing'
+    - name: 'Check GI Home Path'
       include_role:
         name: 'target_commands'
-        tasks_from: 'dbhome_info.yml'
-      vars:
-        dbhome_name: 'OraHome2'
+        tasks_from: 'gihome_path.yml'
     
-    - name: 'Check Map Determinations Parsing'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'map_data.yml'
+
 
 
 
