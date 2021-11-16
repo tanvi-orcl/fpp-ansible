@@ -5,10 +5,10 @@
   hosts: '{{ fpp_host }}'
   tasks:
     
-    # - name: 'Check Client Prerequistes'
-    #   include_role:
-    #     name: 'fpp_common'
-    #     tasks_from: 'check_client_prereq.yml'
+    - name: 'Check Client Prerequistes'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'check_client_prereq.yml'
 
     # TO DO: Finalize Fiserv Naming Standards
     - set_fact:

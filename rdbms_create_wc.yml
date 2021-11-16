@@ -1,15 +1,15 @@
 # This playbook adds a new working copy. It will need to be run once per dbhome per cluster. 
-# Create New DB Home (to be used for working copy) will only run if existing_home is false.
-# existing_home should be true only for initial setup, to convert homes to wc. 
+# Create New DB Home (to be used for working copy) will only run if existing_home_flag is false.
+# existing_home_flag should be true only for initial setup, to convert homes to wc. 
 
 - name:
   hosts: '{{ fpp_host }}'
   tasks:
 
-    # - name: 'Check Client Prerequistes'
-    #   include_role:
-    #     name: 'fpp_common'
-    #     tasks_from: 'check_client_prereq.yml'
+    - name: 'Check Client Prerequistes'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'check_client_prereq.yml'
     
     - set_fact:
         wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
@@ -41,7 +41,7 @@
         tasks_from: 'dbhome_create.yml'
       vars:
         dbhome_name: '{{ wc_name }}'
-      when: existing_home is not defined or existing_home == 'false'
+      when: existing_home_flag is not defined or existing_home_flag == 'false'
     
     # TO DO: Should this be dbhome_name or wc_name? Can the added working copy be a different name than the initially creating home name?
     - name: 'DB Home Info'

@@ -15,12 +15,13 @@ curl_https_proxy: 'http://140.83.186.195:80'
 # optional: image_name
 
 # CREATE WORKING COPY
-image_name: 'gihome1_191120'
-cluster_name: 'ecc9c3'  # currently just for naming conventions
+#image_name: 'gihome1_191120'
+#cluster_name: 'ecc9c3'  # currently just for naming conventions
 
 # PATCH
-#source_home: 'true'
-#dest_wc: 'wc_GIHome_tst1_ecc9c3'
+source_home_flag: 'false'
+dest_wc: 'wc_gihome1_191120_ecc9c3'
+source_wc: 'wc_GIHome_tst1_ecc9c3'
 
 
 ###### TESTING VALUES

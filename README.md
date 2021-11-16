@@ -60,7 +60,7 @@ GI only
 - Runtime Variables
     - image_name (DB1911_210420) - to create new home and add wc
     - cluster_name - for naming working copy
-    - existing_home (true or false) - indicates whether to create a new home or use existing. Default behavior is false.
+    - existing_home_flag (true or false) - indicates whether to create a new home or use existing. Default behavior is false.
         - if false: 
             - version (19.0.0.0) - to create new home and add wc
             - dbhome_bp (APR2021) - to create new home and add wc
@@ -70,13 +70,11 @@ GI only
 
 **rdbms_patch.yml**
 - 
-- Variables
-    - hostgroup
-    - db_unique_name (a4db0_iad3zx) - to patch
-    - target_node (ecc5c4n1)
-    - identity_file  (/path/to/file) - for client prereqs, to move db
+- Runtime Variables
     - source_wc (wc_DB199_201020_legacy_ecc5c4) - for move, can't discover name from image/cluster in case multiple
     - dest_wc (wc_DB199_201020_ecc5c4) - for move, can't discover name from image/cluster in case multiple
+    - db_unique_name (a4db0_iad3zx) - to patch
+    
 
 **gi_create_image.yml**
 - 

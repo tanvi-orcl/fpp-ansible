@@ -6,20 +6,20 @@ identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 exa_tmp_path: '/tmp'
 
 # CREATE IMAGE
-version: '19.0.0.0'
-dbhome_bp: 'OCT2021'
+#version: '19.0.0.0'
+#dbhome_bp: 'OCT2021'
 # optional: image_name
 
 # CREATE WORKING COPY
-image_name: 'dbhome1_191300'
-existing_home: 'false'
-cluster_name: 'ecc9c3'    # currently just for naming conventions
+#image_name: 'dbhome1_191300'
+#existing_home_flag: 'false'
+#cluster_name: 'ecc9c3'    # currently just for naming conventions
 # optional: wc_name
 
 # PATCH
-check_prereq: 'true'
-source_wc: 'wc_DB1911_210420_tst2_ecc9c3'
-dest_wc: 'wc_DB1913_ecc9c3'
+#check_prereq: 'true'
+source_wc: 'wc_DB1913_ecc9c3'
+dest_wc: 'wc_dbhome1_191300_ecc9c3'
 db_unique_name: 'tst1911_mwf_iad'
 
 ###### TESTING VALUES

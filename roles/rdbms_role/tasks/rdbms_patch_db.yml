@@ -4,9 +4,9 @@
     tasks_from: 'patch.yml'
   vars:
     move_type: 'database'
-    db_info: '-dbname {{ db_unique_name }}'
     source_info: '-sourcewc {{ source_wc }}'
     dest_info: '-patchedwc {{ dest_wc }}'
+    db_info: '-dbname {{ db_unique_name }}'
     ignorewcpatches: ''
     forcerolling: ''
     eval: '-eval'
@@ -20,6 +20,8 @@
     tasks_from: 'patch.yml'
   vars:
     move_type: 'database'
+    source_info: '-sourcewc {{ source_wc }}'
+    dest_info: '-patchedwc {{ dest_wc }}'
     db_info: '-dbname {{ db_unique_name }}'
     ignorewcpatches: ''
     forcerolling: ''

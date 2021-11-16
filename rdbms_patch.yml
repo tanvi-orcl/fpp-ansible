@@ -3,28 +3,24 @@
   hosts: '{{ fpp_host }}'
   tasks:
 
-    - block:
-
-      - name: 'Check Client Prerequistes'
-        include_role:
-          name: 'fpp_common'
-          tasks_from: 'check_client_prereq.yml'
-      
-      - name: 'Check if Source Home is WC'
-        include_role:
-          name: 'fpp_common'
-          tasks_from: 'wc_query.yml'
-        vars:
-          wc_name: '{{ source_wc }}'
-      
-      - name: 'Check if New Home is WC'
-        include_role:
-          name: 'fpp_common'
-          tasks_from: 'wc_query.yml'
-        vars:
-          wc_name: '{{ dest_wc }}'
-
-      when: check_prereq is defined and check_prereq == 'true'
+    - name: 'Check Client Prerequistes'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'check_client_prereq.yml'
+    
+    - name: 'Check if Source Home is WC'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_query.yml'
+      vars:
+        wc_name: '{{ source_wc }}'
+    
+    - name: 'Check if New Home is WC'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_query.yml'
+      vars:
+        wc_name: '{{ dest_wc }}'
 
     - name: 'Patch Database'
       include_role:
@@ -42,4 +38,4 @@
       vars:
         dbhome_name: '{{ dest_wc }}'
     
-    # TO DO: Check output for software: yes
+  # TO DO: Check output for software: yes

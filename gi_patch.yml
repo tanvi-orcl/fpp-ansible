@@ -1,12 +1,12 @@
 
-# - name:
-#   hosts: '{{ fpp_host }}'
-#   tasks:
+- name:
+  hosts: '{{ fpp_host }}'
+  tasks:
 
-#     - name: 'Check Client Prerequistes'
-#       include_role:
-#         name: 'fpp_common'
-#         tasks_from: 'check_client_prereq.yml'
+    - name: 'Check Client Prerequistes'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'check_client_prereq.yml'
 
 - name:
   hosts: '{{ exa_host }}'
@@ -16,7 +16,7 @@
       include_role:
         name: 'target_commands'
         tasks_from: 'gihome_path.yml'
-      when: source_wc is not defined and source_home is defined and source_home == 'true'
+      when: source_wc is not defined and source_home_flag is defined and source_home_flag == 'true'
 
 - name:
   hosts: '{{ fpp_host }}'
@@ -28,8 +28,8 @@
         tasks_from: 'wc_query.yml'
       vars:
         wc_name: '{{ source_wc }}'
-      when: source_wc is defined 
-    
+      when: (source_wc is defined) and (source_home_flag is not defined or source_home_flag == 'false')
+
     - name: 'Check if New Home is WC'
       include_role:
         name: 'fpp_common'

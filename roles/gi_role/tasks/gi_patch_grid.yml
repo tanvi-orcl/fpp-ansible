@@ -33,7 +33,7 @@
     register: 'patch_gi_result'
   - debug:
       msg: '{{ patch_gi_result }}'
-  when: source_wc is defined
+  when: (source_wc is defined) and (source_home_flag is not defined or source_home_flag == 'false')
 
 # When Source is Current Home
 
@@ -69,4 +69,4 @@
     register: 'patch_gi_result'
   - debug:
       msg: '{{ patch_gi_result }}'
-  when: source_wc is not defined and source_home is defined and source_home == 'true'
+  when: source_wc is not defined and source_home_flag is defined and source_home_flag == 'true'

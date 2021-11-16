@@ -1,40 +1,21 @@
-Moving it
+Move/Patch Notes
 - DB --> each DB (if unmanaged, make wc and then use source_wc)
-- GI --> once per Cluster (if unmanaged, source_home)
+- GI --> once per Cluster (if unmanaged, set source_home_flag)
     - right now rollback works if both wc, need to make it work for unmanaged so that customer is comfortable for that first wave --> FPP team working on this
     - move failed right off the bat because using ACFS. GI Processes have to stop in the old home and start in the new home.
         - should consider using an agent
         - if not, can use batches field in move command: olsnodes
+    - systemctl stop crond - on all 4 nodes; /linux/stoptools.sh - on both nodes
 
-[2:11 PM] Speaker, Roy (Hagerstown)
-    systemctl stop crond - on all 4 nodes
-​[2:11 PM] Speaker, Roy (Hagerstown)
-    *both nodes
-​[2:11 PM] Speaker, Roy (Hagerstown)
-    /linux/stoptools.sh - on both nodes
-
-- fresh home with current settings installed on exadata server to get metadata without risking changed configurations
-- map created from that info on fpp server, image registered, working copy created
- Lifecycle
- 1. Create Image
- 2. Create WorkingCopy
- 3. Delete Image
- 4. Delete WorkingCopy
-
-Notes from FiServ Testing Sessions
-- Their naming standards: dbhome1_191200, dbhome1_182400, dbhome1_12201_210720 (version 12), dbhome1_191200_12345678 (one off patch)
+FiServ Environment
+- Current naming standards: dbhome1_191200, dbhome1_182400, dbhome1_12201_210720 (version 12), dbhome1_191200_12345678 (one off patch)
 - Will be using centrify or cyberark to get the keys
 
- 
-GI Zip/Working Copy
- - Zip: What is it, how is it being used?
- - what does mcimgsetup command do? DB working copy doesn't need it?
-    - Has a json outfile. It has the groups that should be used. 
 
-1. Any differences between ExaCC vs. ExaCS --> don't think so, because dbaas tooling
-2. What is the general timeline? How often will each task be completed. My understanding is that a new patch comes out --> you create the map file --> register the image --> and then will need to create workingcopy --> and then you will patch. All three tasks are always done together right? You never would just do one? 
-3. Is there an easy way to determine the values (source working copy, major version, etc) to provide at runtime? are you just remembering from before?
-4. What are we doing about the current homes that are not working copies? - trying to figure out if that's a big enough edge case where I should address it 
+Any differences between ExaCC vs. ExaCS --> don't think so, because dbaas tooling
+
+What is the general timeline? How often will each task be completed? --> My understanding is that a new patch comes out, you create the map file, register the image, and then will need to create workingcopy for each databse home you would like to patch to that level, and then you patch each db/grid. 
+
 
 TASKS
 

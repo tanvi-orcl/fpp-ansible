@@ -12,15 +12,13 @@
 
 - name:
   hosts: '{{ exa_host }}'
+  when: image_name is defined
   vars:
     query_image_result: 'Image does not exist.'
   tasks:
 
     - set_fact:
         query_image_error_result: '{{ query_image_result | regex_search("does not exist") }}'
-    - assert:
-        that: '{{ query_image_result | regex_search("does not exist") }}' == ""
-        fail_msg: 'Image with name already exists. Run again with custom image_name provided.'
     # - name: 'Check GI Home Path'
     #   include_role:
     #     name: 'target_commands'
