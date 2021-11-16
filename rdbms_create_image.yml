@@ -50,8 +50,6 @@
     
 - name:
   hosts: '{{ exa_host }}'
-  vars:
-    target_user: 'oracle'
   tasks:
 
     - set_fact:
@@ -62,6 +60,8 @@
       include_role:
         name: 'target_commands'
         tasks_from: 'map_data.yml'
+      vars:
+        target_user: 'oracle'
 
     - name: 'Find DB Groups'
       include_role:
@@ -69,7 +69,7 @@
         tasks_from: 'map_groups.yml'
       vars:
         image_type: 'db'
-
+        target_user: 'oracle'
 
 - name:
   hosts: '{{ fpp_host }}'

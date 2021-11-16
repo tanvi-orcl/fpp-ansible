@@ -57,19 +57,16 @@ GI only
 
 **rdbms_create_wc.yml**
 - 
-- Variables
-    - target_node (ecc9c3n1)
-    - identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
-    - existing_home (true or false) - indicates whether to create a new home or use existing. Default is false.
+- Runtime Variables
+    - image_name (DB1911_210420) - to create new home and add wc
+    - cluster_name - for naming working copy
+    - existing_home (true or false) - indicates whether to create a new home or use existing. Default behavior is false.
         - if false: 
             - version (19.0.0.0) - to create new home and add wc
             - dbhome_bp (APR2021) - to create new home and add wc
         - if true: 
-            - wc_name
-    - image_name (DB1911_210420) - to create new home and add wc
-    - cluster_name (ecc5c4) - to create new home and add wc - currently just for naming conventions
-    - wc_name: OPTIONAL, if want to use a custom name or if using existing_home
-    - osdbagrp_groups: OPTIONAL, if want to use custom groups instead of defaults
+            - wc_name (current dbhome name)
+    - OPTIONAL: wc_name, osdbagrp_groups
 
 **rdbms_patch.yml**
 - 
@@ -91,10 +88,9 @@ GI only
 **gi_create_wc.yml**
 - 
 - Variables
-    - target_node
-    - identity_file - for client prereqs
-    - dbhome_version, dbhome_bp - to create temp home
-    - image_id, image_name - to register image
+    - image_name (GI1911_210420) - to create new home and add wc
+    - cluster_name - for naming working copy
+    - OPTIONAL: wc_name, osdbagrp_groups
 
 **gi_patch.yml**
 - 

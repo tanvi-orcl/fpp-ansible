@@ -32,8 +32,6 @@
 
 - name:
   hosts: '{{ exa_host }}'
-  vars:
-    target_user: 'grid'
   tasks:
     
     - set_fact:
@@ -57,6 +55,8 @@
       include_role:
         name: 'target_commands'
         tasks_from: 'map_data.yml'
+      vars:
+        target_user: 'grid'
 
     - name: 'Find GI Groups'
       include_role:
@@ -64,6 +64,7 @@
         tasks_from: 'map_groups.yml'
       vars:
         image_type: 'grid'
+        target_user: 'grid'
 
 - name:
   hosts: '{{ fpp_host }}'

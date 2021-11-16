@@ -27,7 +27,6 @@
         that: query_wc_error_result != ""
         fail_msg: 'Working copy with name {{ wc_name }} already exists. Run again with custom wc_name provided.'
     
-
 - name:
   hosts: '{{ exa_host }}'
   tasks:
@@ -35,10 +34,6 @@
     - set_fact:
         wc_name: '{{ hostvars[fpp_host]["wc_name"] }}'
       when: wc_name is not defined
-
-    # DAVE TO DO: should we be doing cswlib? does the name change when a new version comes out?
-    # If not automatically doing a cswlib, should probably still do a check to make sure version is there!
-    # and then run cswlib if not.
 
     - name: 'Create New DB Home'
       include_role:
@@ -48,6 +43,7 @@
         dbhome_name: '{{ wc_name }}'
       when: existing_home is not defined or existing_home == 'false'
     
+    # TO DO: Should this be dbhome_name or wc_name? Can the added working copy be a different name than the initially creating home name?
     - name: 'DB Home Info'
       include_role:
         name: 'target_commands'
@@ -55,8 +51,6 @@
       vars:
         dbhome_name: '{{ wc_name }}'
 
-    # TO DO: Can pull this from the outfile like wc_path.
-    # Ask Dave if this should always be used or if we should allow for custom groups to be passed in.
     - name: 'Find DB Groups'
       when: osdbagrp_groups is not defined
       include_role:

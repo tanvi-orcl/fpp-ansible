@@ -11,9 +11,9 @@ dbhome_bp: 'OCT2021'
 # optional: image_name
 
 # CREATE WORKING COPY
-# image_name: 'DB1911_210420_tst2'
-# existing_home: 'false'
-# cluster_name: 'ecc9c3'  # currently just for naming conventions
+image_name: 'dbhome1_191300'
+existing_home: 'false'
+cluster_name: 'ecc9c3'    # currently just for naming conventions
 # optional: wc_name
 
 # PATCH

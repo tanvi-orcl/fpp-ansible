@@ -10,26 +10,25 @@ curl_https_proxy: 'http://140.83.186.195:80'
 #container_url: 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o'
 
 # CREATE IMAGE
-version: '19.0.0.0.0'
-grid_version: '19.11.2.0'
+#version: '19.0.0.0.0'
+#grid_version: '19.11.2.0'
 # optional: image_name
 
 # CREATE WORKING COPY
+image_name: 'gihome1_191120'
 cluster_name: 'ecc9c3'  # currently just for naming conventions
 
 # PATCH
-source_home: 'true'
-dest_wc: 'wc_GIHome_tst1_ecc9c3'
+#source_home: 'true'
+#dest_wc: 'wc_GIHome_tst1_ecc9c3'
+
 
 ###### TESTING VALUES
-#oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
-#path: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
-#oracle_base: '/u02/app/oracle'
-#patch_numbers: '12345678,12345678'
-# osdbagrp_groups: 'OSASM=asmadmin,OSDBA=asmdba,OSOPER=asmoper'
-#existing_home: 'false'
 
-##########
+#patch_numbers: '12345678,12345678'
+#osdbagrp_groups: 'OSASM=asmadmin,OSDBA=asmdba,OSOPER=asmoper'
+
+
 
 
 
