@@ -12,12 +12,19 @@
 
 - name:
   hosts: '{{ exa_host }}'
+  vars:
+    query_image_result: 'Image does not exist.'
   tasks:
-    
-    - name: 'Check GI Home Path'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'gihome_path.yml'
+
+    - set_fact:
+        query_image_error_result: '{{ query_image_result | regex_search("does not exist") }}'
+    - assert:
+        that: '{{ query_image_result | regex_search("does not exist") }}' == ""
+        fail_msg: 'Image with name already exists. Run again with custom image_name provided.'
+    # - name: 'Check GI Home Path'
+    #   include_role:
+    #     name: 'target_commands'
+    #     tasks_from: 'gihome_path.yml'
     
 
 

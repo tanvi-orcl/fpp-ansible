@@ -1,0 +1,13 @@
+
+- name: 'Set Oracle Home to current GI Home'
+  when: oracle_home is not defined
+  include_tasks: 'gihome_path.yml'
+
+- name: 'Upgrade GI'
+  become: 'true'
+  become_user: 'root'
+  shell:  |
+    {{ dbaascli_path }} patch grid upgrade --version {{ grid_version }} --targethome {{ oracle_home }}
+  register: 'upgrade_gi_result'
+- debug:
+    msg: '{{ upgrade_gi_result }}'

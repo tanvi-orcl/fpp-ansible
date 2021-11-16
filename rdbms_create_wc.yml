@@ -55,6 +55,8 @@
       vars:
         dbhome_name: '{{ wc_name }}'
 
+    # TO DO: Can pull this from the outfile like wc_path.
+    # Ask Dave if this should always be used or if we should allow for custom groups to be passed in.
     - name: 'Find DB Groups'
       when: osdbagrp_groups is not defined
       include_role:

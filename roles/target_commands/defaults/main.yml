@@ -2,7 +2,10 @@ dbaascli_path: '/bin/dbaascli'
 gpg_path: '/bin/gpg'
 gi_zip_path: '/acfs01'
 mcimgsetup_path: '/var/opt/oracle/managed/exapatch/mcimgsetup'
+
 curl_https_proxy: ''    # default behavior is no proxy
+
+dbhome_name: 'temp4image1'
 
 name_dict: 
   -a:

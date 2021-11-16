@@ -1,0 +1,54 @@
+
+- name: Pull New Map Content From Uploaded File
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  slurp:
+    src: '{{ fpp_admin_path }}/{{ image_map_path }}/{{ image_name }}.map'    
+  register: 'new_image_map'
+- debug:
+    msg: '{{ new_image_map.content|b64decode|from_json }}'
+
+- name: Load Master Map From Container
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  shell:
+    curl -o {{ fpp_admin_path }}/{{ image_map_path }}/exa_map {{ container_url }}/exa_map
+  environment:
+    HTTPS_PROXY: '{{ curl_https_proxy }}'
+  register: 'curl_master_map'
+
+- name: Pull Master Map Content From File
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  slurp:
+    src: '{{ fpp_admin_path }}/{{ image_map_path }}/exa_map'
+  register: 'master_map_data'
+- debug:
+    msg: '{{ master_map_data.content|b64decode|from_json }}'
+
+- name: Appending New GI Map
+  set_fact:
+    updated_master_map: '{{ master_map_data.content|b64decode|from_json | default([]) | combine(new_image_map.content|b64decode|from_json) }}'
+- debug:
+    var: updated_master_map
+
+- name: Write Master Map Content to File
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  copy: 
+    content: '{{ updated_master_map | to_nice_json }}'
+    dest: '{{ fpp_admin_path }}/{{ image_map_path }}/exa_map'
+- name: Write Master Map File to Container
+  become: 'true'
+  become_user: 'root'
+  shell: 
+    curl -X PUT --data-binary '@{{ fpp_admin_path }}/{{ image_map_path }}/exa_map' {{ container_url }}/exa_map
+  environment:
+    HTTPS_PROXY: '{{ curl_https_proxy }}'
+  register: 'master_map_container'
+- debug:
+    msg: '{{ master_map_container }}'

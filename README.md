@@ -37,17 +37,23 @@ This codebase contains a set of playbooks that can be used individually or combi
 
 ### Playbooks
 
+General Variables
 - exa_host (fiservdb)
 - fpp_host (n3db1): should be the specific host and not a group encompassing the host
+- target_node (ecc9c3n1)
+- identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
+- exa_tmp_path (/tmp)
+
+GI only
+- container_url
+- optional: curl_https_proxy
 
 **rdbms_create_image.yml**
 - 
 - Runtime Variables
-    - target_node (ecc9c3n1)
-    - identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
     - version (19.0.0.0) - to create temp home, for map file
     - dbhome_bp (APR2021) - to create temp home
-    - image_name (DB1911_210420) - for map file, to register image
+    - Optional: image_name (DB1911_210420)
 
 **rdbms_create_wc.yml**
 - 
@@ -77,13 +83,10 @@ This codebase contains a set of playbooks that can be used individually or combi
 
 **gi_create_image.yml**
 - 
-- Variables
-    - target_node
-    - identity_file - for client prereqs
+- Runtime Variables
+    - version (19.0.0.0) - to create temp home, for map file
     - grid_version (19.12.0.0.0) - to patch/upgrade grid and for map file
-    - container_url
-    - curl_proxy_command
-    - oracle_home (OPTIONAL) - provide if multiple grid homes, otherwise will use default
+    - Optional: image_name (DB1911_210420), oracle_home
 
 **gi_create_wc.yml**
 - 

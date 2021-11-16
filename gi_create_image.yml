@@ -1,6 +1,34 @@
 # This playbook creates and registers a new gi image. It will only need to be run 
 # once per image so be sure the hostgroup specified only contains one cluster.
 
+- name:
+  hosts: '{{ fpp_host }}'
+  tasks:
+    
+    # - name: 'Check Client Prerequistes'
+    #   include_role:
+    #     name: 'fpp_common'
+    #     tasks_from: 'check_client_prereq.yml'
+
+    # TO EDIT: Fiserv Naming Standards?
+    - set_fact:
+        image_name: 'gihome1_{{ grid_version | regex_replace("\.", "") }}'
+      when: image_name is not defined
+    - debug:
+        var: image_name
+
+    - name: 'Check if Image {{ image_name }} Exists'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'image_query.yml'
+      vars:
+        ignore_errors: 'yes'
+    - set_fact:
+        query_image_error_result: '{{ query_image_result.stdout | regex_search("does not exist") }}'
+    - assert:
+        that: query_image_error_result != ""
+        fail_msg: 'Image with name {{ image_name }} already exists. Run again with custom image_name provided.'
+    
 
 - name:
   hosts: '{{ exa_host }}'
@@ -8,16 +36,22 @@
     target_user: 'grid'
   tasks:
     
-    - name: 'Update GI Home and Zip'
+    - set_fact:
+        image_name: '{{ hostvars[fpp_host]["image_name"] }}'
+      when: image_name is not defined
+    - debug:
+        var: image_name
+
+    # # TO DO: Test out Upgrade
+    # - name: 'Upgrade GI Home'
+    #   include_role:
+    #     name: 'target_commands'
+    #     tasks_from: 'gihome_upgrade.yml'
+    
+    - name: 'Zip GI Home'
       include_role:
         name: 'target_commands'
         tasks_from: 'gihome_zip.yml'
-    
-    - name: 'Set Oracle Home to updated value'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'gihome_path.yml'
-      when: oracle_home is not defined
 
     - name: 'Find Patch and Bug Data'
       include_role:
@@ -34,11 +68,6 @@
 - name:
   hosts: '{{ fpp_host }}'
   tasks:
-    
-    # - name: 'Check Client Prerequistes'
-    #   include_role:
-    #     name: 'fpp_common'
-    #     tasks_from: 'check_client_prereq.yml'
 
     - name: 'Create Map File'
       include_role:

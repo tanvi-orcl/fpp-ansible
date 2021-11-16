@@ -1,23 +1,22 @@
-exa_host: 'fiservdb'
-# fpp_host: 'fiservfpp'
+# GENERAL
 fpp_host: 'n3db1'
-exa_host: 'ecc9c3n1'
+exa_host: 'fiservdb'
 target_node: 'ecc9c3n1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 exa_tmp_path: '/tmp'
 
-# new home
-version: '19.0.0.0'   # TO DO: Is it okay if it is one less 0 for map file?
+# CREATE IMAGE
+version: '19.0.0.0'
 dbhome_bp: 'OCT2021'
+# optional: image_name
 
-# register image
-image_name: 'DB1911_210420_tst2'   # TO DO: do we already know it's image 19.11? Or should we just submit the month and calculate the first part
+# CREATE WORKING COPY
+# image_name: 'DB1911_210420_tst2'
+# existing_home: 'false'
+# cluster_name: 'ecc9c3'  # currently just for naming conventions
+# optional: wc_name
 
-# working copy
-existing_home: 'false'
-cluster_name: 'ecc9c3'  # currently just for naming conventions
-
-# patch
+# PATCH
 check_prereq: 'true'
 source_wc: 'wc_DB1911_210420_tst2_ecc9c3'
 dest_wc: 'wc_DB1913_ecc9c3'
