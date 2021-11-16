@@ -1,18 +1,22 @@
 
 # Create Individual Map File 
 
-- set_fact:
-    ru_version_tag: '{{ grid_version | regex_replace("\.", "") }}'
-
 - name: 'Add Map File'
   include_role:
     name: 'fpp_common'
-    tasks_from: 'create_map_file.yml'
+    tasks_from: 'map_file_create.yml'
   vars:
     image_type: 'grid'
-    image_tag: '{{ ru_version_tag[:5] }}EE'
+    image_map_path: 'maps/gi'
     image: '{{ image_name }}.zip.gpg'
+    image_tag: '{{ grid_version | regex_replace("\.", "") }}EE'
     ru_version: '{{ grid_version }}'
     patches: '{{ hostvars[target_node]["patch_numbers"] }}'
     osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
+    
+- name: 'Update Exa Map File'
+  include_role:
+    name: 'fpp_common'
+    tasks_from: 'map_gi_master_update.yml'
+  vars:
     image_map_path: 'maps/gi'

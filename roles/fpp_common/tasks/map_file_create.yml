@@ -1,0 +1,18 @@
+- name: 'Copy Bug List'
+  become: 'true'
+  become_user: 'oracle'
+  become_method: 'sudo'
+  shell:  |
+    scp -i {{ identity_file }} opc@{{ target_node }}:{{ exa_tmp_path }}/{{ image_name }}_bugs.lst {{ fpp_admin_path }}/{{ image_map_path }}
+  register: 'bugs_list_result'
+- debug:
+    msg: '{{ bugs_list_result }}'
+
+- name: 'Copy Template to create Map file'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  template:
+    src: 'map.json'
+    dest: '{{ fpp_admin_path }}/{{ image_map_path }}/{{ image_name }}.map'
+  

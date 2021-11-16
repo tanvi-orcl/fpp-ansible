@@ -12,9 +12,6 @@
 
 - name:
   hosts: '{{ exa_host }}'
-  vars:
-    target_user: 'oracle'
-    dbhome_name: 'temp4image1'
   tasks:
     
     - name: 'Create Temp DB Home'
@@ -22,15 +19,44 @@
         name: 'target_commands'
         tasks_from: 'dbhome_create.yml'
     
-    - name: 'Check Temp DB Home'
+    # Checks for successful creation and then sets ru_version, oracle_home, and oracle_base
+    - name: 'Check Temp DB Home Info'
       include_role:
         name: 'target_commands'
         tasks_from: 'dbhome_info.yml'
+
+- name:
+  hosts: '{{ fpp_host }}'
+  tasks:
+
+    # TO EDIT: Fiserv Naming Standards?
+    - set_fact:
+        image_name: 'dbhome1_{{ hostvars[target_node]["ru_version_tag"] }}'
+      when: image_name is not defined
+    - debug:
+        var: image_name
+
+    - name: 'Check if Image {{ image_name }} Exists'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'image_query.yml'
+      vars:
+        ignore_errors: 'yes'
+    - set_fact:
+        query_image_error_result: '{{ query_image_result.stdout | regex_search("does not exist") }}'
+    - assert:
+        that: query_image_error_result != ""
+        fail_msg: 'Image with name {{ image_name }} already exists. Run again with custom image_name provided.'
     
-    # TO DO: auto create image name! --> note: would have to pull in fpp_host
-    # - set_fact:
-    #     image_name: 'DB_{{ version }}'
-    #   when: image_name is not defined
+- name:
+  hosts: '{{ exa_host }}'
+  vars:
+    target_user: 'oracle'
+  tasks:
+
+    - set_fact:
+        image_name: '{{ hostvars[fpp_host]["image_name"] }}'
+      when: image_name is not defined
 
     - name: 'Find Patch and Bug Data'
       include_role:
@@ -59,13 +85,11 @@
         name: 'rdbms_role'
         tasks_from: 'rdbms_register_image.yml'
 
-# - name:
-#   hosts: '{{ exa_host }}'
-#   vars:
-#     dbhome_name: 'temp4image1'
-#   tasks:
+- name:
+  hosts: '{{ exa_host }}'
+  tasks:
 
-#     - name: 'Purge Temp DB Home'
-#       include_role:
-#         name: 'target_commands'
-#         tasks_from: 'dbhome_purge.yml'
+    - name: 'Purge Temp DB Home'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'dbhome_purge.yml'

@@ -8,9 +8,5 @@
 - debug:
     msg: '{{ check_client_prereq_result }}'
 
-
 # TO DO: Assert successful: How do we check to see if version is high enough?
-# maybe can do in rundeck where someone clicks continue?
-
-# TO DO: Figure out if ssh keys are dynamic? If they are, should be run everytime.
-# If not, can be a one off operation. 
+# maybe can do in rundeck where someone clicks continue.
