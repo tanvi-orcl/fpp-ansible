@@ -16,9 +16,7 @@
     - name: 'Set Oracle Home to updated value'
       include_role:
         name: 'target_commands'
-        tasks_from: 'oracle_home.yml'
-      vars:
-        db_regex: '+ASM[0-9]'
+        tasks_from: 'gihome_path.yml'
       when: oracle_home is not defined
 
     - name: 'Find Patch and Bug Data'

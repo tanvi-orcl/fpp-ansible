@@ -1,9 +1,7 @@
 
 - name: 'Pull Oracle Home'
   when: oracle_home is not defined
-  include_tasks: 'oracle_home.yml'
-  vars:
-    db_regex: '+ASM[0-9]'
+  include_tasks: 'gihome_path.yml'
 
 # TO DO: TEST OUT UPGRADE
 # - name: 'Upgrade GI'

@@ -1,32 +1,74 @@
 
+# When Source is WC 
 
-- name: 'Patch GI Image'
-  include_role:
-    name: 'fpp_common'
-    tasks_from: 'patch.yml'
-  vars:
-    move_type: 'gihome'
-    db_info: ''
-    ignorewcpatches: '-ignorewcpatches'
-    forcerolling: ''
-    eval: '-eval'
-  register: 'patch_gi_result'
-- debug:
-    msg: '{{ patch_gi_result }}'
+- block:
+  - name: 'Patch GI Image'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'patch.yml'
+    vars:
+      move_type: 'gihome'
+      db_info: ''
+      source_info: '-sourcewc {{ source_wc }}'
+      dest_info: '-destwc {{ dest_wc }}'
+      ignorewcpatches: '-ignorewcpatches'
+      forcerolling: ''
+      eval: '-eval'
+    register: 'patch_gi_result'
+  - debug:
+      msg: '{{ patch_gi_result }}'
 
-- name: 'Patch GI Image'
-  include_role:
-    name: 'fpp_common'
-    tasks_from: 'patch.yml'
-  vars:
-    move_type: 'gihome'
-    db_info: ''
-    ignorewcpatches: '-ignorewcpatches'
-    forcerolling: ''
-    eval: ''
-  register: 'patch_gi_result'
-- debug:
-    msg: '{{ patch_gi_result }}'
+  - name: 'Patch GI Image'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'patch.yml'
+    vars:
+      move_type: 'gihome'
+      db_info: ''
+      source_info: '-sourcewc {{ source_wc }}'
+      dest_info: '-destwc {{ dest_wc }}'
+      ignorewcpatches: '-ignorewcpatches'
+      forcerolling: ''
+      eval: ''
+    register: 'patch_gi_result'
+  - debug:
+      msg: '{{ patch_gi_result }}'
+  when: source_wc is defined
 
+# When Source is Current Home
 
-# TO DO: Use rhpctl query workingcopy -workingcopy <new WC name>.  The entry for 'Software only' should state 'false'.  Until the move completes it will state true.
+- block:
+  - name: 'Patch GI Image'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'patch.yml'
+    vars:
+      move_type: 'gihome'
+      db_info: ''
+      source_info: '-sourcehome {{ hostvars[target_node]["oracle_home"] }}'
+      dest_info: '-destwc {{ dest_wc }}'
+      ignorewcpatches: '-ignorewcpatches'
+      forcerolling: ''
+      eval: '-eval'
+    register: 'patch_gi_result'
+  - debug:
+      msg: '{{ patch_gi_result }}'
+
+  - name: 'Patch GI Image'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'patch.yml'
+    vars:
+      move_type: 'gihome'
+      db_info: ''
+      source_info: '-sourcehome {{ hostvars[target_node]["oracle_home"] }}'
+      dest_info: '-destwc {{ dest_wc }}'
+      ignorewcpatches: '-ignorewcpatches'
+      forcerolling: ''
+      eval: ''
+    register: 'patch_gi_result'
+  - debug:
+      msg: '{{ patch_gi_result }}'
+  when: source_wc is not defined and source_home is defined and source_home == 'true'
+
+# TO DO: Parse The entry for 'Software only' should state 'false'.  Until the move completes it will state true.

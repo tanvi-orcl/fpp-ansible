@@ -1,32 +1,43 @@
+
+# - name:
+#   hosts: '{{ fpp_host }}'
+#   tasks:
+
+#     - name: 'Check Client Prerequistes'
+#       include_role:
+#         name: 'fpp_common'
+#         tasks_from: 'check_client_prereq.yml'
+
+- name:
+  hosts: '{{ exa_host }}'
+  tasks:
+    
+    - name: 'Set GI Home'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'gihome_path.yml'
+      when: source_wc is not defined and source_home is defined and source_home == 'true'
+
 - name:
   hosts: '{{ fpp_host }}'
   tasks:
-
-    - block:
-      - name: 'Check Client Prerequistes'
-        include_role:
-          name: 'fpp_common'
-          tasks_from: 'check_client_prereq.yml'
-      
-      - name: 'Check if Source Home is WC'
-        include_role:
-          name: 'fpp_common'
-          tasks_from: 'wc_query.yml'
-        vars:
-          wc_name: 'wc_{{ source_image }}_{{ cluster_name }}'
-      
-      - name: 'Check if New Home is WC'
-        include_role:
-          name: 'fpp_common'
-          tasks_from: 'wc_query.yml'
-        vars:
-          wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
-    when: check_prereq is defined and check_prereq == 'true'
+    
+    - name: 'Check if Source Home is WC'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_query.yml'
+      vars:
+        wc_name: '{{ source_wc }}'
+      when: source_wc is defined 
+    
+    - name: 'Check if New Home is WC'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_query.yml'
+      vars:
+        wc_name: '{{ dest_wc }}'
 
     - name: 'Patch GI'
       include_role:
-        name: 'gi'
+        name: 'gi_role'
         tasks_from: 'gi_patch.yml'
-      vars:
-        source_wc: 'wc_{{ source_image }}_{{ cluster_name }}'
-        patched_wc: 'wc_{{ image_name }}_{{ cluster_name }}'

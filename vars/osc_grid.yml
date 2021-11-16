@@ -4,6 +4,7 @@ fpp_host: 'n3db1'
 target_node: 'ecc9c3n1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 exa_tmp_path: '/tmp'
+sourcehome: 'True'
 
 # upgrade grid
 grid_version: '19.11.1.0.0'
@@ -19,6 +20,10 @@ curl_https_proxy: 'http://140.83.186.195:80'
 # working copy:
 cluster_name: 'ecc9c3'  # currently just for naming conventions
 osdbagrp_groups: 'OSASM=asmadmin,OSDBA=asmdba,OSOPER=asmoper'
+
+# patch
+source_home: 'true'
+dest_wc: 'wc_GIHome_tst1_ecc9c3'
 
 ###### TESTING VALUES
 #oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
