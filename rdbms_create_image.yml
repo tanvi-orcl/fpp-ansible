@@ -29,7 +29,7 @@
   hosts: '{{ fpp_host }}'
   tasks:
 
-    # TO EDIT: Fiserv Naming Standards?
+    # TO DO: Finalize Fiserv Naming Standards
     - set_fact:
         image_name: 'dbhome1_{{ hostvars[target_node]["ru_version_tag"] }}'
       when: image_name is not defined

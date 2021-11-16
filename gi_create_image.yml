@@ -10,7 +10,7 @@
     #     name: 'fpp_common'
     #     tasks_from: 'check_client_prereq.yml'
 
-    # TO EDIT: Fiserv Naming Standards?
+    # TO DO: Finalize Fiserv Naming Standards
     - set_fact:
         image_name: 'gihome1_{{ grid_version | regex_replace("\.", "") }}'
       when: image_name is not defined
