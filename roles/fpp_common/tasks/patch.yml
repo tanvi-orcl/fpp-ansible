@@ -7,3 +7,5 @@
   register: 'patch_result'
 - debug:
     msg: '{{ patch_result }}'
+
+# TO DO: Parse The entry for 'Software only' should state 'false'.  Until the move completes it will state true.

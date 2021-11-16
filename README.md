@@ -73,7 +73,7 @@ This codebase contains a set of playbooks that can be used individually or combi
     - target_node (ecc5c4n1)
     - identity_file  (/path/to/file) - for client prereqs, to move db
     - source_wc (wc_DB199_201020_legacy_ecc5c4) - for move, can't discover name from image/cluster in case multiple
-    - patched_wc (wc_DB199_201020_ecc5c4) - for move, can't discover name from image/cluster in case multiple
+    - dest_wc (wc_DB199_201020_ecc5c4) - for move, can't discover name from image/cluster in case multiple
 
 **gi_create_image.yml**
 - 

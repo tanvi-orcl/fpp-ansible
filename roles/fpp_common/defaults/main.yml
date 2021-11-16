@@ -2,6 +2,7 @@ rhpctl_path: '/u02/app/fpp/fpphome/bin/rhpctl'
 fpp_admin_path: '/u02/app/fpp/admin'
 
 ignore_errors: 'no'
+curl_https_proxy: ''    # default behavior is no proxy
 
 
 

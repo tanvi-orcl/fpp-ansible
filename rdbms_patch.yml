@@ -22,7 +22,7 @@
           name: 'fpp_common'
           tasks_from: 'wc_query.yml'
         vars:
-          wc_name: '{{ patched_wc }}'
+          wc_name: '{{ dest_wc }}'
 
       when: check_prereq is defined and check_prereq == 'true'
 
@@ -40,6 +40,6 @@
         name: 'target_commands'
         tasks_from: 'dbhome_info.yml'
       vars:
-        dbhome_name: '{{ patched_wc }}'
+        dbhome_name: '{{ dest_wc }}'
     
     # TO do: Check output for software: yes

@@ -70,5 +70,3 @@
   - debug:
       msg: '{{ patch_gi_result }}'
   when: source_wc is not defined and source_home is defined and source_home == 'true'
-
-# TO DO: Parse The entry for 'Software only' should state 'false'.  Until the move completes it will state true.
