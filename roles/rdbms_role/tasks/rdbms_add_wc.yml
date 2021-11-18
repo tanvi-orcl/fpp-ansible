@@ -1,17 +1,25 @@
 
-- set_fact:
-    osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
+- name: 'Find DB Groups'
   when: osdbagrp_groups is not defined
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'map_groups.yml'
+  vars:
+    image_type: 'db'
+    target_user: 'oracle'
 
 - name: 'Add RDBMS Workingcopy {{ wc_name }}'
-  include_role:
+  import_role:
     name: 'fpp_common'
     tasks_from: 'wc_add.yml'
   vars:
-    path: '{{ hostvars[target_node]["oracle_home"] }}'
-    add_wc_parameters: '-skipclone -oraclebase {{ hostvars[target_node]["oracle_base"] }} -user oracle'
+    target_node: '{{ ansible_hostname }}'
+    path: '{{ oracle_home }}'
+    add_wc_parameters: '-skipclone -oraclebase {{ oracle_base }} -user oracle'
+  delegate_to: '{{ fpp_host }}'
 
 - name: 'Query RDBMS Workingcopy {{ wc_name }}'
-  include_role:
+  import_role:
     name: 'fpp_common'
     tasks_from: 'wc_query.yml'
+  delegate_to: '{{ fpp_host }}'

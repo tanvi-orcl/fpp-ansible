@@ -1,8 +1,21 @@
+
+- name: 'Check if DB Unique Name is valid'
+  become: true
+  become_user: 'root'
+  become_method: 'sudo'
+  shell: 'grep {{ db_unique_name }}: /etc/oratab'
+  ignore_errors: 'yes'
+  register: 'db_name_result'
+- fail:
+    msg: 'Database not valid.'
+  when: not db_name_result.stdout | regex_search(db_unique_name)
+
 - name: 'Patch Database {{ db_unique_name }} EVAL'
-  include_role:
+  import_role:
     name: 'fpp_common'
     tasks_from: 'patch.yml'
   vars:
+    target_node: '{{ ansible_hostname }}'
     move_type: 'database'
     source_info: '-sourcewc {{ source_wc }}'
     dest_info: '-patchedwc {{ dest_wc }}'
@@ -10,15 +23,14 @@
     ignorewcpatches: ''
     forcerolling: ''
     eval: '-eval'
-  register: 'patch_db_eval_result'
-- debug:
-    msg: '{{ patch_db_eval_result }}'
+  delegate_to: '{{ fpp_host }}'
 
 - name: 'Patch Database {{ db_unique_name }}'
-  include_role:
+  import_role:
     name: 'fpp_common'
     tasks_from: 'patch.yml'
   vars:
+    target_node: '{{ ansible_hostname }}'
     move_type: 'database'
     source_info: '-sourcewc {{ source_wc }}'
     dest_info: '-patchedwc {{ dest_wc }}'
@@ -26,6 +38,4 @@
     ignorewcpatches: ''
     forcerolling: ''
     eval: ''
-  register: 'patch_db_result'
-- debug:
-    msg: '{{ patch_db_result }}'
+  delegate_to: '{{ fpp_host }}'

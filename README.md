@@ -40,39 +40,41 @@ This codebase contains a set of playbooks that can be used individually or combi
 General Variables
 - exa_host (fiservdb)
 - fpp_host (n3db1): should be the specific host and not a group encompassing the host
-- target_node (ecc9c3n1)
 - identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
 - exa_tmp_path (/tmp)
 
 GI only
 - container_url
-- optional: curl_https_proxy
+- OPTIONAL: curl_https_proxy
 
 **rdbms_create_image.yml**
 - 
 - Runtime Variables
     - version (19.0.0.0) - to create temp home, for map file
     - dbhome_bp (APR2021) - to create temp home
-    - Optional: image_name (DB1911_210420)
+    - OPTIONAL: image_name (DB1911_210420)
 
 **rdbms_create_wc.yml**
 - 
 - Runtime Variables
     - image_name (DB1911_210420) - to create new home and add wc
-    - cluster_name - for naming working copy
-    - existing_home_flag (true or false) - indicates whether to create a new home or use existing. Default behavior is false.
-        - if false: 
-            - version (19.0.0.0) - to create new home and add wc
-            - dbhome_bp (APR2021) - to create new home and add wc
-        - if true: 
-            - wc_name (current dbhome name)
+    - version (19.0.0.0) - to create new home and add wc
+    - dbhome_bp (APR2021) - to create new home and add wc
     - OPTIONAL: wc_name, osdbagrp_groups
+
+**rdbms_create_wc_existing.yml**
+- 
+- Runtime Variables
+    - image_name (DB1911_210420) - to create new home and add wc
+    - version (19.0.0.0) - to create new home and add wc
+    - wc_name (current dbhome name)
+    - OPTIONAL: osdbagrp_groups
 
 **rdbms_patch.yml**
 - 
 - Runtime Variables
-    - source_wc (wc_DB199_201020_legacy_ecc5c4) - for move, can't discover name from image/cluster in case multiple
-    - dest_wc (wc_DB199_201020_ecc5c4) - for move, can't discover name from image/cluster in case multiple
+    - source_wc (wc_DB199_201020_legacy_ecc5c4)
+    - dest_wc (wc_DB199_201020_ecc5c4)
     - db_unique_name (a4db0_iad3zx) - to patch
     
 
@@ -81,22 +83,26 @@ GI only
 - Runtime Variables
     - version (19.0.0.0) - to create temp home, for map file
     - grid_version (19.12.0.0.0) - to patch/upgrade grid and for map file
-    - Optional: image_name (DB1911_210420), oracle_home
+    - OPTIONAL: image_name (DB1911_210420), oracle_home
 
 **gi_create_wc.yml**
 - 
 - Variables
     - image_name (GI1911_210420) - to create new home and add wc
-    - cluster_name - for naming working copy
-    - OPTIONAL: wc_name, osdbagrp_groups
+    - new_wc_path
+    - OPTIONAL: wc_name
+
+**gi_create_wc_existing.yml**
+- 
+- Variables
+    - image_name (GI1911_210420) - to create new home and add wc
+    - wc_name
 
 **gi_patch.yml**
 - 
 - Variables
-    - hostgroup
-    - identity_file, target_node - for client prereqs
-    - dbhome_version, dbhome_bp - to create temp home
-    - image_id, image_name - to register image
+    - source_wc
+    - dest_wc
 
 
 ## Additional Resources

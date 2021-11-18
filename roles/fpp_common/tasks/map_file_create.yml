@@ -15,4 +15,6 @@
   template:
     src: 'map.json'
     dest: '{{ fpp_admin_path }}/{{ image_map_path }}/{{ image_name }}.map'
-  
+  register: 'map_template_result'
+- debug:
+    msg: '{{ map_template_result }}'

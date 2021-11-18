@@ -1,39 +1,36 @@
 # This playbook adds a new working copy. It will need to be run once per dbhome per cluster. 
-# Create New DB Home (to be used for working copy) will only run if existing_home_flag is false.
-# existing_home_flag should be true only for initial setup, to convert homes to wc. 
-
-- name:
-  hosts: '{{ fpp_host }}'
-  tasks:
-
-    - name: 'Check Client Prerequistes'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'check_client_prereq.yml'
-    
-    - set_fact:
-        wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
-      when: wc_name is not defined
-
-    - name: 'Check if WC Exists'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'wc_query.yml'
-      vars:
-        ignore_errors: 'yes'
-    - set_fact:
-        query_wc_error_result: '{{ query_wc_result.stdout | regex_search("does not exist") }}'
-    - assert:
-        that: query_wc_error_result != ""
-        fail_msg: 'Working copy with name {{ wc_name }} already exists. Run again with custom wc_name provided.'
-    
+  
 - name:
   hosts: '{{ exa_host }}'
   tasks:
 
-    - set_fact:
-        wc_name: '{{ hostvars[fpp_host]["wc_name"] }}'
-      when: wc_name is not defined
+    # FPP Prereqs: Check FPP-Client connection and make sure WC does not exist.
+    
+    - block:
+
+      - name: 'Check Client Prerequistes'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'check_client_prereq.yml'
+        vars:
+          target_node: '{{ ansible_hostname }}'
+
+      - set_fact:
+          wc_name: 'wc_{{ image_name }}_{{ ansible_hostname[:-2] }}'
+        when: wc_name is not defined
+
+      # TO DO: On fail, skip but add to record.
+      - name: 'Check if WC Exists'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'wc_query.yml'
+        vars:
+          ignore_errors_flag: 'yes'
+      - fail:
+          msg: 'Working copy with name {{ wc_name }} already exists. Run again with custom wc_name provided.'
+        when: not query_wc_result.stdout | regex_search("does not exist")
+      
+      delegate_to: '{{ fpp_host }}'
 
     - name: 'Create New DB Home'
       include_role:
@@ -41,9 +38,7 @@
         tasks_from: 'dbhome_create.yml'
       vars:
         dbhome_name: '{{ wc_name }}'
-      when: existing_home_flag is not defined or existing_home_flag == 'false'
     
-    # TO DO: Should this be dbhome_name or wc_name? Can the added working copy be a different name than the initially creating home name?
     - name: 'DB Home Info'
       include_role:
         name: 'target_commands'
@@ -51,20 +46,9 @@
       vars:
         dbhome_name: '{{ wc_name }}'
 
-    - name: 'Find DB Groups'
-      when: osdbagrp_groups is not defined
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'map_groups.yml'
-      vars:
-        image_type: 'db'
-        target_user: 'oracle'
-
-- name:
-  hosts: '{{ fpp_host }}'
-  tasks:
-
     - name: 'Create Working Copy'
       include_role:
         name: 'rdbms_role'
         tasks_from: 'rdbms_add_wc.yml'
+
+    

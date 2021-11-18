@@ -18,6 +18,8 @@
   environment:
     HTTPS_PROXY: '{{ curl_https_proxy }}'
   register: 'curl_master_map'
+- debug:
+    msg: '{{ curl_master_map }}'
 
 - name: Pull Master Map Content From File
   become: 'true'

@@ -11,8 +11,6 @@
 - set_fact:
     oracle_home: '{{ dbhome_info_result.stdout | regex_findall("HOME_LOC=(.+?)\n") | first }}'
     ru_version: '{{ dbhome_info_result.stdout | regex_findall("VERSION=(.+?)\n") | first }}'
-- set_fact:
-    ru_version_tag: '{{ ru_version | regex_replace("\.", "") }}'
 - debug:
     var: 'oracle_home'
 - debug:

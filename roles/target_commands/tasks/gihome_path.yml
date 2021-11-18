@@ -4,9 +4,9 @@
   become_method: 'sudo'
   shell:  |
     echo $(awk -F : ' $1 ~ /^+ASM[0-9]$/ {print $2}' /etc/oratab)
-  register: 'gi_home_result'
+  register: 'gihome_result'
 - set_fact:
-    oracle_home: '{{ gi_home_result.stdout }}'
+    oracle_home: '{{ gihome_result.stdout }}'
 - debug:
     var: 'oracle_home'
 

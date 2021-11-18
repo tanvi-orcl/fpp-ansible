@@ -1,23 +1,30 @@
 
-- set_fact:
-    osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
-  when: osdbagrp_groups is not defined
+- name: 'Set Current GI Home'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'gihome_path.yml'
+
+- name: 'Find GI Groups'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'map_groups.yml'
+  vars:
+    image_type: 'grid'
+    target_user: 'grid'
 
 - name: 'Add GI Workingcopy {{ wc_name }}'
-  include_role:
+  import_role:
     name: 'fpp_common'
     tasks_from: 'wc_add.yml'
   vars:
-    path: '{{ hostvars[target_node]["oracle_home"] }}'
+    target_node: '{{ ansible_hostname }}'
+    path: '{{ wc_path }}'
+    osdbagrp_groups: '{{ osdbagrp_groups }}'
     add_wc_parameters: '-softwareonly'
-  register: 'add_gi_wc_result'
-- debug:
-    msg: '{{ add_gi_wc_result }}'
+  delegate_to: '{{ fpp_host }}'
 
 - name: 'Query GI Workingcopy {{ wc_name }}'
-  include_role:
+  import_role:
     name: 'fpp_common'
     tasks_from: 'wc_query.yml'
-  register: 'query_gi_wc_result'
-- debug:
-    msg: '{{ query_gi_wc_result }}'
+  delegate_to: '{{ fpp_host }}'

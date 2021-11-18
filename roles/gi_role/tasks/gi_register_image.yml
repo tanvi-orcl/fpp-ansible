@@ -1,20 +1,16 @@
 # assert that image is defined
 
-- name: 'Register GI Image {{ image_name }}'
-  include_role:
-    name: 'fpp_common'
-    tasks_from: 'image_register.yml'
-  vars:
-    image_map_path: 'maps/gi'
-    software_type: 'ORACLEGISOFTWARE'
-  register: 'register_gi_image_result'
-- debug:
-    msg: '{{ register_gi_image_result }}'
+- block:
+  - name: 'Register GI Image {{ image_name }}'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'image_register.yml'
+    vars:
+      image_map_path: 'maps/gi'
+      software_type: 'ORACLEGISOFTWARE'
 
-- name: 'Query GI Image {{ image_name }}'
-  include_role:
-    name: 'fpp_common'
-    tasks_from: 'image_query.yml'
-  register: 'query_gi_image_result'
-- debug:
-    msg: '{{ query_gi_image_result }}'
+  - name: 'Query GI Image {{ image_name }}'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'image_query.yml'
+  delegate_to: '{{ fpp_host }}'

@@ -1,31 +1,17 @@
-# ansible-playbook -i inventory test_parse.yml --extra-vars oracle_home=/u02/app/oracle/product/19.0.0.0/dbhome_10
-
-# - name:
-#   hosts: '{{ fpp_host }}'
-#   tasks:
-
-#     - shell: |
-#         hostname
-#       register: 'hostname_result'
-#     - debug:
-#         msg: '{{ hostname_result }}'
+# This playbook creates and registers a new rdbms image. It will only need to be run once 
+# per image so be sure the hostgroup specified only contains one cluster.
 
 - name:
   hosts: '{{ exa_host }}'
-  when: image_name is defined
-  vars:
-    query_image_result: 'Image does not exist.'
   tasks:
-
-    - set_fact:
-        query_image_error_result: '{{ query_image_result | regex_search("does not exist") }}'
-    # - name: 'Check GI Home Path'
-    #   include_role:
-    #     name: 'target_commands'
-    #     tasks_from: 'gihome_path.yml'
     
-
-
-
-
-    
+    - name: 'Check if DB Unique Name is valid'
+      become: true
+      become_user: 'root'
+      become_method: 'sudo'
+      shell: 'grep {{ db_unique_name }}: /etc/oratab'
+      ignore_errors: 'yes'
+      register: 'unique_result'
+    - fail:
+        msg: 'Database not valid.'
+      when: not unique_result.stdout | regex_search(db_unique_name)

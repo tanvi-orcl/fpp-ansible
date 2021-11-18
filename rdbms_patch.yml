@@ -1,35 +1,36 @@
 
 - name:
-  hosts: '{{ fpp_host }}'
+  hosts: '{{ exa_host }}'
   tasks:
 
-    - name: 'Check Client Prerequistes'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'check_client_prereq.yml'
+    - block:
+      
+      - name: 'Check Client Prerequistes'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'check_client_prereq.yml'
+        vars:
+          target_node: '{{ ansible_hostname }}'
     
-    - name: 'Check if Source Home is WC'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'wc_query.yml'
-      vars:
-        wc_name: '{{ source_wc }}'
+      - name: 'Check if Source Home is WC'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'wc_query.yml'
+        vars:
+          wc_name: '{{ source_wc }}'
     
-    - name: 'Check if New Home is WC'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'wc_query.yml'
-      vars:
-        wc_name: '{{ dest_wc }}'
+      - name: 'Check if New Home is WC'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'wc_query.yml'
+        vars:
+          wc_name: '{{ dest_wc }}'
+      delegate_to: '{{ fpp_host }}'
 
     - name: 'Patch Database'
       include_role:
         name: 'rdbms_role'
         tasks_from: 'rdbms_patch_db.yml'
-
-- name:
-  hosts: '{{ exa_host }}'
-  tasks:
 
     - name: 'Check Database'
       include_role:

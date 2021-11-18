@@ -1,93 +1,62 @@
 # This playbook creates and registers a new rdbms image. It will only need to be run once 
 # per image so be sure the hostgroup specified only contains one cluster.
 
-# - name:
-#   hosts: '{{ fpp_host }}'
-#   tasks:
-
-#     - name: 'Check Client Prerequistes'
-#       include_role:
-#         name: 'fpp_common'
-#         tasks_from: 'check_client_prereq.yml'
-
 - name:
   hosts: '{{ exa_host }}'
   tasks:
     
+    - name: 'Check Client Prerequistes'
+      import_role:
+        name: 'fpp_common'
+        tasks_from: 'check_client_prereq.yml'
+      vars:
+        target_node: '{{ ansible_hostname }}'
+      delegate_to: '{{ fpp_host }}'
+
+    # Creates new DB and checks for successful creation
+    # Sets ru_version, oracle_home, and oracle_base
+
     - name: 'Create Temp DB Home'
       include_role:
         name: 'target_commands'
         tasks_from: 'dbhome_create.yml'
     
-    # Checks for successful creation and then sets ru_version, oracle_home, and oracle_base
-    - name: 'Check Temp DB Home Info'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'dbhome_info.yml'
-
-- name:
-  hosts: '{{ fpp_host }}'
-  tasks:
-
-    # TO DO: Finalize Fiserv Naming Standards
+    # - name: 'Check Temp DB Home Info'
+    #   include_role:
+    #     name: 'target_commands'
+    #     tasks_from: 'dbhome_info.yml'
+    
+    # Setting Image Name, Checking for Image, and Registering with FPP
+    # FPP Operation: Checking Connection between FPP Server and Client
+    
     - set_fact:
-        image_name: 'dbhome1_{{ hostvars[target_node]["ru_version_tag"] }}'
+        image_name: 'dbhome2_{{ ru_version | regex_replace("\.", "") }}'
       when: image_name is not defined
     - debug:
         var: image_name
 
-    - name: 'Check if Image {{ image_name }} Exists'
-      include_role:
-        name: 'fpp_common'
-        tasks_from: 'image_query.yml'
-      vars:
-        ignore_errors: 'yes'
-    - set_fact:
-        query_image_error_result: '{{ query_image_result.stdout | regex_search("does not exist") }}'
-    - assert:
-        that: query_image_error_result != ""
-        fail_msg: 'Image with name {{ image_name }} already exists. Run again with custom image_name provided.'
-    
-- name:
-  hosts: '{{ exa_host }}'
-  tasks:
+    - block:
 
-    - set_fact:
-        image_name: '{{ hostvars[fpp_host]["image_name"] }}'
-      when: image_name is not defined
-
-    - name: 'Find Patch and Bug Data'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'map_data.yml'
-      vars:
-        target_user: 'oracle'
-
-    - name: 'Find DB Groups'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'map_groups.yml'
-      vars:
-        image_type: 'db'
-        target_user: 'oracle'
-
-- name:
-  hosts: '{{ fpp_host }}'
-  tasks:
+      - name: 'Check if Image {{ image_name }} Exists'
+        include_role:
+          name: 'fpp_common'
+          tasks_from: 'image_query.yml'
+        vars:
+          ignore_errors_flag: 'yes'
+      - fail:
+          msg: 'Image with name {{ image_name }} already exists. Run again with custom image_name provided.'
+        when: not query_image_result.stdout | regex_search("does not exist")
+      delegate_to: '{{ fpp_host }}'
     
     - name: 'Create Map File'
       include_role:
         name: 'rdbms_role'
         tasks_from: 'rdbms_create_map_file.yml'
-    
+      
     - name: 'Register Image'
       include_role:
         name: 'rdbms_role'
         tasks_from: 'rdbms_register_image.yml'
-
-- name:
-  hosts: '{{ exa_host }}'
-  tasks:
 
     - name: 'Purge Temp DB Home'
       include_role:

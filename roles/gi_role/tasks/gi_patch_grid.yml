@@ -1,72 +1,38 @@
 
 # When Source is WC 
 
-- block:
-  - name: 'Patch GI Image'
-    include_role:
-      name: 'fpp_common'
-      tasks_from: 'patch.yml'
-    vars:
-      move_type: 'gihome'
-      db_info: ''
-      source_info: '-sourcewc {{ source_wc }}'
-      dest_info: '-destwc {{ dest_wc }}'
-      ignorewcpatches: '-ignorewcpatches'
-      forcerolling: ''
-      eval: '-eval'
-    register: 'patch_gi_result'
-  - debug:
-      msg: '{{ patch_gi_result }}'
+# - name: 'Set GI Home'
+#   include_role:
+#     name: 'target_commands'
+#     tasks_from: 'gihome_path.yml'
+#   when: source_wc is not defined and source_home_flag is defined and source_home_flag == 'true'
 
-  - name: 'Patch GI Image'
-    include_role:
-      name: 'fpp_common'
-      tasks_from: 'patch.yml'
-    vars:
-      move_type: 'gihome'
-      db_info: ''
-      source_info: '-sourcewc {{ source_wc }}'
-      dest_info: '-destwc {{ dest_wc }}'
-      ignorewcpatches: '-ignorewcpatches'
-      forcerolling: ''
-      eval: ''
-    register: 'patch_gi_result'
-  - debug:
-      msg: '{{ patch_gi_result }}'
-  when: (source_wc is defined) and (source_home_flag is not defined or source_home_flag == 'false')
+- name: 'Patch GI Image'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'patch.yml'
+  vars:
+    target_node: '{{ ansible_hostname }}'
+    move_type: 'gihome'
+    db_info: ''
+    source_info: '-sourcewc {{ source_wc }}'
+    dest_info: '-destwc {{ dest_wc }}'
+    ignorewcpatches: '-ignorewcpatches'
+    forcerolling: ''
+    eval: '-eval'
+  delegate_to: '{{ fpp_host }}'
 
-# When Source is Current Home
-
-- block:
-  - name: 'Patch GI Image'
-    include_role:
-      name: 'fpp_common'
-      tasks_from: 'patch.yml'
-    vars:
-      move_type: 'gihome'
-      db_info: ''
-      source_info: '-sourcehome {{ hostvars[target_node]["oracle_home"] }}'
-      dest_info: '-destwc {{ dest_wc }}'
-      ignorewcpatches: '-ignorewcpatches'
-      forcerolling: ''
-      eval: '-eval'
-    register: 'patch_gi_result'
-  - debug:
-      msg: '{{ patch_gi_result }}'
-
-  - name: 'Patch GI Image'
-    include_role:
-      name: 'fpp_common'
-      tasks_from: 'patch.yml'
-    vars:
-      move_type: 'gihome'
-      db_info: ''
-      source_info: '-sourcehome {{ hostvars[target_node]["oracle_home"] }}'
-      dest_info: '-destwc {{ dest_wc }}'
-      ignorewcpatches: '-ignorewcpatches'
-      forcerolling: ''
-      eval: ''
-    register: 'patch_gi_result'
-  - debug:
-      msg: '{{ patch_gi_result }}'
-  when: source_wc is not defined and source_home_flag is defined and source_home_flag == 'true'
+- name: 'Patch GI Image'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'patch.yml'
+  vars:
+    target_node: '{{ ansible_hostname }}'
+    move_type: 'gihome'
+    db_info: ''
+    source_info: '-sourcewc {{ source_wc }}'
+    dest_info: '-destwc {{ dest_wc }}'
+    ignorewcpatches: '-ignorewcpatches'
+    forcerolling: ''
+    eval: ''
+  delegate_to: '{{ fpp_host }}'

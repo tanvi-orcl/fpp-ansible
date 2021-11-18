@@ -1,22 +1,43 @@
 
 # Create Individual Map File 
 
-- name: 'Add Map File'
+- name: 'Find Patch and Bug Data'
   include_role:
+    name: 'target_commands'
+    tasks_from: 'map_data.yml'
+  vars:
+    target_user: 'grid'
+
+- name: 'Find GI Groups'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'map_groups.yml'
+  vars:
+    image_type: 'grid'
+    target_user: 'grid'
+
+- set_fact:
+    grid_version_tag: '{{ grid_version | regex_replace("\.", "") }}'
+  
+- name: 'Add Map File'
+  import_role:
     name: 'fpp_common'
     tasks_from: 'map_file_create.yml'
   vars:
+    target_node: '{{ ansible_hostname }}'
     image_type: 'grid'
     image_map_path: 'maps/gi'
     image: '{{ image_name }}.zip.gpg'
-    image_tag: '{{ grid_version | regex_replace("\.", "") }}EE'
-    ru_version: '{{ grid_version }}'
-    patches: '{{ hostvars[target_node]["patch_numbers"] }}'
-    osdbagrp_groups: '{{ hostvars[target_node]["osdbagrp_groups"] }}'
-    
+    image_tag: '{{ grid_version_tag[:5] }}EE'
+    ru_version: '{{ grid_version }}'      # Development Note: Choosing to set map ru_version to match dbaascli dbhome info output. Might not match OCI standards. 
+    patches: '{{ patch_numbers }}'
+    osdbagrp_groups: '{{ osdbagrp_groups }}'
+  delegate_to: '{{ fpp_host }}'
+
 - name: 'Update Exa Map File'
-  include_role:
+  import_role:
     name: 'fpp_common'
     tasks_from: 'map_gi_master_update.yml'
   vars:
     image_map_path: 'maps/gi'
+  delegate_to: '{{ fpp_host }}'

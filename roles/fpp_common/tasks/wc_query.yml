@@ -5,6 +5,6 @@
   shell: |
     {{ rhpctl_path }} query workingcopy -workingcopy {{ wc_name }}
   register: 'query_wc_result'
-  ignore_errors: '{{ ignore_errors }}'
+  ignore_errors: '{{ ignore_errors_flag }}'
 - debug:
     msg: '{{ query_wc_result }}'

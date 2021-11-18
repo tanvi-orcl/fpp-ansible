@@ -6,6 +6,6 @@
   shell: |
     {{ rhpctl_path }} query image -image {{ image_name }}
   register: 'query_image_result'
-  ignore_errors: '{{ ignore_errors }}'
+  ignore_errors: '{{ ignore_errors_flag }}'
 - debug:
     msg: '{{ query_image_result }}'

@@ -1,8 +1,4 @@
 
-- name: 'Set Oracle Home to current GI Home'
-  when: oracle_home is not defined
-  include_tasks: 'gihome_path.yml'
-
 - name: 'Copy File to Host'
   become: 'true'
   become_user: 'root'

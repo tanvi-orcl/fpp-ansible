@@ -1,9 +1,11 @@
-
+# This version should be true only for initial setup, to convert homes to wc. 
+    
 - name:
   hosts: '{{ exa_host }}'
   tasks:
-    
+
     # FPP Prereqs: Check FPP-Client connection and make sure WC does not exist.
+    
     - block:
 
       - name: 'Check Client Prerequistes'
@@ -17,6 +19,7 @@
           wc_name: 'wc_{{ image_name }}_{{ ansible_hostname[:-2] }}'
         when: wc_name is not defined
 
+      # TO DO: On fail, skip but add to record.
       - name: 'Check if WC Exists'
         include_role:
           name: 'fpp_common'
@@ -28,14 +31,18 @@
         when: not query_wc_result.stdout | regex_search("does not exist")
       
       delegate_to: '{{ fpp_host }}'
-
-    - name: 'Create New GI Home'
+    
+    - name: 'DB Home Info'
       include_role:
         name: 'target_commands'
-        tasks_from: 'gihome_mcimgsetup.yml'
+        tasks_from: 'dbhome_info.yml'
+      vars:
+        dbhome_name: '{{ wc_name }}'
+        
     
     - name: 'Create Working Copy'
       include_role:
-        name: 'gi_role'
-        tasks_from: 'gi_add_wc.yml'
+        name: 'rdbms_role'
+        tasks_from: 'rdbms_add_wc.yml'
+
     
