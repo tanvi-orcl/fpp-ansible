@@ -13,3 +13,10 @@
           target_node: '{{ ansible_hostname }}'
 
       delegate_to: '{{ fpp_host }}'
+    
+    - name: 'Delete Home in Console'
+      include_role:
+        name: 'rdbms_role'
+        tasks_from: 'rdbms_delete_home.yml'
+      vars:
+        dbhome_name: '{{ wc_name }}'

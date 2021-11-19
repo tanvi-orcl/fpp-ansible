@@ -1,6 +1,6 @@
 
 - name:
-  hosts: '{{ exa_host }}'
+  hosts: '{{ exa_group }}'
   tasks:
     
     # FPP Prereqs: Check FPP-Client connection and make sure WC does not exist.

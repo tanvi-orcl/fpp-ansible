@@ -38,8 +38,9 @@ This codebase contains a set of playbooks that can be used individually or combi
 ### Playbooks
 
 General Variables
-- exa_host (fiservdb)
-- fpp_host (n3db1): should be the specific host and not a group encompassing the host
+
+- fpp_host (n3db1) - should be the specific host and not a group encompassing the host
+- exa_group (fiservdb)
 - identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
 - exa_tmp_path (/tmp)
 
@@ -63,6 +64,14 @@ GI only
     - OPTIONAL: wc_name, osdbagrp_groups
 
 **rdbms_create_wc_existing.yml**
+- 
+- Runtime Variables
+    - image_name (DB1911_210420) - to create new home and add wc
+    - version (19.0.0.0) - to create new home and add wc
+    - wc_name (current dbhome name)
+    - OPTIONAL: osdbagrp_groups
+
+**rdbms_delete_wc.yml**
 - 
 - Runtime Variables
     - image_name (DB1911_210420) - to create new home and add wc

@@ -1,7 +1,7 @@
 # This playbook adds a new working copy. It will need to be run once per dbhome per cluster. 
   
 - name:
-  hosts: '{{ exa_host }}'
+  hosts: '{{ exa_group }}'
   tasks:
 
     # FPP Prereqs: Check FPP-Client connection and make sure WC does not exist.
@@ -16,10 +16,9 @@
           target_node: '{{ ansible_hostname }}'
 
       - set_fact:
-          wc_name: 'wc_{{ image_name }}_{{ ansible_hostname[:-2] }}'
+          wc_name: 'multiple1_{{ image_name }}_{{ ansible_hostname }}'
         when: wc_name is not defined
 
-      # TO DO: On fail, skip but add to record.
       - name: 'Check if WC Exists'
         include_role:
           name: 'fpp_common'
@@ -27,7 +26,7 @@
         vars:
           ignore_errors_flag: 'yes'
       - fail:
-          msg: 'Working copy with name {{ wc_name }} already exists. Run again with custom wc_name provided.'
+          msg: 'Working copy with name {{ wc_name }} already exists. Run on {{ ansible_hostname }} again with custom wc_name provided.'
         when: not query_wc_result.stdout | regex_search("does not exist")
       
       delegate_to: '{{ fpp_host }}'
@@ -39,12 +38,12 @@
       vars:
         dbhome_name: '{{ wc_name }}'
     
-    - name: 'DB Home Info'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'dbhome_info.yml'
-      vars:
-        dbhome_name: '{{ wc_name }}'
+    # - name: 'DB Home Info'
+    #   include_role:
+    #     name: 'target_commands'
+    #     tasks_from: 'dbhome_info.yml'
+    #   vars:
+    #     dbhome_name: '{{ wc_name }}'
 
     - name: 'Create Working Copy'
       include_role:

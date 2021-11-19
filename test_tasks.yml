@@ -2,16 +2,13 @@
 # per image so be sure the hostgroup specified only contains one cluster.
 
 - name:
-  hosts: '{{ exa_host }}'
+  hosts: '{{ exa_group }}'
   tasks:
     
-    - name: 'Check if DB Unique Name is valid'
+    - name: 'Check Nodes'
       become: true
       become_user: 'root'
       become_method: 'sudo'
-      shell: 'grep {{ db_unique_name }}: /etc/oratab'
-      ignore_errors: 'yes'
-      register: 'unique_result'
-    - fail:
-        msg: 'Database not valid.'
-      when: not unique_result.stdout | regex_search(db_unique_name)
+      shell: 'hostname'
+      register: 'test_result'
+    - debug: { msg: '{{ test_result }}' }

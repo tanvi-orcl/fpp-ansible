@@ -1,16 +1,18 @@
 # GENERAL
 fpp_host: 'n3db1'
-exa_host: 'fiservdb'
+exa_group: 'fiservdb'
+# exa_group: 'clustertest'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 exa_tmp_path: '/tmp'
 
 # CREATE IMAGE
-# version: '19.0.0.0'
-# dbhome_bp: 'OCT2021'
+version: '19.0.0.0'
+dbhome_bp: 'OCT2021'
 # optional: image_name
 
 # CREATE WORKING COPY
-image_name: 'dbhome1_191300'
+image_name: 'tst_image'
+#image_name: 'dbhome1_191300'
 #cluster_name: 'ecc9c3'    # currently just for naming conventions
 # optional: wc_name
 

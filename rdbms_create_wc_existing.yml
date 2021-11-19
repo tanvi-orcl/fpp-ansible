@@ -1,7 +1,7 @@
 # This version should be true only for initial setup, to convert homes to wc. 
     
 - name:
-  hosts: '{{ exa_host }}'
+  hosts: '{{ exa_group }}'
   tasks:
 
     # FPP Prereqs: Check FPP-Client connection and make sure WC does not exist.
@@ -19,7 +19,7 @@
           wc_name: 'wc_{{ image_name }}_{{ ansible_hostname[:-2] }}'
         when: wc_name is not defined
 
-      # TO DO: On fail, skip but add to record.
+      # TO DO: On fail, add to record.
       - name: 'Check if WC Exists'
         include_role:
           name: 'fpp_common'

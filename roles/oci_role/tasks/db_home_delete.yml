@@ -1,10 +1,13 @@
 
-- name: 'Get OCID for {{ db_home_name | lower }} DB Home'
+- name: 'Get OCID for {{ dbhome_name }} DB Home'
   when: db_home_id is not defined
   include_tasks: db_home_discovery.yml
 
-- name: 'Delete db home with name {{ db_home_name | lower }}'
-  when: db_home_id is defined
+- assert: 
+    that: db_home_id is defined
+    fail_msg: 'db home {{ dbhome_name }} not found.'
+
+- name: 'Delete db home with name {{ dbhome_name }}'
   oci_database_db_home:
     db_home_id: '{{ db_home_id }}'
     state: 'absent'

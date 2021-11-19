@@ -2,7 +2,7 @@
 # once per image so be sure the hostgroup specified only contains one cluster.
 
 - name:
-  hosts: '{{ exa_host }}'
+  hosts: '{{ exa_group }}'
   tasks:
     
     - block:

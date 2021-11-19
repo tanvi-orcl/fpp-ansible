@@ -1,5 +1,5 @@
 # GENERAL
-exa_host: 'fiservdb'
+exa_group: 'fiservdb'
 fpp_host: 'n3db1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 exa_tmp_path: '/tmp'

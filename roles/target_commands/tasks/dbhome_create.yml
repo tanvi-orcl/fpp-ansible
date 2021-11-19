@@ -10,6 +10,7 @@
     msg: '{{ cswlib_list_result }}'
 
 - block:
+
   - name: 'cswlib download'
     become: 'true'
     become_user: 'root'
@@ -17,11 +18,11 @@
     shell:  |
       {{ dbaascli_path }} cswlib download --version {{ version | regex_replace("\.", "") }} --bp {{ dbhome_bp }}
     register: 'cswlib_download_result'
+    failed_when: cswlib_download_result.stdout | regex_search("ERROR:.+")
   - debug:
       msg: '{{ cswlib_download_result }}'
-  - fail:
-      msg: 'ERROR during cswlib download. See above debug statement for output.'
-    when: cswlib_download_result.stdout | regex_search("ERROR:.+")
+
+  when: not cswlib_list_result.stdout | regex_search(dbhome_bp)
 
 - name: 'create dbhome'
   become: 'true'
@@ -30,8 +31,9 @@
   shell:  |
     {{ dbaascli_path }} dbhome create --version {{ version | regex_replace("\.", "") }} --bp {{ dbhome_bp }} --ohome_name {{ dbhome_name }} --noprompt YES
   register: 'dbhome_create_result'
+  failed_when: dbhome_create_result.stdout | regex_search("ERROR:.+")
 - debug:
     msg: '{{ dbhome_create_result }}'
 
-# - name: 'DB Home Info'
-#   include_tasks: 'dbhome_info.yml'
+- name: 'DB Home Info'
+  include_tasks: 'dbhome_info.yml'

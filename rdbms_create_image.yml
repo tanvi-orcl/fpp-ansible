@@ -2,7 +2,7 @@
 # per image so be sure the hostgroup specified only contains one cluster.
 
 - name:
-  hosts: '{{ exa_host }}'
+  hosts: '{{ exa_group }}'
   tasks:
     
     - name: 'Check Client Prerequistes'
@@ -16,15 +16,19 @@
     # Creates new DB and checks for successful creation
     # Sets ru_version, oracle_home, and oracle_base
 
-    - name: 'Create Temp DB Home'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'dbhome_create.yml'
-    
-    # - name: 'Check Temp DB Home Info'
+    # - name: 'Create Temp DB Home'
     #   include_role:
     #     name: 'target_commands'
-    #     tasks_from: 'dbhome_info.yml'
+    #     tasks_from: 'dbhome_create.yml'
+    #   vars:
+    #     dbhome_name: 'temp4image1'
+    
+    - name: 'Check Temp DB Home Info'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'dbhome_info.yml'
+      vars:
+        dbhome_name: 'temp4image1'
     
     # Setting Image Name, Checking for Image, and Registering with FPP
     # FPP Operation: Checking Connection between FPP Server and Client
@@ -32,33 +36,37 @@
     - set_fact:
         image_name: 'dbhome2_{{ ru_version | regex_replace("\.", "") }}'
       when: image_name is not defined
-    - debug:
-        var: image_name
+    - debug: { var: image_name }
 
-    - block:
+    - name: 'Always delete temp home, even if errors occur.'
+      block:
 
       - name: 'Check if Image {{ image_name }} Exists'
-        include_role:
+        import_role:
           name: 'fpp_common'
           tasks_from: 'image_query.yml'
         vars:
           ignore_errors_flag: 'yes'
+        delegate_to: '{{ fpp_host }}'
       - fail:
           msg: 'Image with name {{ image_name }} already exists. Run again with custom image_name provided.'
         when: not query_image_result.stdout | regex_search("does not exist")
-      delegate_to: '{{ fpp_host }}'
-    
-    - name: 'Create Map File'
-      include_role:
-        name: 'rdbms_role'
-        tasks_from: 'rdbms_create_map_file.yml'
       
-    - name: 'Register Image'
-      include_role:
-        name: 'rdbms_role'
-        tasks_from: 'rdbms_register_image.yml'
-
-    - name: 'Purge Temp DB Home'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'dbhome_purge.yml'
+      - name: 'Create Map File'
+        include_role:
+          name: 'rdbms_role'
+          tasks_from: 'rdbms_create_map_file.yml'
+        
+      - name: 'Register Image'
+        include_role:
+          name: 'rdbms_role'
+          tasks_from: 'rdbms_register_image.yml'
+    
+      always:
+      
+      - name: 'Delete Temp DB Home'
+        include_role:
+          name: 'rdbms_role'
+          tasks_from: 'rdbms_delete_home.yml'
+        vars:
+          dbhome_name: 'temp4image1'

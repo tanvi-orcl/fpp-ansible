@@ -1,6 +1,6 @@
 
 - name:
-  hosts: '{{ exa_host }}'
+  hosts: '{{ exa_group }}'
   tasks:
 
     - block:
