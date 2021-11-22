@@ -1,0 +1,10 @@
+- name: 'ExaCS VM Cluster OCID'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  shell: |
+    grep vmcluster_ocid= /opt/oracle/exacs.props
+  register: 'exacs_vm_cluster_ocid'
+- debug: { msg: '{{ exacs_vm_cluster_ocid }}' }
+- set_fact:
+    vm_cluster_id: '{{ exacs_vm_cluster_ocid.stdout | regex_findall("vmcluster_ocid=(.+)") | first }}'

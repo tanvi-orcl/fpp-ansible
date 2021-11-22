@@ -1,0 +1,27 @@
+
+- assert: { that: image_name is defined and wc_name is defined }
+
+- name: 'Check if WC Exists'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'wc_query.yml'
+  vars:
+    ignore_errors_flag: 'yes'
+  delegate_to: '{{ fpp_host }}'
+- fail:
+    msg: 'Working copy with name {{ wc_name }} already exists. Run again with custom wc_name provided.'
+  when: not query_wc_result.stdout | regex_search("does not exist")
+
+- name: 'DB Home Discovery'
+  include_role:
+    name: 'oci_tasks'
+    tasks_from: 'db_home_discovery.yml'
+  vars:
+    db_home_name: '{{ wc_name }}'
+  delegate_to: 'localhost'
+- assert: { that: oracle_home is defined }
+
+- name: 'Create Working Copy'
+  include_role:
+    name: 'rdbms_fpp'
+    tasks_from: 'rdbms_wc_add.yml'

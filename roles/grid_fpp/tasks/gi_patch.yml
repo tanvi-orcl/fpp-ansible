@@ -1,11 +1,21 @@
+- name: 'Assert GI Create WC Variables are defined.'
+  assert: { that: source_wc is defined and dest_wc is defined }
 
-# When Source is WC 
+- name: 'Check if Source Home is WC'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'wc_query.yml'
+  vars:
+    wc_name: '{{ source_wc }}'
+  delegate_to: '{{ fpp_host }}'
 
-# - name: 'Set GI Home'
-#   include_role:
-#     name: 'target_commands'
-#     tasks_from: 'gihome_path.yml'
-#   when: source_wc is not defined and source_home_flag is defined and source_home_flag == 'true'
+- name: 'Check if New Home is WC'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'wc_query.yml'
+  vars:
+    wc_name: '{{ dest_wc }}'
+  delegate_to: '{{ fpp_host }}'
 
 - name: 'Patch GI Image'
   import_role:
@@ -15,7 +25,6 @@
     target_node: '{{ ansible_hostname }}'
     move_type: 'gihome'
     db_info: ''
-    source_info: '-sourcewc {{ source_wc }}'
     dest_info: '-destwc {{ dest_wc }}'
     ignorewcpatches: '-ignorewcpatches'
     forcerolling: ''
@@ -30,7 +39,6 @@
     target_node: '{{ ansible_hostname }}'
     move_type: 'gihome'
     db_info: ''
-    source_info: '-sourcewc {{ source_wc }}'
     dest_info: '-destwc {{ dest_wc }}'
     ignorewcpatches: '-ignorewcpatches'
     forcerolling: ''

@@ -1,0 +1,30 @@
+
+- name: 'Find Patch and Bug Data'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'map_data.yml'
+  vars:
+    target_user: 'oracle'
+
+- name: 'Find DB Groups'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'map_groups.yml'
+  vars:
+    image_type: 'db'
+    target_user: 'oracle'
+
+- name: 'Add Map File'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'map_file_create.yml'
+  vars:
+    target_node: '{{ ansible_hostname }}'
+    image_type: 'db'
+    image_map_path: 'maps/db'
+    image: '{{ image_name }}.zip.gpg'
+    image_tag: '{{ ru_version_tag[:5] }}EE'
+    ru_version: '{{ ru_version }}'
+    patches: '{{ patch_numbers }}'
+    osdbagrp_groups: '{{ osdbagrp_groups }}'
+  delegate_to: '{{ fpp_host }}'

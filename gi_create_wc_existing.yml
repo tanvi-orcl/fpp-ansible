@@ -1,5 +1,3 @@
-# This playbook creates and registers a new gi image. It will only need to be run 
-# once per image so be sure the hostgroup specified only contains one cluster.
 
 - name:
   hosts: '{{ exa_group }}'
@@ -19,7 +17,7 @@
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
 
-    - name: 'Set Current GI Home'
+    - name: 'Add GI Working Copy'
       include_role:
         name: 'grid_fpp'
-        tasks_from: 'gi_image_create.yml'
+        tasks_from: 'gi_create_wc.yml'

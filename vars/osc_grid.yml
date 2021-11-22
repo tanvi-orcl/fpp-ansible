@@ -9,13 +9,13 @@ curl_https_proxy: 'http://140.83.186.195:80'
 #container_url: 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o'
 
 # CREATE IMAGE
-# version: '19.0.0.0.0'
-# grid_version: '19.11.1.0'
+version: '19.0.0.0.0'
+ru_version: '19.11.3.0'
 # optional: image_name
 
 # CREATE WORKING COPY
 image_name: 'gihome1_191110'
-#cluster_name: 'ecc9c3'  # currently just for naming conventions
+exadata_type: 'exacc'
 
 # PATCH
 source_wc: 'wc_gihome1_191120_ecc9c3'

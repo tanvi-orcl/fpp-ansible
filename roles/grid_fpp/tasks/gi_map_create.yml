@@ -17,7 +17,7 @@
     target_user: 'grid'
 
 - set_fact:
-    grid_version_tag: '{{ grid_version | regex_replace("\.", "") }}'
+    grid_version_tag: '{{ ru_version | regex_replace("\.", "") }}'
   
 - name: 'Add Map File'
   import_role:
@@ -28,8 +28,8 @@
     image_type: 'grid'
     image_map_path: 'maps/gi'
     image: '{{ image_name }}.zip.gpg'
-    image_tag: '{{ grid_version_tag[:5] }}EE'
-    ru_version: '{{ grid_version }}'      # Development Note: Choosing to set map ru_version to match dbaascli dbhome info output. Might not match OCI standards. 
+    image_tag: '{{ ru_version_tag[:5] }}EE'
+    ru_version: '{{ ru_version }}'
     patches: '{{ patch_numbers }}'
     osdbagrp_groups: '{{ osdbagrp_groups }}'
   delegate_to: '{{ fpp_host }}'

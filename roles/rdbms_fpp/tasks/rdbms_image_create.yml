@@ -1,0 +1,58 @@
+- name: 'Assert RDBMS Create Image Variables are defined.'
+  assert: { that: version is defined and ru_version is defined }
+
+- set_fact:
+    ru_version_tag: '{{ ru_version | regex_replace("\.", "") }}'
+- set_fact:
+    image_name: 'dbhome2_{{ ru_version_tag }}'
+  when: image_name is not defined
+- debug: { var: image_name }
+
+# Creates temp DB and sets oracle home.
+
+- name: 'Find VM Cluster OCID'
+  include_role:
+    name: 'target_commands'
+    tasks_from: '{{ exadata_type }}_ocid.yml'
+
+# Setting Image Name, Checking for Image, and Registering with FPP
+
+- name: 'Always delete temp home, even if errors occur.'
+  block:
+
+  - name: 'Create fresh {{ version }} DB Home'
+    import_role:
+      name: 'oci_tasks'
+      tasks_from: 'db_home_create.yml'
+    vars:
+      db_home_name: '{{ temp_db_home_name }}'
+      db_version: '{{ version }}'
+    delegate_to: localhost
+  - assert: { that: oracle_home is defined }
+
+  - name: 'Check if Image {{ image_name }} Exists'
+    import_role:
+      name: 'fpp_common'
+      tasks_from: 'image_query.yml'
+    vars:
+      ignore_errors_flag: 'yes'
+    delegate_to: '{{ fpp_host }}'
+  - fail:
+      msg: 'Image with name {{ image_name }} already exists. Run again with custom image_name provided.'
+    when: not query_image_result.stdout | regex_search("does not exist")
+  
+  - name: 'Create Map File'
+    include_tasks: 'rdbms_map_create.yml'
+    
+  - name: 'Register Image'
+    include_tasks: 'rdbms_image_register.yml'
+
+  always:
+  
+  - name: 'Delete Temp DB Home'
+    import_role:
+      name: 'oci_tasks'
+      tasks_from: 'db_home_delete.yml'
+    vars:
+      db_home_name: '{{ temp_db_home_name }}'
+    delegate_to: localhost

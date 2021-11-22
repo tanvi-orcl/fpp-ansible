@@ -1,0 +1,27 @@
+- name: 'Assert GI Create WC Variables are defined.'
+  assert: { that: image_name is defined }
+
+- set_fact:
+    wc_name: 'wc_{{ image_name }}_{{ ansible_hostname[:-2] }}'
+  when: wc_name is not defined
+
+- name: 'Check if WC Exists'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'wc_query.yml'
+  vars:
+    ignore_errors_flag: 'yes'
+  delegate_to: '{{ fpp_host }}'
+- fail:
+    msg: 'Working copy with name {{ wc_name }} already exists. Run again with custom wc_name provided.'
+  when: not query_wc_result.stdout | regex_search("does not exist")
+
+- name: 'Create New GI Home'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'gihome_mcimgsetup.yml'
+
+- name: 'Create Working Copy'
+  include_role:
+    name: 'grid_fpp'
+    tasks_from: 'gi_add_wc.yml'

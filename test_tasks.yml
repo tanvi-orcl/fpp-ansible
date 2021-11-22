@@ -5,10 +5,8 @@
   hosts: '{{ exa_group }}'
   tasks:
     
-    - name: 'Check Nodes'
-      become: true
-      become_user: 'root'
-      become_method: 'sudo'
-      shell: 'hostname'
-      register: 'test_result'
-    - debug: { msg: '{{ test_result }}' }
+    - name: List db_home_patches
+      debug:
+        msg: 'true'
+      when: 19.13.0.0.0 > 19.10.0.0
+

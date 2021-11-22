@@ -7,4 +7,4 @@
   register: 'exacc_vm_cluster_ocid'
 - debug: { msg: '{{ exacc_vm_cluster_ocid }}' }
 - set_fact:
-    exacc_vm_cluster_ocid: '{{ exacc_vm_cluster_ocid.stdout | regex_findall("vmcluster_ocid=(.+)") | first }}'
+    vm_cluster_id: '{{ exacc_vm_cluster_ocid.stdout | regex_findall("vmcluster_ocid=(.+)") | first }}'

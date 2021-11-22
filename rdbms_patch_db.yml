@@ -1,10 +1,8 @@
-# This playbook creates and registers a new rdbms image. It will only need to be run once 
-# per image so be sure the hostgroup specified only contains one cluster.
 
 - name:
   hosts: '{{ exa_group }}'
   tasks:
-    
+
     - name: 'Assert general variables are defined.'
       assert:
         that: 
@@ -18,11 +16,9 @@
       vars:
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
-
-    # On Exadata host, Creates temp DB and uses new oracle home to discovers map values.
-    # On FPP host, creates map file and registers image.
-
-    - name: 'Create {{ ru_version }} Image'
+  
+    - name: 'RDBMS Patch'
       include_role:
         name: 'rdbms_fpp'
-        tasks_from: 'rdbms_image_create.yml'
+        tasks_from: 'rdbms_patch.yml'
+

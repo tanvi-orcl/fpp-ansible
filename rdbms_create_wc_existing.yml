@@ -5,44 +5,23 @@
   tasks:
 
     # FPP Prereqs: Check FPP-Client connection and make sure WC does not exist.
-    
-    - block:
+    - name: 'Assert general variables are defined.'
+      assert:
+        that: 
+          - fpp_host is defined and identity_file is defined and exa_tmp_path is defined
+          - exadata_type is defined and ( exadata_type == 'exacc' or exadata_type == 'exacs')
 
-      - name: 'Check Client Prerequistes'
-        include_role:
-          name: 'fpp_common'
-          tasks_from: 'check_client_prereq.yml'
-        vars:
-          target_node: '{{ ansible_hostname }}'
-
-      - set_fact:
-          wc_name: 'wc_{{ image_name }}_{{ ansible_hostname[:-2] }}'
-        when: wc_name is not defined
-
-      # TO DO: On fail, add to record.
-      - name: 'Check if WC Exists'
-        include_role:
-          name: 'fpp_common'
-          tasks_from: 'wc_query.yml'
-        vars:
-          ignore_errors_flag: 'yes'
-      - fail:
-          msg: 'Working copy with name {{ wc_name }} already exists. Run again with custom wc_name provided.'
-        when: not query_wc_result.stdout | regex_search("does not exist")
-      
-      delegate_to: '{{ fpp_host }}'
-    
-    - name: 'DB Home Info'
-      include_role:
-        name: 'target_commands'
-        tasks_from: 'dbhome_info.yml'
+    - name: 'Check Client Prerequistes'
+      import_role:
+        name: 'fpp_common'
+        tasks_from: 'check_client_prereq.yml'
       vars:
-        dbhome_name: '{{ wc_name }}'
-        
-    
+        target_node: '{{ ansible_hostname }}'
+      delegate_to: '{{ fpp_host }}'
+
     - name: 'Create Working Copy'
       include_role:
-        name: 'rdbms_role'
-        tasks_from: 'rdbms_add_wc.yml'
+        name: 'rdbms_fpp'
+        tasks_from: 'rdbms_wc_create_existing.yml'
 
     

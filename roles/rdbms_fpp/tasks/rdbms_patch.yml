@@ -1,3 +1,5 @@
+- name: 'Assert RDBMS Create Image Variables are defined.'
+  assert: { that: db_unique_name is defined and source_wc is defined and dest_wc is defined }
 
 - name: 'Check if DB Unique Name is valid'
   become: true
@@ -10,6 +12,22 @@
     msg: 'Database not valid.'
   when: not db_name_result.stdout | regex_search(db_unique_name)
 
+- name: 'Check if Source Home is WC'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'wc_query.yml'
+  vars:
+    wc_name: '{{ source_wc }}'
+  delegate_to: '{{ fpp_host }}'
+
+- name: 'Check if New Home is WC'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'wc_query.yml'
+  vars:
+    wc_name: '{{ dest_wc }}'
+  delegate_to: '{{ fpp_host }}'
+
 - name: 'Patch Database {{ db_unique_name }} EVAL'
   import_role:
     name: 'fpp_common'
@@ -17,7 +35,6 @@
   vars:
     target_node: '{{ ansible_hostname }}'
     move_type: 'database'
-    source_info: '-sourcewc {{ source_wc }}'
     dest_info: '-patchedwc {{ dest_wc }}'
     db_info: '-dbname {{ db_unique_name }}'
     ignorewcpatches: ''
@@ -32,10 +49,11 @@
   vars:
     target_node: '{{ ansible_hostname }}'
     move_type: 'database'
-    source_info: '-sourcewc {{ source_wc }}'
     dest_info: '-patchedwc {{ dest_wc }}'
     db_info: '-dbname {{ db_unique_name }}'
     ignorewcpatches: ''
     forcerolling: ''
     eval: ''
   delegate_to: '{{ fpp_host }}'
+
+# TO DO: Check if successful

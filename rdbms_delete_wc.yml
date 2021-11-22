@@ -3,20 +3,30 @@
   hosts: '{{ exa_group }}'
   tasks:
 
-    - block:
+    - name: 'Assert general variables are defined.'
+      assert:
+        that: 
+          - fpp_host is defined and identity_file is defined and exa_tmp_path is defined
+          - exadata_type is defined and ( exadata_type == 'exacc' or exadata_type == 'exacs')
 
-      - name: 'Delete Working Copy'
-        include_role:
-          name: 'fpp_common'
-          tasks_from: 'wc_delete.yml'
-        vars:
-          target_node: '{{ ansible_hostname }}'
-
+    - name: 'Delete Working Copy'
+      import_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_delete.yml'
+      vars:
+        target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
     
-    - name: 'Delete Home in Console'
+    - name: 'Find VM Cluster OCID'
       include_role:
-        name: 'rdbms_role'
-        tasks_from: 'rdbms_delete_home.yml'
+        name: 'target_commands'
+        tasks_from: '{{ exadata_type }}_ocid.yml'
+
+    - name: 'Delete DB Home'
+      import_role:
+        name: 'oci_tasks'
+        tasks_from: 'db_home_delete.yml'
       vars:
-        dbhome_name: '{{ wc_name }}'
+        db_home_name: '{{ wc_name }}'
+      delegate_to: localhost
+      

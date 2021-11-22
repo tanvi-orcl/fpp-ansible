@@ -1,0 +1,20 @@
+
+- name: 'Discover VM Cluster for DB Home {{ db_home_name }}'
+  when: compartment_id is not defined
+  include_tasks: '{{ exadata_type }}_vm_cluster_discovery.yml'
+
+- assert: { that: compartment_id is defined }
+
+- name: 'Discover DB Home {{ db_home_name }}'
+  oci_database_db_home_facts:
+    compartment_id: '{{ compartment_id }}'
+    display_name: '{{ db_home_name }}'
+    vm_cluster_id: '{{ vm_cluster_id }}'
+  register: 'db_home_discovery_result'
+- debug:
+    msg: '{{ db_home_discovery_result }}'
+- set_fact: 
+    db_home_id: '{{ db_home_discovery_result.db_homes[0].id }}'
+    db_home_version: '{{ db_home_create_result.db_home.db_version }}'
+    oracle_home: '{{ db_home_discovery_result.db_homes[0].db_home_location }}'
+  when: db_home_discovery_result.db_homes|length == 1 

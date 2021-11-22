@@ -8,6 +8,22 @@
     image_type: 'db'
     target_user: 'oracle'
 
+- name: 'Find Oracle Base'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  shell:  |
+    ./orabase
+  args:
+    chdir: '{{ oracle_home }}/bin'
+  environment:
+    ORACLE_HOME: '{{ oracle_home }}'
+  register: 'oracle_base_result'
+- debug:
+    msg: '{{ oracle_base_result }}'
+- set_fact:
+    oracle_base: '{{ oracle_base_result.stdout }}'
+
 - name: 'Add RDBMS Workingcopy {{ wc_name }}'
   import_role:
     name: 'fpp_common'

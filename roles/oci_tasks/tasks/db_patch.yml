@@ -1,0 +1,31 @@
+- name: List Available DB Patches
+  oci_database_db_home_patch_facts:
+    db_home_id: '{{ db_home_id }}'
+  register: 'patch_facts_result'
+- debug: { msg: '{{ patch_facts_result }} ' }
+
+- name: Select Correct Patch OCID by ru_version
+  set_fact:
+    patch_id: '{{ item.id }}'
+  when: item.version == '{{ ru_version }}'
+  loop: '{{ patch_facts_result.db_home_patches }}'
+- debug:
+    var: 'patch_id'
+
+- name: Precheck Patch to DB Home
+  oci_database_db_home:
+    db_home_id: '{{ db_home_id }}'
+    patch_details: 
+      action: 'PRECHECK'
+      patch_id: '{{ patch_id }}'
+  register: 'precheck_patch_result'
+- debug: { msg: '{{ precheck_patch_result }} ' }
+
+- name: Apply Patch to DB Home
+  oci_database_db_home:
+    db_home_id: '{{ db_home_id }}'
+    patch_details: 
+      action: 'APPLY'
+      patch_id: '{{ patch_id }}'
+  register: 'apply_patch_result'
+- debug: { msg: '{{ apply_patch_result }} ' }

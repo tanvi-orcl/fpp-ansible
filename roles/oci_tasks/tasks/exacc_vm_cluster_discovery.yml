@@ -1,3 +1,4 @@
+- assert: { that: vm_cluster_id is defined }
 
 - name: ExaCC VM Cluster Discovery - VM Cluster Name
   oci_database_vm_cluster_facts:

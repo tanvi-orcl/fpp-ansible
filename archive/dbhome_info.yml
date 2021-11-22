@@ -3,7 +3,7 @@
   become_user: 'root'
   become_method: 'sudo'
   shell:  |
-    {{ dbaascli_path }} dbhome info --hname {{ dbhome_name }} --noprompt YES
+    {{ dbaascli_path }} dbhome info --hname {{ db_home_name }} --noprompt YES
   register: 'dbhome_info_result'
 - debug:
     msg: '{{ dbhome_info_result }}'

@@ -39,10 +39,13 @@ This codebase contains a set of playbooks that can be used individually or combi
 
 General Variables
 
-- fpp_host (n3db1) - should be the specific host and not a group encompassing the host
 - exa_group (fiservdb)
+- fpp_host (n3db1) - should be the specific host and not a group encompassing the host
 - identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
 - exa_tmp_path (/tmp)
+
+RDBMS only
+- exadata_type (exacc or exacs)
 
 GI only
 - container_url
@@ -52,7 +55,7 @@ GI only
 - 
 - Runtime Variables
     - version (19.0.0.0) - to create temp home, for map file
-    - dbhome_bp (APR2021) - to create temp home
+    - ru_version (19.13.0.0) - to create temp home
     - OPTIONAL: image_name (DB1911_210420)
 
 **rdbms_create_wc.yml**
@@ -60,24 +63,20 @@ GI only
 - Runtime Variables
     - image_name (DB1911_210420) - to create new home and add wc
     - version (19.0.0.0) - to create new home and add wc
-    - dbhome_bp (APR2021) - to create new home and add wc
+    - ru_version (19.13.0.0) - to create new home and add wc
     - OPTIONAL: wc_name, osdbagrp_groups
 
 **rdbms_create_wc_existing.yml**
 - 
 - Runtime Variables
     - image_name (DB1911_210420) - to create new home and add wc
-    - version (19.0.0.0) - to create new home and add wc
     - wc_name (current dbhome name)
     - OPTIONAL: osdbagrp_groups
 
 **rdbms_delete_wc.yml**
 - 
 - Runtime Variables
-    - image_name (DB1911_210420) - to create new home and add wc
-    - version (19.0.0.0) - to create new home and add wc
     - wc_name (current dbhome name)
-    - OPTIONAL: osdbagrp_groups
 
 **rdbms_patch.yml**
 - 
@@ -91,25 +90,25 @@ GI only
 - 
 - Runtime Variables
     - version (19.0.0.0) - to create temp home, for map file
-    - grid_version (19.12.0.0.0) - to patch/upgrade grid and for map file
+    - ru_version (19.13.0.0) - to patch/upgrade grid and for map file
     - OPTIONAL: image_name (DB1911_210420), oracle_home
 
 **gi_create_wc.yml**
 - 
-- Variables
+- Runtime Variables
     - image_name (GI1911_210420) - to create new home and add wc
-    - new_wc_path
+    - new_wc_path ??
     - OPTIONAL: wc_name
 
 **gi_create_wc_existing.yml**
 - 
-- Variables
+- Runtime Variables
     - image_name (GI1911_210420) - to create new home and add wc
     - wc_name
 
 **gi_patch.yml**
 - 
-- Variables
+- Runtime Variables
     - source_wc
     - dest_wc
 
