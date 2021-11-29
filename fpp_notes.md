@@ -1,3 +1,40 @@
+
+Agent Syncs (10:00am)
+DbaasCli Create (10:01)
+DbaasCli Delete (10:21)
+Agent Syncs (10:30am)
+
+DbaasCli Create (9:59am)
+Agent Syncs (10:00am) - temp image is in console
+DbaasCli Delete (10:20) - Console Messed Up
+--> Run API afterwards IF PRESENT
+
+
+Questions For Fiserv
+- Allowing for custom GI Home Path: what are the requirements?
+    - do they want to provide the full path or the unique name after the 190000 part? --> leaning towards full path
+    - required or optional? --> not sure yet. required
+- GIHome Patch by node (dependent on Dave's internal discussion with dev)
+    - Tanvi question --> custom scripts to shut those down? How does that work?
+        - disable cron (systemctl stop crond)
+        - /stoptools.sh (/linux/stoptools.sh)
+        - lsof /linux: if they are not running then it comes back with nothing. Need to be stopped on every node that's being patched 
+        - /linux, /ggtrail --> relocate it to a node that's not being patched and then release anything running in ggtrail
+- Final Naming Standards for working copies / images --> multiple on same home, what is expected behavior? Increment automatically or pass in your own name?
+    - cluster naming pattern right now? --> is it always clustern[0-4]
+        - exacc: clustername-dbvm(01-08)
+        - exacs: clustername-[a-z]4(01-08)
+    - now in this case: path to dbhome1 and then wc name has it's own name (not matching!)
+- patch fails? auto revert or do you want to hold it and fix it? --> there's a command for -revert
+    - something on three --> easy fix then resume it. Stop and tell the DBA what the error was and if they can resume or rollback... based on the results of the investigation 
+- Seeding OCIDs in VM Clusters
+    - use showoci tool to more easily get OCIDs (Scott has experience with this and can sit in)
+- Expectations for playbook
+    - any use cases we are missing?
+    - Out of scope: rollback, random mid-cycle fixes automatically applied to working copies: will need to redownloaded cswlib (separate playbook) --> maybe not depending on method
+
+
+
 Move/Patch Notes
 - DB --> each DB (if unmanaged, make wc and then use source_wc)
 - GI --> once per Cluster (if unmanaged, set source_home_flag)
@@ -9,19 +46,22 @@ Move/Patch Notes
 
 FiServ Environment
 - Current naming standards: dbhome1_191200, dbhome1_182400, dbhome1_12201_210720 (version 12), dbhome1_191200_12345678 (one off patch)
+    dbhome1_191200 --> wc1_191200_cluster
+    dbhome2_191200 --> wc2_191200_cluster
+    dbhome1_12201_210720 --> wc1_12201_210720_cluster
+    dbhome2_12201_210720 --> wc2_12201_210720_cluster
 - Will be using centrify or cyberark to get the keys
 
+Dave Notes
+- NOTE: WILL NEED TO MAKE RPM UPDATES ON MY EXACS ENVIRONMENT (copy file from fpp to exacs then execute)
+- Path is optional, suffix
+- Register Working Copy - creating a new attr file with that line
+    - Make sure double check if the home is active or not (check inventory file AND run ps -ef | grep crsd)
+    - check in BOTH cases just to be sure
 
 Any differences between ExaCC vs. ExaCS --> don't think so, because dbaas tooling
 
-What is the general timeline? How often will each task be completed? --> My understanding is that a new patch comes out, you create the map file, register the image, and then will need to create workingcopy for each databse home you would like to patch to that level, and then you patch each db/grid. 
-
-
 TASKS
-
-19.13 version database
-- new 19.13 DB Home, will need to create an image from that. If they add patches to it next week, they'll need to create a new image from that. However, they shouldn't be doing that. This is an image we're going to take and test. Okay, we're happy with it, etc. etc. 
-- If they're happy with it, making a working copy. Depending on their environment, groups need to match what is the RDBMS 
 
 1. Should we be performing ssh/name resolution checks + DBaaSTools/FPE version checks before every patch
     Pre-job --> separate, optional
@@ -32,6 +72,17 @@ TASKS
 
 Database home --> templates/image registered with FPP --> working copy of that image. Determination to move to column from that home from another home
 
+- automating naming (multiple working copies of same image on same machine)
+    dbhome1_191200 --> wc1_191200_cluster
+    dbhome2_191200 --> wc2_191200_cluster
+    dbhome1_12201_210720 --> wc1_12201_210720_cluster
+    dbhome2_12201_210720 --> wc2_12201_210720_cluster
 
+- fatal: [ecc9c3n1]: FAILED! => {"changed": false, "msg": "The database version must be one of 11.2.0.4 or 12.1.0.2 or 12.2.0.1 or 18.0.0.0 or 19.0.0.0."}
+    - currently using patch....
+        - 3:26 --> 3:34 for Precheck (8)
+        - 3:35 --> 3:57 (22)
+    - automatic OraHome1/OraHome2 name?? very annoying for dbaascli 
+        - they said they might be removing that field? what does that mean?
 
 

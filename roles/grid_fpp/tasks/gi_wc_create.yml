@@ -1,5 +1,3 @@
-- name: 'Assert GI Create WC Variables are defined.'
-  assert: { that: image_name is defined }
 
 - set_fact:
     wc_name: 'wc_{{ image_name }}_{{ ansible_hostname[:-2] }}'
@@ -20,6 +18,9 @@
   include_role:
     name: 'target_commands'
     tasks_from: 'gihome_mcimgsetup.yml'
+  vars:
+    oh_dirname: '{{ wc_name }}'
+  when: existing_home is not defined or existing_home == 'false'
 
 - name: 'Create Working Copy'
   include_role:

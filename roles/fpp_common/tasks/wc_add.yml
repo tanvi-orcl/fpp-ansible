@@ -3,7 +3,7 @@
   become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    {{ rhpctl_path }} add workingcopy -workingcopy {{ wc_name }} -image {{ image_name }} -skipcopy -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo -path {{ path }} -groups "{{ osdbagrp_groups }}" {{ add_wc_parameters }} 
+    {{ rhpctl_path }} add workingcopy -workingcopy {{ wc_name }} -image {{ image_name }} -skipcopy -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo -path {{ path }} -groups "{{ osdbagrp_groups }}" {{ add_wc_param }} 
   register: 'add_wc_result'
 - debug:
     msg: '{{ add_wc_result }}'

@@ -64,19 +64,19 @@ GI only
     - image_name (DB1911_210420) - to create new home and add wc
     - version (19.0.0.0) - to create new home and add wc
     - ru_version (19.13.0.0) - to create new home and add wc
-    - OPTIONAL: wc_name, osdbagrp_groups
+    - OPTIONAL: db_home_name, osdbagrp_groups
 
 **rdbms_create_wc_existing.yml**
 - 
 - Runtime Variables
     - image_name (DB1911_210420) - to create new home and add wc
-    - wc_name (current dbhome name)
+    - db_home_name (current dbhome name)
     - OPTIONAL: osdbagrp_groups
 
 **rdbms_delete_wc.yml**
 - 
 - Runtime Variables
-    - wc_name (current dbhome name)
+    - db_home_name (db_home_name to delete)
 
 **rdbms_patch.yml**
 - 

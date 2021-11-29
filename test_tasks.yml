@@ -5,8 +5,8 @@
   hosts: '{{ exa_group }}'
   tasks:
     
-    - name: List db_home_patches
-      debug:
-        msg: 'true'
-      when: 19.13.0.0.0 > 19.10.0.0
+    - name: 'Create Working Copy'
+      include_role:
+        name: 'target_commands'
+        tasks_from: 'gihome_zip.yml'
 

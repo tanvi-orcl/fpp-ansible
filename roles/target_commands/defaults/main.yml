@@ -1,7 +1,7 @@
 dbaascli_path: '/bin/dbaascli'
 gpg_path: '/bin/gpg'
 gi_zip_path: '/acfs01'
-mcimgsetup_path: '/var/opt/oracle/managed/exapatch/mcimgsetup'
+mcimgsetup_path: '/var/opt/oracle/managed/exapatch/mcimgsetupfpp'
 
 curl_https_proxy: ''    # default behavior is no proxy
 

@@ -1,0 +1,37 @@
+
+- set_fact:
+    db_home_name: 'dbhome1_{{ ru_version | regex_replace("\.", "") }}'
+  when: db_home_name is not defined
+
+# TO DO: Check if database home exists when existing_home is not defined or existing_home == false
+
+# TO DO: Set Ansible hostname correctly
+- set_fact:
+    wc_name: 'wc{{ db_home_name | regex_findall("dbhome([0-9].+)") | first }}_{{ ansible_hostname[:-2] }}'
+
+- name: 'Check if WC Exists'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'wc_query.yml'
+  vars:
+    ignore_errors_flag: 'yes'
+  delegate_to: '{{ fpp_host }}'
+- fail:
+    msg: 'Working copy with name {{ wc_name }} already exists. Run on {{ ansible_hostname }} again with custom wc_name provided.'
+  when: not query_wc_result.stdout | regex_search("does not exist")
+  
+- name: 'Create fresh {{ version }} DB Home'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'dbhome_create.yml'
+  when: existing_home is not defined or existing_home == 'false'
+  
+- name: 'Pull DB Home Info'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'dbhome_info.yml'
+
+- name: 'Create Working Copy'
+  include_role:
+    name: 'rdbms_fpp'
+    tasks_from: 'rdbms_wc_add.yml'

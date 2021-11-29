@@ -4,7 +4,7 @@
   become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    {{ rhpctl_path }} delete workingcopy -workingcopy {{ wc_name }} -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
+    {{ rhpctl_path }} delete workingcopy -workingcopy {{ wc_name }} {{ metadata_param }} -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
   register: 'delete_wc_result'
 - debug:
     msg: '{{ delete_wc_result }}'

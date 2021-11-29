@@ -17,6 +17,9 @@
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
 
+    - name: 'Assert GI Create WC Variables are defined.'
+      assert: { that: image_name is defined }
+
     - name: 'Add GI Working Copy'
       include_role:
         name: 'grid_fpp'
