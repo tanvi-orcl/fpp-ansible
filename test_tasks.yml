@@ -8,5 +8,5 @@
     - name: 'Create Working Copy'
       include_role:
         name: 'target_commands'
-        tasks_from: 'gihome_zip.yml'
+        tasks_from: 'gihome_path.yml'
 

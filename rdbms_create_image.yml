@@ -8,7 +8,7 @@
     - name: 'Assert general variables are defined.'
       assert:
         that: 
-          - fpp_host is defined and identity_file is defined and exa_tmp_path is defined
+          - fpp_host is defined and identity_file is defined
           - exadata_type is defined and ( exadata_type == 'exacc' or exadata_type == 'exacs')
 
     - name: 'Check Client Prerequistes'
@@ -22,7 +22,7 @@
     # On Exadata host, Creates temp DB and uses new oracle home to discovers map values.
     # On FPP host, creates map file and registers image.
 
-    - name: 'Create {{ ru_version }} Image'
+    - name: 'Create RDBMS Image'
       include_role:
         name: 'rdbms_fpp'
         tasks_from: 'rdbms_image_create.yml'

@@ -6,7 +6,7 @@
   become_user: 'root'
   become_method: 'sudo'
   shell: |
-    {{ mcimgsetup_path }} -image_name {{ image_name }}.zip.gpg -dbname grid -oh_dirname {{ oh_dirname }} -container {{ container_url }} -outfile {{ exa_tmp_path }}/fpp_{{ image_name }}_stage.json -force_patch 0 -ignore_exachk 1 -skip_exachk_exec 1 -exclude_chks A98AD732FD50F308E040E50A1EC01B2C
+    {{ mcimgsetup_path }} -image_name {{ image_name }}.zip.gpg -dbname grid {{ oh_dirname_param }} -container {{ container_url }} -outfile {{ exa_tmp_path }}/fpp_{{ image_name }}_stage.json -force_patch 0 -ignore_exachk 1 -skip_exachk_exec 1 -exclude_chks A98AD732FD50F308E040E50A1EC01B2C
   environment:
     HTTPS_PROXY: '{{ curl_https_proxy }}'
   register: 'create_gi_home_result'

@@ -8,5 +8,8 @@
 - debug:
     msg: '{{ check_client_prereq_result }}'
 
-# TO DO: Assert successful: How do we check to see if version is high enough?
+# TO DO: 
+# Assert successful: How do we check to see if version is high enough?
 # maybe can do in rundeck where someone clicks continue.
+
+# Check FPP RPM

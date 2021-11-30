@@ -3,35 +3,42 @@
     db_home_name: 'dbhome1_{{ ru_version | regex_replace("\.", "") }}'
   when: db_home_name is not defined
 
-# TO DO: Check if database home exists when existing_home is not defined or existing_home == false
+# Checks if database home exists
 
-# TO DO: Set Ansible hostname correctly
-- set_fact:
-    wc_name: 'wc{{ db_home_name | regex_findall("dbhome([0-9].+)") | first }}_{{ ansible_hostname[:-2] }}'
-
-- name: 'Check if WC Exists'
+- name: 'Check if {{ db_home_name }} Exists'
   import_role:
-    name: 'fpp_common'
-    tasks_from: 'wc_query.yml'
+    name: 'target_commands'
+    tasks_from: 'dbhome_info.yml'
+
+- assert:
+    that: oracle_home is defined
+    fail_msg: 'DB Home {{ db_home_name }} not found.'
+    success_msg: 'DB Home {{ db_home_name }} exists with oracle_home {{ oracle_home }}'
+  when: existing_home is true
+- assert:
+    that: oracle_home is not defined
+    fail_msg: 'DB Home {{ db_home_name }} already exists, please pass in custom db_home_name.'
+  when: existing_home is not defined or existing_home is false
+
+- include_tasks:
+    name: 'get_wc_name.yml'
   vars:
     ignore_errors_flag: 'yes'
-  delegate_to: '{{ fpp_host }}'
 - fail:
     msg: 'Working copy with name {{ wc_name }} already exists. Run on {{ ansible_hostname }} again with custom wc_name provided.'
   when: not query_wc_result.stdout | regex_search("does not exist")
   
-- name: 'Create fresh {{ version }} DB Home'
+# Create Home and Working Copy
+
+- name: 'Create {{ ru_version }} DB Home for new WC'
   include_role:
     name: 'target_commands'
     tasks_from: 'dbhome_create.yml'
   when: existing_home is not defined or existing_home == 'false'
-  
-- name: 'Pull DB Home Info'
-  include_role:
-    name: 'target_commands'
-    tasks_from: 'dbhome_info.yml'
 
-- name: 'Create Working Copy'
+- assert: { that: oracle_home is defined }
+
+- name: 'Add Working Copy'
   include_role:
     name: 'rdbms_fpp'
     tasks_from: 'rdbms_wc_add.yml'

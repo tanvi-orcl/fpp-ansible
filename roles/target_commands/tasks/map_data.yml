@@ -17,14 +17,17 @@
 
 # Bug List
 
+- set_fact:
+    bugs_list_path: '{{ exa_tmp_path }}/{{ image_name }}_bugs.lst'
 - name: 'Bug List'
   become: 'true'
   become_user: '{{ target_user }}'
   become_method: 'sudo'
   shell:  |
-    $ORACLE_HOME/OPatch/opatch lspatches -bugs > {{ exa_tmp_path }}/{{ image_name }}_bugs.lst
+    $ORACLE_HOME/OPatch/opatch lspatches -bugs > {{ bugs_list_path }}
   environment:
     ORACLE_HOME: '{{ oracle_home }}'
   register: 'bugs_list_result'
 - debug:
     msg: '{{ bugs_list_result }}'
+

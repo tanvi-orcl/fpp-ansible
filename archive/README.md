@@ -55,15 +55,14 @@ GI only
 - Runtime Variables
     - version (19.0.0.0) - to create temp home, for map file
     - bp_version (OCT2021) - to create temp home
-    - OPTIONAL: image_name (DB1911_210420)
+    - OPTIONAL: image_name (DB191100_210420), for one-off cases
 
-**rdbms_create_wc.yml**
+**rdbms_create_wc_new.yml**
 - 
 - Runtime Variables
     - image_name (DB1911_210420) - to create new home and add wc
     - version (19.0.0.0) - to create new home and add wc
     - bp_version (OCT2021) - to create new home and add wc
-    - ru_version (19.13.0.0) - to create new home and add wc
     - OPTIONAL: db_home_name, osdbagrp_groups
 
 **rdbms_create_wc_existing.yml**
@@ -97,7 +96,8 @@ GI only
 - 
 - Runtime Variables
     - image_name (GI1911_210420) - to create new home and add wc
-    - OPTIONAL: wc_name, gi_home_path
+    - new_wc_path ??
+    - OPTIONAL: wc_name
 
 **gi_create_wc_existing.yml**
 - 

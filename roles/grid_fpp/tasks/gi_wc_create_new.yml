@@ -1,0 +1,48 @@
+
+- set_fact:
+    wc_name: 'wc_{{ image_name }}_{{ ansible_hostname[:-2] }}'
+  when: wc_name is not defined
+
+- name: 'Check if WC Exists'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'wc_query.yml'
+  vars:
+    ignore_errors_flag: 'yes'
+  delegate_to: '{{ fpp_host }}'
+- fail:
+    msg: 'Working copy with name {{ wc_name }} already exists. Run again with custom wc_name provided.'
+  when: not query_wc_result.stdout | regex_search("does not exist")
+
+- name: 'Set Current GI Home'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'gihome_path.yml'
+
+- name: 'When Suffix Defined for Custom Path'
+  block:
+  - name: 'Check for Existing Suffix'
+    become: 'true'
+    become_user: 'root'
+    become_method: 'sudo'
+    shell:  |
+      grep '/{{ gi_home_suffix }}"' {{ inventory_path }}/ContentsXML/inventory.xml
+    register: 'home_path_result'
+  - fail:
+      msg: 'Path ending in {{ gi_home_suffix }} already exists.'
+    when: home_path_result.stdout != ""
+  - set_fact:
+      oh_dirname_param: '-oh_dirname {{ gi_home_suffix }}'
+  when: gi_home_suffix is defined
+
+- name: 'Create New GI Home'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'gihome_mcimgsetup.yml'
+  vars:
+    oh_dirname_param: '{{ oh_dirname_param }}'
+
+- name: 'Create Working Copy'
+  include_role:
+    name: 'grid_fpp'
+    tasks_from: 'gi_wc_add.yml'

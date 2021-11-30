@@ -1,5 +1,5 @@
 - name: 'Assert RDBMS Create Image Variables are defined.'
-  assert: { that: db_unique_name is defined and source_wc is defined and dest_wc is defined }
+  assert: { that: db_unique_name is defined and source_home is defined and dest_home is defined }
 
 - name: 'Check if DB Unique Name is valid'
   become: true
@@ -13,20 +13,20 @@
   when: not db_name_result.stdout | regex_search(db_unique_name)
 
 - name: 'Check if Source Home is WC'
-  import_role:
-    name: 'fpp_common'
-    tasks_from: 'wc_query.yml'
+  include_tasks: 'get_wc_name.yml'
   vars:
-    wc_name: '{{ source_wc }}'
-  delegate_to: '{{ fpp_host }}'
+    ignore_errors_flag: 'no'
+    db_home_name: '{{ source_home }}'
+- set_fact:
+    source_wc: '{{ wc_name }}'
 
-- name: 'Check if New Home is WC'
-  import_role:
-    name: 'fpp_common'
-    tasks_from: 'wc_query.yml'
+- name: 'Check if Dest Home is WC'
+  include_tasks: 'get_wc_name.yml'
   vars:
-    wc_name: '{{ dest_wc }}'
-  delegate_to: '{{ fpp_host }}'
+    ignore_errors_flag: 'no'
+    db_home_name: '{{ dest_home }}'
+- set_fact:
+    dest_wc: '{{ wc_name }}'
 
 - name: 'Patch Database {{ db_unique_name }} EVAL'
   import_role:
@@ -35,12 +35,13 @@
   vars:
     target_node: '{{ ansible_hostname }}'
     move_type: 'database'
-    dest_info: '-patchedwc {{ dest_wc }}'
-    db_info: '-dbname {{ db_unique_name }}'
-    ignorewcpatches: ''
-    forcerolling: ''
-    eval: '-eval'
+    dest_param: '-patchedwc {{ dest_wc }}'
+    db_param: '-dbname {{ db_unique_name }}'
+    ignorewcpatches_param: ''
+    forcerolling_param: ''
+    eval_param: '-eval'
   delegate_to: '{{ fpp_host }}'
+  when: retry is not defined or retry == 'false'
 
 - name: 'Patch Database {{ db_unique_name }}'
   import_role:
@@ -49,11 +50,11 @@
   vars:
     target_node: '{{ ansible_hostname }}'
     move_type: 'database'
-    dest_info: '-patchedwc {{ dest_wc }}'
-    db_info: '-dbname {{ db_unique_name }}'
-    ignorewcpatches: ''
-    forcerolling: ''
-    eval: ''
+    dest_param: '-patchedwc {{ dest_wc }}'
+    db_param: '-dbname {{ db_unique_name }}'
+    ignorewcpatches_param: ''
+    forcerolling_param: ''
+    eval_param: ''
   delegate_to: '{{ fpp_host }}'
 
 # TO DO: Check if successful

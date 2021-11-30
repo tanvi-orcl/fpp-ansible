@@ -1,13 +1,27 @@
 
 - name: 'Assert RDBMS Create Image Variables are defined.'
-  assert: { that: version is defined and bp_version is defined }
+  assert: { that: version is defined and ru_version is defined }
+
+- set_fact:
+    ru_version_tag: '{{ ru_version | regex_replace("\.", "") }}'
+- set_fact:
+    image_name: 'DB{{ ru_version_tag }}'
+  when: image_name is not defined
+- debug: { var: image_name }
 
 # Creates temp DB and sets oracle home.
 
-- name: 'Create fresh {{ version }} {{ bp_version }} DB Home'
+- name: 'Create fresh {{ version }} DB Home'
   include_role:
     name: 'target_commands'
     tasks_from: 'dbhome_create.yml'
+  vars:
+    db_home_name: '{{ temp_db_home_name }}'
+  
+- name: 'Create fresh {{ version }} DB Home'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'dbhome_info.yml'
   vars:
     db_home_name: '{{ temp_db_home_name }}'
 
@@ -16,14 +30,7 @@
 - name: 'Always delete temp home, even if errors occur.'
   block:
 
-  - assert: { that: oracle_home is defined and ru_version is defined }
-
-  - set_fact:
-      ru_version_tag: '{{ ru_version | regex_replace("\.", "") }}'
-  - set_fact:
-      image_name: 'DB{{ ru_version_tag }}'
-    when: image_name is not defined
-  - debug: { var: image_name }
+  - assert: { that: oracle_home is defined }
 
   - name: 'Check if Image {{ image_name }} Exists'
     import_role:

@@ -34,7 +34,6 @@ Questions For Fiserv
     - Out of scope: rollback, random mid-cycle fixes automatically applied to working copies: will need to redownloaded cswlib (separate playbook) --> maybe not depending on method
 
 
-
 Move/Patch Notes
 - DB --> each DB (if unmanaged, make wc and then use source_wc)
 - GI --> once per Cluster (if unmanaged, set source_home_flag)

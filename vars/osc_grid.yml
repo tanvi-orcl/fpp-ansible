@@ -2,7 +2,6 @@
 exa_group: 'fiservdb'
 fpp_host: 'n3db1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
-exa_tmp_path: '/tmp'
 
 container_url: 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/5jl4rKbGW4Nf96igLLbxd8npI8a9xlvC1oTJDenSzpZVi5pWNVK3Vvlza2UL2YcQ/n/oscnas001/b/osc_ansible/o'
 curl_https_proxy: 'http://140.83.186.195:80'

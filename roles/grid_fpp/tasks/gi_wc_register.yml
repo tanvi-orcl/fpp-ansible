@@ -7,15 +7,14 @@
     image_type: 'grid'
     target_user: 'grid'
 
-- name: 'Add GI Workingcopy {{ wc_name }}'
+- name: 'Register GI Workingcopy {{ wc_name }}'
   import_role:
     name: 'fpp_common'
-    tasks_from: 'wc_add.yml'
+    tasks_from: 'wc_register.yml'
   vars:
     target_node: '{{ ansible_hostname }}'
     path: '{{ wc_path }}'
     osdbagrp_groups: '{{ osdbagrp_groups }}'
-    add_wc_parameters: '-softwareonly'
   delegate_to: '{{ fpp_host }}'
 
 - name: 'Query GI Workingcopy {{ wc_name }}'

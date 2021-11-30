@@ -8,26 +8,13 @@
 - debug:
     msg: '{{ dbhome_info_result }}'
 
-- set_fact:
-    oracle_home: '{{ dbhome_info_result.stdout | regex_findall("HOME_LOC=(.+?)\n") | first }}'
-    ru_version: '{{ dbhome_info_result.stdout | regex_findall("VERSION=(.+?)\n") | first }}'
-- debug:
-    var: 'oracle_home'
-- debug:
-    var: 'ru_version'
-
-- name: 'Find Oracle Base'
-  become: 'true'
-  become_user: 'root'
-  become_method: 'sudo'
-  shell:  |
-    ./orabase
-  args:
-    chdir: '{{ oracle_home }}/bin'
-  environment:
-    ORACLE_HOME: '{{ oracle_home }}'
-  register: 'oracle_base_result'
-- debug:
-    msg: '{{ oracle_base_result }}'
-- set_fact:
-    oracle_base: '{{ oracle_base_result.stdout }}'
+- name: 'Set oracle_home, ru_version, oracle_base if {{ db_home_name }} exists'
+  block:
+  - set_fact:
+      oracle_home: '{{ dbhome_info_result.stdout | regex_findall("HOME_LOC=(.+?)\n") | first }}'
+      ru_version: '{{ dbhome_info_result.stdout | regex_findall("VERSION=(.+?)\n") | first }}'
+  - debug:
+      var: 'oracle_home'
+  - debug:
+      var: 'ru_version'
+  when: dbhome_info_result.stdout != ""

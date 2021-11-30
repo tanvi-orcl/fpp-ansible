@@ -1,14 +1,3 @@
-# - name: 'Get Current GI Home'
-#   become: 'true'
-#   become_user: 'root'
-#   become_method: 'sudo'
-#   shell:  |
-#     echo $(awk -F : ' $1 ~ /^+ASM[0-9]$/ {print $2}' /etc/oratab)
-#   register: 'gihome_result'
-# - set_fact:
-#     oracle_home: '{{ gihome_result.stdout }}'
-# - debug:
-#     var: 'oracle_home'
 
 - name: 'Get Inventory Location'
   become: 'true'
@@ -18,18 +7,9 @@
     grep inventory_loc /etc/oraInst.loc
   register: 'inventory_result'
 - set_fact:
-    inventory_path: '{{ inventory_result.stdout | regex_search("inventory_loc=(.+)") }}'
-
-- name: 'Get Provided Home'
-  become: 'true'
-  become_user: 'root'
-  become_method: 'sudo'
-  shell:  |
-    grep {{ oracle_home }} {{ inventory_path }}/ContentsXML/inventory.xml
-  register: 'home_path_result'
-  when: oracle_home is defined
-- set_fact:
-    inventory_path: '{{ home_path_result.stdout | regex_search("inventory_loc=(.+)") }}'
+    inventory_path: '{{ inventory_result.stdout | regex_findall("inventory_loc=(.+)") | first }}'
+- debug:
+    var: 'inventory_path'
 
 - name: 'Get Active Home'
   become: 'true'
@@ -37,9 +17,28 @@
   become_method: 'sudo'
   shell:  |
     grep 'CRS="true"' {{ inventory_path }}/ContentsXML/inventory.xml
-  register: 'home_path_result'
+  register: 'crs_path_result'
+- debug:
+    msg: '{{ crs_path_result }}'
 - set_fact:
-    home_path: '{{ inventory_result.stdout | regex_search("inventory_loc=(.+)") }}'
+    oracle_home: '{{ crs_path_result.stdout | regex_findall("LOC=.(/.+?). ") | first }}'
+- debug:
+    var: 'oracle_home'
+
+# - block:
+#   - name: 'Get Provided Home For Existing'
+#     become: 'true'
+#     become_user: 'root'
+#     become_method: 'sudo'
+#     shell:  |
+#       grep '/{{ gi_home_suffix }}"' {{ inventory_path }}/ContentsXML/inventory.xml
+#     register: 'home_path_result'
+#   - set_fact:
+#       gi_home_path_inventory: '{{ home_path_result.stdout | regex_findall("LOC=.(/.+?). ") | first }}'
+#     when: home_path_result.stdout != ""
+#   when: gi_home_suffix is defined
+
+
 
 
 

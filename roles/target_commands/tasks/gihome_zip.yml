@@ -1,60 +1,48 @@
 
-
 - name: 'Copy File to Host'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'
   copy:
-    src: 'fpptools_exa-ATP_19.11-19.0.0.0.0+211114.x86_64.rpm'
+    src: 'install_gi.excl'
     dest: '{{ exa_tmp_path }}'
   register: 'copy_script_result'
 - debug:
     msg: '{{ copy_script_result }}'
 
-# - name: 'Copy File to Host'
-#   become: 'true'
-#   become_user: 'root'
-#   become_method: 'sudo'
-#   copy:
-#     src: 'install_gi.excl'
-#     dest: '{{ exa_tmp_path }}'
-#   register: 'copy_script_result'
-# - debug:
-#     msg: '{{ copy_script_result }}'
+- name: 'Create Zip File'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  shell:  |
+    zip -r {{ gi_zip_path }}/{{ image_name }}.zip .* * -x "..*" -x@{{ exa_tmp_path }}/install_gi.excl >{{ gi_zip_path }}/zip{{ image_name }}.out 2>{{ gi_zip_path }}/zip{{ image_name }}.err
+  args:
+    chdir: '{{ oracle_home }}'
+  register: 'gi_zip_result'
+- debug:
+    msg: '{{ gi_zip_result }}'
 
-# - name: 'Create Zip File'
-#   become: 'true'
-#   become_user: 'root'
-#   become_method: 'sudo'
-#   shell:  |
-#     zip -r {{ gi_zip_path }}/{{ image_name }}.zip .* * -x "..*" -x@{{ exa_tmp_path }}/install_gi.excl >{{ gi_zip_path }}/zip{{ image_name }}.out 2>{{ gi_zip_path }}/zip{{ image_name }}.err
-#   args:
-#     chdir: '{{ oracle_home }}'
-#   register: 'gi_zip_result'
-# - debug:
-#     msg: '{{ gi_zip_result }}'
+- name: 'Encrypt Zip File'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  shell:  |
+    {{ gpg_path }} --yes --batch --passphrase 'AdbCsPatching$' -c {{ gi_zip_path }}/{{ image_name }}.zip
+  args:
+    chdir: '{{ oracle_home }}'
+  register: 'gi_encrypt_result'
+- debug:
+    msg: '{{ gi_encrypt_result }}'
 
-# - name: 'Encrypt Zip File'
-#   become: 'true'
-#   become_user: 'root'
-#   become_method: 'sudo'
-#   shell:  |
-#     {{ gpg_path }} --yes --batch --passphrase 'AdbCsPatching$' -c {{ gi_zip_path }}/{{ image_name }}.zip
-#   args:
-#     chdir: '{{ oracle_home }}'
-#   register: 'gi_encrypt_result'
-# - debug:
-#     msg: '{{ gi_encrypt_result }}'
-
-# - name: 'Upload encrypted image file to object store'
-#   become: 'true'
-#   become_user: 'root'
-#   become_method: 'sudo'
-#   shell:  |
-#     curl -T {{ gi_zip_path }}/{{ image_name }}.zip.gpg {{ container_url }}/
-#   environment:
-#     HTTPS_PROXY: '{{ curl_https_proxy }}'
-#   register: 'upload_result'
-# - debug:
-#     msg: '{{ upload_result }}'
+- name: 'Upload encrypted image file to object store'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  shell:  |
+    curl -T {{ gi_zip_path }}/{{ image_name }}.zip.gpg {{ container_url }}/
+  environment:
+    HTTPS_PROXY: '{{ curl_https_proxy }}'
+  register: 'upload_result'
+- debug:
+    msg: '{{ upload_result }}'
 

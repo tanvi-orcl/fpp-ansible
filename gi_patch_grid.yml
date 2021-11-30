@@ -6,7 +6,7 @@
     - name: 'Assert general variables are defined.'
       assert:
         that: 
-          - fpp_host is defined and identity_file is defined and exa_tmp_path is defined
+          - fpp_host is defined and identity_file is defined
           - container_url is defined
 
     - name: 'Check Client Prerequistes'

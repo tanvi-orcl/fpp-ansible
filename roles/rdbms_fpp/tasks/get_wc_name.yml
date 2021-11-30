@@ -1,0 +1,15 @@
+
+# TO DO: Set Ansible hostname correctly
+
+# - set_fact:
+#     wc_name: 'wc{{ db_home_name | regex_findall("dbhome([0-9].+)") | first }}_{{ ansible_hostname[:-2] }}'
+- set_fact:
+    wc_name: 'wc_{{ db_home_name }}_{{ ansible_hostname[:-2] }}'
+
+- name: 'Check if WC Exists'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'wc_query.yml'
+  vars:
+    ignore_errors_flag: '{{ ignore_errors_flag }}'
+  delegate_to: '{{ fpp_host }}'

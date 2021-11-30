@@ -8,7 +8,7 @@
     - name: 'Assert general variables are defined.'
       assert:
         that: 
-          - fpp_host is defined and identity_file is defined and exa_tmp_path is defined
+          - fpp_host is defined and identity_file is defined
           - exadata_type is defined and ( exadata_type == 'exacc' or exadata_type == 'exacs')
 
     - name: 'Check Client Prerequistes'
@@ -19,7 +19,10 @@
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
     
-    - assert: { that: image_name is defined and version is defined and ru_version is defined }
+    - assert:
+        that: 
+          - image_name is defined
+          - version is defined and bp_version is defined and ru_version is defined
     
     - name: 'Create RDBMS WC'
       include_role:

@@ -16,9 +16,6 @@
     image_type: 'grid'
     target_user: 'grid'
 
-- set_fact:
-    grid_version_tag: '{{ ru_version | regex_replace("\.", "") }}'
-  
 - name: 'Add Map File'
   import_role:
     name: 'fpp_common'
