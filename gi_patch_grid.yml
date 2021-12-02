@@ -17,8 +17,8 @@
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
     
-    - name: 'Patch Grid'
-      include_role:
-        name: 'grid_fpp'
-        tasks_from: 'gi_patch.yml'
+    # - name: 'Patch Grid'
+    #   include_role:
+    #     name: 'grid_fpp'
+    #     tasks_from: 'gi_patch.yml'
     

@@ -1,0 +1,9 @@
+- name:
+  hosts: '{{ exa_group }}'
+  tasks:
+    
+
+    - name: 'Create StopTools UA'
+      include_role:
+        name: 'grid_fpp'
+        tasks_from: 'gi_ua_stoptools_create.yml'

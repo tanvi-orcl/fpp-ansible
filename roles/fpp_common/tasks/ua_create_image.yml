@@ -1,0 +1,53 @@
+
+# # TO DO: Set correct permissions / owner
+# - name: 'Copy Useraction Script to FPP Host'
+#   become: 'true'
+#   become_user: 'oracle'
+#   become_method: 'sudo'
+#   copy:
+#     src: '{{ ua_script }}'
+#     dest: '{{ fpp_admin_path }}/{{ ua_path }}'
+#     mode: '1777'
+#   register: 'copy_script_result'
+# - debug:
+#     msg: '{{ copy_script_result }}'
+
+# - name: 'Create Useraction for Script'
+#   become: 'true'
+#   become_user: 'oracle'
+#   become_method: 'sudo'
+#   shell:  |
+#     {{ rhpctl_path }} add useraction -useraction {{ ua_name }} -actionscript {{ fpp_admin_path }}/{{ ua_path }}/{{ ua_script }} {{ phase }} -optype {{ op_type }} -onerror ABORT 
+#   register: 'add_ua_result'
+# - debug:
+#     msg: '{{ add_ua_result }}'
+
+- name: 'Create New Software Image'
+  become: 'true'
+  become_user: 'oracle'
+  become_method: 'sudo'
+  shell:  |
+    {{ rhpctl_path }} add imagetype -imagetype {{ image_type }} -basetype {{ base_type }} 
+  register: 'create_softwareimage_result'
+- debug:
+    msg: '{{ create_softwareimage_result }}'
+
+- name: 'Add Useraction to Imagetype'
+  become: 'true'
+  become_user: 'oracle'
+  become_method: 'sudo'
+  shell:  |
+    {{ rhpctl_path }} modify imagetype -imagetype {{ image_type }} -useractions {{ ua_name }} 
+  register: 'modify_softwareimage_result'
+- debug:
+    msg: '{{ modify_softwareimage_result }}'
+
+- name: 'Query UserAction Script'
+  become: 'true'
+  become_user: 'oracle'
+  become_method: 'sudo'
+  shell: |
+    {{ rhpctl_path }} query useraction -useraction {{ ua_name }}
+  register: 'query_ua_result'
+- debug:
+    msg: '{{ query_ua_result }}'

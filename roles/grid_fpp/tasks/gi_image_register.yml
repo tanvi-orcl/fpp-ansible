@@ -7,7 +7,7 @@
       tasks_from: 'image_register.yml'
     vars:
       image_map_path: 'maps/gi'
-      software_type: 'ORACLEGISOFTWARE'
+      software_type: '{{ gi_software_type }}'
 
   - name: 'Query GI Image {{ image_name }}'
     include_role:

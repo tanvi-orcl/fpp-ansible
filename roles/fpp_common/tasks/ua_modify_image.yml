@@ -1,0 +1,32 @@
+# TO DO: Set correct permissions / owner
+- name: 'Copy UserAction Script to FPP Host'
+  become: 'true'
+  become_user: 'oracle'
+  become_method: 'sudo'
+  copy:
+    src: '{{ ua_script }}'
+    dest: '{{ fpp_admin_path }}/{{ ua_path }}'
+    mode: '1777'
+  register: 'copy_script_result'
+- debug:
+    msg: '{{ copy_script_result }}'
+
+- name: 'Copy UserAction Script to FPP Host'
+  become: 'true'
+  become_user: 'oracle'
+  become_method: 'sudo'
+  shell: |
+    {{ rhpctl_path }} modify useraction -useraction {{ ua_name }} -actionscript {{ fpp_admin_path }}/{{ ua_path }}/{{ ua_script }} 
+  register: 'copy_script_result'
+- debug:
+    msg: '{{ copy_script_result }}'
+
+- name: 'Query UserAction Script'
+  become: 'true'
+  become_user: 'oracle'
+  become_method: 'sudo'
+  shell: |
+    {{ rhpctl_path }} query useraction -useraction {{ ua_name }}
+  register: 'query_ua_result'
+- debug:
+    msg: '{{ query_ua_result }}'

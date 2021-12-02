@@ -1,0 +1,10 @@
+- block:
+  - name: 'Update UA {{ ua_stoptools_name }}'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'ua_modify_image.yml'
+    vars:
+      ua_path: 'useractions'
+      ua_script: '{{ ua_stoptools_script }}'
+      ua_name: '{{ ua_stoptools_name }}'
+  delegate_to: '{{ fpp_host }}'

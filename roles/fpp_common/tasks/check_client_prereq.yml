@@ -1,15 +1,32 @@
+
+- block:
+  - name: 'Check FPP RPM Version'
+    shell: |
+      rpm -qp /u02/app/fpp/fpphome/target_rpm/fpptools_exa-ATP_19.11-19.0.0.0.0+211114.x86_64.rpm
+    register: 'check_fpp_prereq_result'
+  - debug:
+      msg: '{{ check_fpp_prereq_result }}'
+  - set_fact:
+      fpp_server_fpptools: '{{ check_fpp_prereq_result.stdout }}'
+  run_once: 'true'
+  
 - name: 'Check Client Prerequisites'
   become: 'true'
   become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    ssh -i {{ identity_file }} -o "StrictHostKeyChecking=no" opc@{{ target_node }} -t "rpm -qa | egrep 'dbaas|FPE' ; ls /var/opt/oracle/managed/exapatch/mcpostpatch"
+    ssh -i {{ identity_file }} -o "StrictHostKeyChecking=no" opc@{{ target_node }} -t "rpm -qa | egrep 'dbaas|FPE|fpptools' ; ls /var/opt/oracle/managed/exapatch/mcpostpatch"
   register: 'check_client_prereq_result'
 - debug:
     msg: '{{ check_client_prereq_result }}'
 
-# TO DO: 
-# Assert successful: How do we check to see if version is high enough?
-# maybe can do in rundeck where someone clicks continue.
+- set_fact:
+    dbaas_version: '{{ check_client_prereq_result.stdout | regex_findall("dbaas.+?-(.+)\b") | first }}'
+    fpe_version: '{{ check_client_prereq_result.stdout | regex_findall("FPE.+?-(.+)\b") | first }}'
+    client_server_fpptools: '{{ check_client_prereq_result.stdout | regex_findall("(fpptools.+)\b") | first }}'
 
-# Check FPP RPM
+- assert:
+    that: 
+      - dbaas_version is version('1.0-1+21.1.1.3.0_210630.1055', '>=')
+      - fpe_version is version('20.1.3-210428.1907', '>=')
+      - fpp_server_fpptools == client_server_fpptools

@@ -2,7 +2,25 @@ Node List: (1,2) (3,4) (5,6); (1) (2, 3, 4, 5, 6); (1) (3, 5) (2, 4, 6)
 
 Node List: (1,2, 3,4, 5,6)
 
+1. Create User Action
+2. Create Custom Image Type
+3. Mod CIT w/ UA
+4. Mod Image w/ new CIT
 
+
+1.
+rhpctl add useraction -useraction run_stoptools -actionscript /u02/app/fpp/admin/useractions/test_us.sh -pre -optype MOVE_GIHOME -onerror ABORT
+to Modify/update script
+rhpctl modify useraction -useraction run_stoptools -actionscript /u02/app/fpp/admin/useractions/test_us.sh
+
+2.
+rhpctl add imagetype -imagetype GI_StopTools -basetype ORACLEGISOFTWARE
+
+3. 
+rhpctl modify imagetype -imagetype GI_StopTools -useractions run_stoptools
+
+4. 
+rhpctl modify image -image GI1911300 -imagetype GI_StopTools
 
 first command (node list)
 - index 1
@@ -24,16 +42,6 @@ Execute on List of Nodes --> pre-tasks
 FPP --> patch
 Execute on List of Nodes --> post-tasks
 
-
-
-
-Questions For Fiserv
-- GIHome Patch by node (dependent on Dave's internal discussion with dev)
-    - Tanvi question --> custom scripts to shut those down? How does that work?
-        - disable cron (systemctl stop crond)
-        - /stoptools.sh (/linux/stoptools.sh)
-        - lsof /linux: if they are not running then it comes back with nothing. Need to be stopped on every node that's being patched 
-        - /linux, /ggtrail --> relocate it to a node that's not being patched and then release anything running in ggtrail
 - Final Naming Standards for working copies / images --> multiple on same home, what is expected behavior? Increment automatically or pass in your own name?
     - cluster naming pattern right now? --> is it always clustern[0-4]
         - exacc: clustername-dbvm(01-08)
@@ -43,9 +51,6 @@ Questions For Fiserv
     - something on three --> easy fix then resume it. Stop and tell the DBA what the error was and if they can resume or rollback... based on the results of the investigation 
 - Seeding OCIDs in VM Clusters
     - use showoci tool to more easily get OCIDs (Scott has experience with this and can sit in)
-- Expectations for playbook
-    - any use cases we are missing?
-    - Out of scope: rollback, random mid-cycle fixes automatically applied to working copies: will need to redownloaded cswlib (separate playbook) --> maybe not depending on method
 
 
 Move/Patch Notes

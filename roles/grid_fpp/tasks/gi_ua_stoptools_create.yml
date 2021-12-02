@@ -1,0 +1,14 @@
+- block:
+  - name: 'Register GI Image {{ image_name }}'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'ua_create_image.yml'
+    vars:
+      ua_path: 'useractions'
+      ua_script: '{{ ua_stoptools_script }}'
+      ua_name: '{{ ua_stoptools_name }}'
+      phase: '-pre'
+      op_type: 'MOVE_GIHOME'
+      image_type: '{{ gi_software_type }}'
+      base_type: 'ORACLEGISOFTWARE'
+  delegate_to: '{{ fpp_host }}'

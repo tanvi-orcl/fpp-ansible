@@ -1,6 +1,6 @@
 # GENERAL
-# exa_group: 'fiservdb'
-exa_group: 'clustertest'
+exa_group: 'fiservdb'
+#exa_group: 'clustertest'
 fpp_host: 'n3db1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 exadata_type: 'exacc'
@@ -17,11 +17,14 @@ exadata_type: 'exacc'
 # db_home_name: 'dbhome2_191300_123423'
 # optional: wc_name
 
+#db_home_name: 'OraHome2'
+orphan_home: 'true'
+
 # PATCH
 #check_prereq: 'true'
-source_home: 'dbhome2_191300'
-dest_home: 'dbhome3_191300'
-db_unique_name: 'tst1911_mwf_iad'
+# source_home: 'dbhome2_191300'
+# dest_home: 'dbhome3_191300'
+# db_unique_name: 'tst1911_mwf_iad'
 
 ###### TESTING VALUES
 #oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'

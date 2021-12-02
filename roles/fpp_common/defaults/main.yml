@@ -9,6 +9,9 @@ forcerolling_param: ''
 # wc defaults
 add_wc_param: ''
 
+# delete defaults
+metadata_param: ''
+
 ignore_errors_flag: 'no'
 curl_https_proxy: ''    # default behavior is no proxy
 

@@ -15,6 +15,6 @@
     msg: '{{ db_home_discovery_result }}'
 - set_fact: 
     db_home_id: '{{ db_home_discovery_result.db_homes[0].id }}'
-    db_home_version: '{{ db_home_create_result.db_home.db_version }}'
+    db_home_version: '{{ db_home_discovery_result.db_homes[0].db_version }}'
     oracle_home: '{{ db_home_discovery_result.db_homes[0].db_home_location }}'
   when: db_home_discovery_result.db_homes|length == 1 

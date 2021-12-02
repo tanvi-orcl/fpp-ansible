@@ -2,14 +2,12 @@
 - name:
   hosts: '{{ exa_group }}'
   vars:
-    version_tag: '19.13.0.0.0'
-    fiserv_hostname: 'dbvm-asdfasdf1'
+    fpp_version_full: '1.0-1+21.1.1.3.0_210630.1055.x86_64'
+    fpp_version: '20.0'
   tasks:
 
-    - set_fact:
-        cluster_name: '{{ fiserv_hostname | regex_findall("(.+?)-") | first }}'
-    - debug:
-        var: 'cluster_name'
+    - assert:
+        that: fpp_version_full is version('1.0-1+21.1.1.3.0_210630.1055', '>=')
     # - block:
     #   - name: 'Check Client Prerequistes'
     #     include_role:

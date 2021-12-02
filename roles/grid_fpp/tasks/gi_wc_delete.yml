@@ -1,0 +1,18 @@
+
+- block:
+  - name: 'Check if WC Exists'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'wc_query.yml'
+  - assert:
+      that: query_wc_result.stdout | regex_search("Software only. true")
+  delegate_to: '{{ fpp_host }}'
+
+- block:
+  - name: 'Delete Working Copy'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'wc_delete.yml'
+    vars:
+      target_node: '{{ ansible_hostname }}'
+  delegate_to: '{{ fpp_host }}'

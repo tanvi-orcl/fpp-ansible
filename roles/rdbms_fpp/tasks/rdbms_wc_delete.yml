@@ -1,0 +1,27 @@
+
+- name: 'Get WC Name and Check if Exists'
+  include_tasks: 'rdbms_get_wc_name.yml'
+  when: orphan_home is not defined or orphan_home == 'false'
+
+- block:
+  - name: 'Delete Working Copy'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'wc_delete.yml'
+    vars:
+      target_node: '{{ ansible_hostname }}'
+      metadata_param: '-metadataonly'
+  when: wc_name is defined
+  delegate_to: '{{ fpp_host }}'
+
+- name: 'Find VM Cluster OCID'
+  include_role:
+    name: 'target_commands'
+    tasks_from: '{{ exadata_type }}_ocid.yml'
+
+- block:
+  - name: 'Delete DB Home'
+    include_role:
+      name: 'oci_tasks'
+      tasks_from: 'db_home_delete.yml'
+  delegate_to: localhost

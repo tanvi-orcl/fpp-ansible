@@ -23,15 +23,14 @@
       tasks_from: 'patch_grid.yml'
     vars:
       target_node: '{{ ansible_hostname }}'
-      ignorewcpatches: '-ignorewcpatches'
-      batch_param: '-batches "(ecc9c3n1),(ecc9c3n2),(ecc9c3n3,ecc9c3n4)"'
-      # eval_param: '-eval'
+      ignorewcpatches_param: '-ignorewcpatches'
+      eval_param: '-eval'
       
-  # - name: 'Patch GI Image'
-  #   include_role:
-  #     name: 'fpp_common'
-  #     tasks_from: 'patch_grid.yml'
-  #   vars:
-  #     target_node: '{{ ansible_hostname }}'
-  #     ignorewcpatches: '-ignorewcpatches'
+  - name: 'Patch GI Image'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'patch_grid.yml'
+    vars:
+      target_node: '{{ ansible_hostname }}'
+      ignorewcpatches_param: '-ignorewcpatches'
   delegate_to: '{{ fpp_host }}'
