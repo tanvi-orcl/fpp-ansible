@@ -1,15 +1,16 @@
 
-- name: 'Register RDBMS Image {{ image_name }}'
-  import_role:
-    name: 'fpp_common'
-    tasks_from: 'image_register.yml'
-  vars:
-    image_map_path: 'maps/db'
-    software_type: 'ORACLEDBSOFTWARE'
-  delegate_to: '{{ fpp_host }}'
+# changed to include
+- block:
+  - name: 'Register RDBMS Image {{ image_name }}'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'image_register.yml'
+    vars:
+      image_map_path: 'maps/db'
+      software_type: 'ORACLEDBSOFTWARE'
 
-- name: 'Query RDBMS Image {{ image_name }}'
-  import_role:
-    name: 'fpp_common'
-    tasks_from: 'image_query.yml'
+  - name: 'Query RDBMS Image {{ image_name }}'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'image_query.yml'
   delegate_to: '{{ fpp_host }}'

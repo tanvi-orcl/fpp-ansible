@@ -1,8 +1,8 @@
 {
-    "{{ image_tag }}": [
+    "{{ ru_version_string[:5] }}EE": [
         {
             "version": "{{ version }}",
-            "ru_version": "{{ ru_version }}",
+            "ru_version": "{{ version_tag }}",
             "aru_id": "226",
             "image_type": "{{ image_type }}",
             "image_name": "{{ image_name }}.zip.gpg",

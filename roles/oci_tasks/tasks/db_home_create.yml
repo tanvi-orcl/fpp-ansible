@@ -28,7 +28,5 @@
     
 
 - name: 'Patch DB Home to {{ ru_version }} if needed'
-  import_role:
-    name: 'oci_tasks'
-    tasks_from: 'db_patch.yml'
+  include_tasks: 'db_patch.yml'
   when: db_home_version != ru_version

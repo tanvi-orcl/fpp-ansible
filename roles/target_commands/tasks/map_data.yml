@@ -11,9 +11,9 @@
 - debug:
     msg: '{{ opatch_result }}'
 - set_fact:
-    patch_numbers: '{{ opatch_result.stdout_lines | regex_findall("([0-9]{8});", multiline=True) | join(",") }}' 
+    patches: '{{ opatch_result.stdout_lines | regex_findall("([0-9]{8});", multiline=True) | join(",") }}' 
 - debug:
-    var: 'patch_numbers'
+    var: 'patches'
 
 # Bug List
 

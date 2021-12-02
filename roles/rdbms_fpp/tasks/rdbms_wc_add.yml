@@ -24,18 +24,19 @@
 - set_fact:
     oracle_base: '{{ oracle_base_result.stdout }}'
 
-- name: 'Add RDBMS Workingcopy {{ wc_name }}'
-  import_role:
-    name: 'fpp_common'
-    tasks_from: 'wc_add.yml'
-  vars:
-    target_node: '{{ ansible_hostname }}'
-    path: '{{ oracle_home }}'
-    add_wc_parameters: '-skipclone -oraclebase {{ oracle_base }} -user oracle'
-  delegate_to: '{{ fpp_host }}'
+# changed to include
+- block:
+  - name: 'Add RDBMS Workingcopy {{ wc_name }}'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'wc_add.yml'
+    vars:
+      target_node: '{{ ansible_hostname }}'
+      path: '{{ oracle_home }}'
+      add_wc_param: '-skipclone -oraclebase {{ oracle_base }} -user oracle'
 
-- name: 'Query RDBMS Workingcopy {{ wc_name }}'
-  import_role:
-    name: 'fpp_common'
-    tasks_from: 'wc_query.yml'
+  - name: 'Query RDBMS Workingcopy {{ wc_name }}'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'wc_query.yml'
   delegate_to: '{{ fpp_host }}'

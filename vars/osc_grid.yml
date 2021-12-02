@@ -8,17 +8,19 @@ curl_https_proxy: 'http://140.83.186.195:80'
 #container_url: 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o'
 
 # CREATE IMAGE
-version: '19.0.0.0.0'
-ru_version: '19.11.3.0'
+#version: '19.0.0.0.0'
+#version_tag: '19.11.3.0.0'
 # optional: image_name
 
 # CREATE WORKING COPY
-image_name: 'gihome1_191110'
-exadata_type: 'exacc'
+#image_name: 'GI1911300'
+#gi_home_suffix: 'grid1911300_2'
+#gi_home_suffix: 'grid1911_0_wc61_iad1602clu032f2_2202' #existing
+#exadata_type: 'exacc'
 
 # PATCH
-source_wc: 'wc_gihome1_191120_ecc9c3'
 dest_wc: 'wc_gihome1_191110_ecc9c3'
+source_wc: 'wc_GI1911300_ecc9c3'
 
 
 ###### TESTING VALUES

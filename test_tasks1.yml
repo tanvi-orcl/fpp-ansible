@@ -1,0 +1,24 @@
+   
+- name:
+  hosts: '{{ exa_group }}'
+  vars:
+    version_tag: '19.13.0.0.0'
+    fiserv_hostname: 'dbvm-asdfasdf1'
+  tasks:
+
+    - set_fact:
+        cluster_name: '{{ fiserv_hostname | regex_findall("(.+?)-") | first }}'
+    - debug:
+        var: 'cluster_name'
+    # - block:
+    #   - name: 'Check Client Prerequistes'
+    #     include_role:
+    #       name: 'fpp_common'
+    #       tasks_from: 'image_query.yml'
+    #   run_once: 'true'
+    #     any_errors_fatal: 'true'
+    #   delegate_to: '{{ fpp_host }}'
+    # - debug:
+    #     msg: 'THIS SHOULD NOT RUN'
+      
+      

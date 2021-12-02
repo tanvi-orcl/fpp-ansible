@@ -1,12 +1,14 @@
 
 - set_fact:
-    db_home_name: 'dbhome1_{{ ru_version | regex_replace("\.", "") }}'
+    ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
+- set_fact:
+    db_home_name: 'dbhome3_{{ ru_version_string[:6] }}'
   when: db_home_name is not defined
 
 # Checks if database home exists
 
 - name: 'Check if {{ db_home_name }} Exists'
-  import_role:
+  include_role:
     name: 'target_commands'
     tasks_from: 'dbhome_info.yml'
 
@@ -14,14 +16,14 @@
     that: oracle_home is defined
     fail_msg: 'DB Home {{ db_home_name }} not found.'
     success_msg: 'DB Home {{ db_home_name }} exists with oracle_home {{ oracle_home }}'
-  when: existing_home is true
+  when: existing_home is defined and existing_home is true
 - assert:
     that: oracle_home is not defined
     fail_msg: 'DB Home {{ db_home_name }} already exists, please pass in custom db_home_name.'
-  when: existing_home is not defined or existing_home is false
+  when: existing_home is not defined or existing_home == 'false'
 
-- include_tasks:
-    name: 'get_wc_name.yml'
+- name: 'Get WC Name and Check if Exists'
+  include_tasks: 'rdbms_get_wc_name.yml'
   vars:
     ignore_errors_flag: 'yes'
 - fail:
@@ -30,15 +32,13 @@
   
 # Create Home and Working Copy
 
-- name: 'Create {{ ru_version }} DB Home for new WC'
+- name: 'Create {{ version_tag }} DB Home for new WC'
   include_role:
     name: 'target_commands'
     tasks_from: 'dbhome_create.yml'
   when: existing_home is not defined or existing_home == 'false'
-
 - assert: { that: oracle_home is defined }
 
 - name: 'Add Working Copy'
-  include_role:
-    name: 'rdbms_fpp'
-    tasks_from: 'rdbms_wc_add.yml'
+  include_tasks: 'rdbms_wc_add.yml'
+  

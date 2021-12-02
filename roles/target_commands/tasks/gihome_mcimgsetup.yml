@@ -1,6 +1,4 @@
 
-# TO DO: Grep Inventory file to check if oh_dirname exists
-
 - name: 'Create GI Home'
   become: 'true'
   become_user: 'root'

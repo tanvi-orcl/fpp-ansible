@@ -1,9 +1,0 @@
-- name: 'Patch {{ move_type }}'
-  become: 'true'
-  become_user: 'oracle'
-  become_method: 'sudo'
-  shell: |
-    {{ rhpctl_path }} move {{ move_type }} {{ db_param }} -sourcewc {{ source_wc }} {{ dest_param }} -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo {{ ignorewcpatches_param }} {{ forcerolling_param }} {{ eval_param }}
-  register: 'patch_result'
-- debug:
-    msg: '{{ patch_result }}'

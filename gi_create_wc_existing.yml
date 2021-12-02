@@ -17,8 +17,10 @@
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
 
-    - name: 'Assert GI Create WC Variables are defined.'
-      assert: { that: image_name is defined and wc_name is defined }
+    - assert:
+        that: 
+          - image_name is defined
+          - gi_home_path is defined
 
     - name: 'Add GI Working Copy'
       include_role:

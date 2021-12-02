@@ -4,12 +4,24 @@
   hosts: '{{ exa_group }}'
   tasks:
 
-    # FPP Prereqs: Check FPP-Client connection and make sure WC does not exist.
     - name: 'Assert general variables are defined.'
       assert:
         that: 
           - fpp_host is defined and identity_file is defined
           - exadata_type is defined and ( exadata_type == 'exacc' or exadata_type == 'exacs')
+    
+    - name: 'Assert Create WC Existing variables are defined.'
+      assert:
+        that: 
+          - image_name is defined and db_home_name is defined
+    
+    - name: 'Check if Provided Image Exists'
+      import_role:
+        name: 'fpp_common'
+        tasks_from: 'image_query.yml'
+      delegate_to: '{{ fpp_host }}'
+      run_once: 'true'
+      any_errors_fatal: 'true'
 
     - name: 'Check Client Prerequistes'
       import_role:
@@ -18,11 +30,6 @@
       vars:
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
-
-    - assert:
-        that: 
-          - image_name is defined
-          - db_home_name is defined
 
     - name: 'Create Working Copy'
       include_role:

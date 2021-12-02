@@ -7,7 +7,7 @@
 # - set_fact:
 #     wc_name: 'wc{{ db_home_name | regex_findall("dbhome([0-9].+)") | first }}_{{ cluster_name }}'
 - set_fact:
-    wc_name: 'wc_{{ image_name }}_{{ cluster_name }}'
+    wc_name: 'wc_{{ db_home_name }}_{{ cluster_name }}'
 
 # changed to include
 - block:

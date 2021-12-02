@@ -8,7 +8,7 @@
 - debug:
     msg: '{{ dbhome_info_result }}'
 
-- name: 'Set oracle_home, ru_version, oracle_base if {{ db_home_name }} exists'
+- name: 'Set oracle_home, ru_version if {{ db_home_name }} exists'
   block:
   - set_fact:
       oracle_home: '{{ dbhome_info_result.stdout | regex_findall("HOME_LOC=(.+?)\n") | first }}'
@@ -17,4 +17,4 @@
       var: 'oracle_home'
   - debug:
       var: 'ru_version'
-  when: dbhome_info_result.stdout != ""
+  when: dbhome_info_result.stdout | regex_search("HOME_NAME")

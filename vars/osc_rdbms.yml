@@ -1,26 +1,26 @@
 # GENERAL
-exa_group: 'fiservdb'
-# exa_group: 'clustertest'
+# exa_group: 'fiservdb'
+exa_group: 'clustertest'
 fpp_host: 'n3db1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
-
 exadata_type: 'exacc'
 
 # CREATE IMAGE
-version: '19.0.0.0'
-ru_version: '19.13.0.0'
-# db_home_name: 'dbhome2_191300_123423'
+#version: '19.0.0.0'
+#version_tag: '19.13.0.0.0'
 # optional: image_name
 
 # CREATE WORKING COPY
-# image_name: 'tst_image'
+#image_name: 'DB2191300'
+#db_home_name: dbhome1_191100
 # image_name: 'dbhome1_191300'
+# db_home_name: 'dbhome2_191300_123423'
 # optional: wc_name
 
 # PATCH
 #check_prereq: 'true'
-source_home: 'dbhome1_191300'
-dest_home: 'dbhome2_191300'
+source_home: 'dbhome2_191300'
+dest_home: 'dbhome3_191300'
 db_unique_name: 'tst1911_mwf_iad'
 
 ###### TESTING VALUES

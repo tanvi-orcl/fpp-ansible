@@ -54,7 +54,7 @@ GI only
 - 
 - Runtime Variables
     - version (19.0.0.0) - to create temp home, for map file
-    - bp_version (OCT2021) - to create temp home
+    - version_tag (19.13.0.0.0) - to create temp home
     - OPTIONAL: image_name (DB1911_210420)
 
 **rdbms_create_wc.yml**
@@ -62,8 +62,7 @@ GI only
 - Runtime Variables
     - image_name (DB1911_210420) - to create new home and add wc
     - version (19.0.0.0) - to create new home and add wc
-    - bp_version (OCT2021) - to create new home and add wc
-    - ru_version (19.13.0.0) - to create new home and add wc
+    - version_tag (19.13.0.0.0) - to create new home and add wc
     - OPTIONAL: db_home_name, osdbagrp_groups
 
 **rdbms_create_wc_existing.yml**
@@ -81,16 +80,17 @@ GI only
 **rdbms_patch.yml**
 - 
 - Runtime Variables
-    - source_wc (wc_DB199_201020_legacy_ecc5c4)
-    - dest_wc (wc_DB199_201020_ecc5c4)
+    - source_home (dbhome1_191200)
+    - dest_home (dbhome1_191300)
     - db_unique_name (a4db0_iad3zx) - to patch
-    
+
+{{ ignorewcpatches_param }} {{ forcerolling_param }}    
 
 **gi_create_image.yml**
 - 
 - Runtime Variables
     - version (19.0.0.0) - to create temp home, for map file
-    - ru_version (19.13.0.0) - to patch/upgrade grid and for map file
+    - version_tag (19.13.0.0.0) - to patch/upgrade grid and for map file
     - OPTIONAL: image_name (DB1911_210420), oracle_home
 
 **gi_create_wc.yml**

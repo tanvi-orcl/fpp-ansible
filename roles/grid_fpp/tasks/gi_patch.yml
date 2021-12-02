@@ -1,46 +1,37 @@
 - name: 'Assert GI Create WC Variables are defined.'
   assert: { that: source_wc is defined and dest_wc is defined }
 
-- name: 'Check if Source Home is WC'
-  import_role:
-    name: 'fpp_common'
-    tasks_from: 'wc_query.yml'
-  vars:
-    wc_name: '{{ source_wc }}'
-  delegate_to: '{{ fpp_host }}'
+# changed to include
+- block:
+  - name: 'Check if Source Home is WC'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'wc_query.yml'
+    vars:
+      wc_name: '{{ source_wc }}'
 
-- name: 'Check if New Home is WC'
-  import_role:
-    name: 'fpp_common'
-    tasks_from: 'wc_query.yml'
-  vars:
-    wc_name: '{{ dest_wc }}'
-  delegate_to: '{{ fpp_host }}'
+  - name: 'Check if New Home is WC'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'wc_query.yml'
+    vars:
+      wc_name: '{{ dest_wc }}'
 
-- name: 'Patch GI Image'
-  import_role:
-    name: 'fpp_common'
-    tasks_from: 'patch.yml'
-  vars:
-    target_node: '{{ ansible_hostname }}'
-    move_type: 'gihome'
-    db_info: ''
-    dest_info: '-destwc {{ dest_wc }}'
-    ignorewcpatches: '-ignorewcpatches'
-    forcerolling: ''
-    eval: '-eval'
-  delegate_to: '{{ fpp_host }}'
-
-- name: 'Patch GI Image'
-  import_role:
-    name: 'fpp_common'
-    tasks_from: 'patch.yml'
-  vars:
-    target_node: '{{ ansible_hostname }}'
-    move_type: 'gihome'
-    db_info: ''
-    dest_info: '-destwc {{ dest_wc }}'
-    ignorewcpatches: '-ignorewcpatches'
-    forcerolling: ''
-    eval: ''
+  - name: 'Patch GI Image EVAL'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'patch_grid.yml'
+    vars:
+      target_node: '{{ ansible_hostname }}'
+      ignorewcpatches: '-ignorewcpatches'
+      batch_param: '-batches "(ecc9c3n1),(ecc9c3n2),(ecc9c3n3,ecc9c3n4)"'
+      # eval_param: '-eval'
+      
+  # - name: 'Patch GI Image'
+  #   include_role:
+  #     name: 'fpp_common'
+  #     tasks_from: 'patch_grid.yml'
+  #   vars:
+  #     target_node: '{{ ansible_hostname }}'
+  #     ignorewcpatches: '-ignorewcpatches'
   delegate_to: '{{ fpp_host }}'

@@ -1,19 +1,33 @@
+Node List: (1,2) (3,4) (5,6); (1) (2, 3, 4, 5, 6); (1) (3, 5) (2, 4, 6)
 
-Agent Syncs (10:00am)
-DbaasCli Create (10:01)
-DbaasCli Delete (10:21)
-Agent Syncs (10:30am)
+Node List: (1,2, 3,4, 5,6)
 
-DbaasCli Create (9:59am)
-Agent Syncs (10:00am) - temp image is in console
-DbaasCli Delete (10:20) - Console Messed Up
---> Run API afterwards IF PRESENT
+
+
+first command (node list)
+- index 1
+- when index 1 --> runs initial command
+
+next bath (node list)
+- index 2
+- when index != 1 --> runs continue
+
+first command (first batch): (1,2) (3,4) (5,6)
+    node 1: pre-task
+    node 2: pre-task
+second command: continue
+    ??: pre-task
+third command: continue
+
+FPP --> get list of nodes
+Execute on List of Nodes --> pre-tasks
+FPP --> patch
+Execute on List of Nodes --> post-tasks
+
+
 
 
 Questions For Fiserv
-- Allowing for custom GI Home Path: what are the requirements?
-    - do they want to provide the full path or the unique name after the 190000 part? --> leaning towards full path
-    - required or optional? --> not sure yet. required
 - GIHome Patch by node (dependent on Dave's internal discussion with dev)
     - Tanvi question --> custom scripts to shut those down? How does that work?
         - disable cron (systemctl stop crond)

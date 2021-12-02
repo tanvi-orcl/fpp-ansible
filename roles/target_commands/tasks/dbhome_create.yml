@@ -1,13 +1,30 @@
 
-- name: 'cswlib check bp'
+- block:
+  - name: 'cswlib check bp'
+    become: 'true'
+    become_user: 'root'
+    become_method: 'sudo'
+    shell:  |
+      {{ dbaascli_path }} cswlib showimages --product database | grep "IMAGE_TAG={{ version_tag }} " -A 4
+    register: 'cswlib_showimages_result'
+  - debug:
+      msg: '{{ cswlib_showimages_result }}'
+  - set_fact:
+      software_bp: '{{ cswlib_showimages_result.stdout | regex_findall("-([A-Z]+?[0-9]+?)\b") | first }}'
+  run_once: 'true'
+
+- debug:
+    var: 'software_bp'
+
+- name: 'cswlib check available bp'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'
   shell:  |
-    {{ dbaascli_path }} cswlib list
-  register: 'cswlib_list_result'
+    {{ dbaascli_path }} dbimage list
+  register: 'dbimage_list_result'
 - debug:
-    msg: '{{ cswlib_list_result }}'
+    msg: '{{ dbimage_list_result }}'
 
 - block:
 
@@ -16,20 +33,20 @@
     become_user: 'root'
     become_method: 'sudo'
     shell:  |
-      {{ dbaascli_path }} cswlib download --version {{ version | regex_replace("\.", "") }} --bp {{ bp_version }}
+      {{ dbaascli_path }} cswlib download --version {{ version | regex_replace("\.", "") }} --bp {{ software_bp }}
     register: 'cswlib_download_result'
     failed_when: cswlib_download_result.stdout | regex_search("ERROR:.+")
   - debug:
       msg: '{{ cswlib_download_result }}'
 
-  when: not cswlib_list_result.stdout | regex_search(bp_version)
+  when: not dbimage_list_result.stdout | regex_search(software_bp)
 
 - name: 'create dbhome'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'
   shell:  |
-    {{ dbaascli_path }} dbhome create --version {{ version | regex_replace("\.", "") }} --bp {{ bp_version }} --ohome_name {{ db_home_name }} --noprompt YES
+    {{ dbaascli_path }} dbhome create --version {{ version | regex_replace("\.", "") }} --imageTag {{ version_tag }} --ohome_name {{ db_home_name }} --noprompt YES
   register: 'dbhome_create_result'
   failed_when: dbhome_create_result.stdout | regex_search("ERROR:.+")
 - debug:
