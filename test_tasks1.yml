@@ -1,22 +1,17 @@
    
 - name:
-  hosts: '{{ exa_group }}'
+  hosts: 'n3db1'
   vars:
-    fpp_version_full: '1.0-1+21.1.1.3.0_210630.1055.x86_64'
-    fpp_version: '20.0'
+    wc_name2: 'wc_GI1911300_ecc9c3'
+    wc_name: 'wc_gihome1_191110_ecc9c3'
   tasks:
 
-    - assert:
-        that: fpp_version_full is version('1.0-1+21.1.1.3.0_210630.1055', '>=')
-    # - block:
-    #   - name: 'Check Client Prerequistes'
-    #     include_role:
-    #       name: 'fpp_common'
-    #       tasks_from: 'image_query.yml'
-    #   run_once: 'true'
-    #     any_errors_fatal: 'true'
-    #   delegate_to: '{{ fpp_host }}'
-    # - debug:
-    #     msg: 'THIS SHOULD NOT RUN'
+    - name: 'RDBMS Patch'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_query.yml'
+    - debug:
+        var: 'curr_batch'
+
       
       

@@ -83,6 +83,7 @@ GI only
     - source_home (dbhome1_191200)
     - dest_home (dbhome1_191300)
     - db_unique_name (a4db0_iad3zx) - to patch
+    - OPTIONAL: patch_error_param (retry, revert)
 
 {{ ignorewcpatches_param }} {{ forcerolling_param }}    
 
@@ -110,6 +111,8 @@ GI only
 - Runtime Variables
     - source_wc
     - dest_wc
+    - batch_list
+    - OPTIONAL: patch_error_param (-revert)
 
 
 ## Additional Resources

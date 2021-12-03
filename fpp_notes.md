@@ -7,6 +7,18 @@ Node List: (1,2, 3,4, 5,6)
 3. Mod CIT w/ UA
 4. Mod Image w/ new CIT
 
+FPP
+- dest_wc --> get nodes
+
+Run On Nodes
+- Off
+
+FPP Patch
+
+Run On Nodes One
+
+
+
 
 1.
 rhpctl add useraction -useraction run_stoptools -actionscript /u02/app/fpp/admin/useractions/test_us.sh -pre -optype MOVE_GIHOME -onerror ABORT

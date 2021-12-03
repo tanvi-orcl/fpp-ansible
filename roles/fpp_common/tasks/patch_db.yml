@@ -1,13 +1,25 @@
 
-# TO DO: figure out ignorewcpatches and forcerolling
+- block:
+  - name: 'Patch Database {{ eval_param }}'
+    become: 'true'
+    become_user: 'oracle'
+    become_method: 'sudo'
+    shell: |
+      {{ rhpctl_path }} move database -dbname {{ db_unique_name }} -sourcewc {{ source_wc }} -patchedwc {{ dest_wc }} {{ ignorewcpatches_param }} {{ forcerolling_param }} {{ eval_param }} {{ patch_error_param }} -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
+    register: 'patch_result'
+  - debug:
+      msg: '{{ patch_result }}'
+  when: patch_error_param is not defined
 
-- name: 'Patch Database'
-  become: 'true'
-  become_user: 'oracle'
-  become_method: 'sudo'
-  shell: |
-    {{ rhpctl_path }} move database -dbname {{ db_unique_name }} -sourcewc {{ source_wc }} -patchedwc {{ dest_wc }} {{ ignorewcpatches_param }} {{ forcerolling_param }} {{ eval_param }} -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
-  register: 'patch_result'
 
-- debug:
-    msg: '{{ patch_result }}'
+- block:
+  - name: 'Patch Database {{ eval_param }}, {{ patch_error_param }}'
+    become: 'true'
+    become_user: 'oracle'
+    become_method: 'sudo'
+    shell: |
+      {{ rhpctl_path }} move database -dbname {{ db_unique_name }} -patchedwc {{ dest_wc }} {{ eval_param }} {{ patch_error_param }} -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
+    register: 'patch_result'
+  - debug:
+      msg: '{{ patch_result }}'
+  when: patch_error_param is defined

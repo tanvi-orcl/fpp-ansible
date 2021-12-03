@@ -8,4 +8,4 @@ hostname >> curr_date
 # confirm that stopped --> check return code
 #/linux/stoptools.sh  # --> check return code
 #wc -l lsof /linux     # if they are not running then it comes back with nothing
-# TO DO: /ggtrail --> relocate it to a node that's not being patched and then release anything running in ggtrail
+# /ggtrail --> relocate it to a node that's not being patched and then release anything running in ggtrail

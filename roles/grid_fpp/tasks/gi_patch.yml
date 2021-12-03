@@ -1,36 +1,50 @@
-- name: 'Assert GI Create WC Variables are defined.'
-  assert: { that: source_wc is defined and dest_wc is defined }
 
-# changed to include
-- block:
-  - name: 'Check if Source Home is WC'
-    include_role:
-      name: 'fpp_common'
-      tasks_from: 'wc_query.yml'
-    vars:
-      wc_name: '{{ source_wc }}'
+# TO DO: Set Up Actual Pre Task
+- name: 'Run Pre-Tasks'
+  include_role:
+    name: 'target_commands'
+    tasks_from: 'gihome_path.yml'
+  when: patch_error_param is not defined
 
-  - name: 'Check if New Home is WC'
-    include_role:
-      name: 'fpp_common'
-      tasks_from: 'wc_query.yml'
-    vars:
-      wc_name: '{{ dest_wc }}'
+- assert:
+  that:
+    - patch_error_param == '-revert' or patch_error_param == '-continue'
+  when: patch_error_param is defined
 
-  - name: 'Patch GI Image EVAL'
-    include_role:
-      name: 'fpp_common'
-      tasks_from: 'patch_grid.yml'
-    vars:
-      target_node: '{{ ansible_hostname }}'
-      ignorewcpatches_param: '-ignorewcpatches'
-      eval_param: '-eval'
+- name: 'Patching Work to Delegate to FPP and Run Once'
+  block:
+  
+  - name: 'Run Prereqs if on first batch'
+    block:
+    - name: 'Check if Source Home is WC'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_query.yml'
+      vars:
+        wc_name: '{{ source_wc }}'
+
+    - name: 'Check if New Home is WC'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_query.yml'
+      vars:
+        wc_name: '{{ dest_wc }}'
+
+    - name: 'Patch GI Image EVAL'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'patch_grid.yml'
+      vars:
+        ignorewcpatches_param: '-ignorewcpatches'
+        eval_param: '-eval'
+    when: hostvars[fpp_host]["curr_batch"] is not defined and patch_error_param is not defined
       
   - name: 'Patch GI Image'
     include_role:
       name: 'fpp_common'
       tasks_from: 'patch_grid.yml'
     vars:
-      target_node: '{{ ansible_hostname }}'
       ignorewcpatches_param: '-ignorewcpatches'
+  
+  run_once: 'true'
   delegate_to: '{{ fpp_host }}'

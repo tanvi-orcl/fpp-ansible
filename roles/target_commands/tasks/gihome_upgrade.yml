@@ -9,7 +9,6 @@
 - debug:
     msg: '{{ composite_version_result }}'
 
-# TO DO: Test out Upgrade
 # - block:
 #   - name: 'Upgrade GI'
 #     become: 'true'

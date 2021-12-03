@@ -1,21 +1,24 @@
 
-# TO DO: figure out ignorewcpatches and forcerolling
+- block:
+  - name: 'Patch GIHome {{ eval_param }}'
+    become: 'true'
+    become_user: 'oracle'
+    become_method: 'sudo'
+    shell: |
+      {{ rhpctl_path }} move gihome -sourcewc {{ source_wc }} -destwc {{ dest_wc }} {{ ignorewcpatches_param }} {{ forcerolling_param }} -batches "{{ batches_list }}" {{ eval_param }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
+    register: 'patch_result'
+  - debug:
+      msg: '{{ patch_result }}'
+  when: patch_error_param is not defined
 
-- name: 'Patch GIHome {{ eval_param }}'
-  become: 'true'
-  become_user: 'oracle'
-  become_method: 'sudo'
-  shell: |
-    {{ rhpctl_path }} move gihome -sourcewc {{ source_wc }} -destwc {{ dest_wc }} {{ ignorewcpatches_param }} {{ forcerolling_param }} -batches "{{ batches }}" -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo {{ eval_param }}
-  register: 'patch_result'
-- debug:
-    msg: '{{ patch_result }}'
-
-# # Default behavior: waiting for batch param
-# - name: 'Patch GIHome'
-#   become: 'true'
-#   become_user: 'oracle'
-#   become_method: 'sudo'
-#   shell: |
-#     {{ rhpctl_path }} move gihome -sourcewc {{ source_wc }} -destwc {{ dest_wc }} {{ ignorewcpatches_param }} {{ forcerolling_param }} -direct -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo {{ eval_param }}
-#   register: 'patch_result'
+- block:
+  - name: 'Patch GIHome {{ eval_param }}, {{ patch_error_param }}'
+    become: 'true'
+    become_user: 'oracle'
+    become_method: 'sudo'
+    shell: |
+      {{ rhpctl_path }} move gihome -destwc {{ dest_wc }} -batches "{{ batches_list }}" {{ eval_param }} {{ patch_error_param }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
+    register: 'patch_result'
+  - debug:
+      msg: '{{ patch_result }}'
+  when: patch_error_param is defined

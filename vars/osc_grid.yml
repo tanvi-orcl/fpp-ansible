@@ -18,14 +18,14 @@ curl_https_proxy: 'http://140.83.186.195:80'
 #gi_home_suffix: 'grid1911300_2'
 #gi_home_suffix: 'grid1911_0_wc61_iad1602clu032f2_2202' #existing
 #exadata_type: 'exacc'
-
 # wc_name: 'wc_gihome1_191120_ecc9c3'
 
 # PATCH
-batches: '(ecc9c3n1),(ecc9c3n2),(ecc9c3n3,ecc9c3n4)'
+batches_list: '(ecc9c3n1),(ecc9c3n2),(ecc9c3n3,ecc9c3n4)'
 source_wc: 'wc_GI1911300_ecc9c3'
 dest_wc: 'wc_gihome1_191110_ecc9c3'
-
+patch_error_param: '-revert'
+patch_error_flag: 'retry'
 
 
 ###### TESTING VALUES

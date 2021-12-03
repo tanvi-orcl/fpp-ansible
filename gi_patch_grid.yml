@@ -1,13 +1,39 @@
 
+
 - name:
-  hosts: '{{ exa_group }}'
+  hosts: '{{ fpp_host }}'
   tasks:
     
     - name: 'Assert general variables are defined.'
       assert:
         that: 
-          - fpp_host is defined and identity_file is defined
-          - container_url is defined
+          - identity_file is defined
+
+    - name: 'Assert GI Create WC Variables are defined.'
+      assert: { that: source_wc is defined and dest_wc is defined }
+    
+    - name: 'Query {{ dest_wc }} for any Current Batches'
+      include_role:
+        name: 'fpp_common'
+        tasks_from: 'wc_query.yml'
+      vars:
+        wc_name: '{{ dest_wc }}'
+
+- name:
+  hosts: '{{ exa_group }}'
+  tasks:
+    
+    - block:
+      - name: End the play for hosts not in the current batch
+        meta: end_host
+        when: ansible_hostname != '{{ batches_list | regex_findall("\b(.+?)\b") | first }}'
+      when: hostvars[fpp_host]["curr_batch"] is not defined
+    
+    - block:
+      - name: End the play for hosts not in the current batch
+        meta: end_host
+        when: ansible_hostname not in hostvars[fpp_host]["curr_batch"]
+      when: hostvars[fpp_host]["curr_batch"] is defined
 
     - name: 'Check Client Prerequistes'
       import_role:
@@ -17,8 +43,7 @@
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
     
-    # - name: 'Patch Grid'
-    #   include_role:
-    #     name: 'grid_fpp'
-    #     tasks_from: 'gi_patch.yml'
-    
+    - name: 'Run PreReqs'
+      include_role:
+        name: 'grid_fpp'
+        tasks_from: 'gi_patch.yml'
