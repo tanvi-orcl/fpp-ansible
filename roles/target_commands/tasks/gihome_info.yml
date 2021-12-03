@@ -25,18 +25,20 @@
 - debug:
     var: 'oracle_home'
 
-# - block:
-#   - name: 'Get Provided Home For Existing'
-#     become: 'true'
-#     become_user: 'root'
-#     become_method: 'sudo'
-#     shell:  |
-#       grep '/{{ gi_home_suffix }}"' {{ inventory_path }}/ContentsXML/inventory.xml
-#     register: 'home_path_result'
-#   - set_fact:
-#       gi_home_path_inventory: '{{ home_path_result.stdout | regex_findall("LOC=.(/.+?). ") | first }}'
-#     when: home_path_result.stdout != ""
-#   when: gi_home_suffix is defined
+- name: 'Get Client Name'
+  become: 'true'
+  become_user: 'grid'
+  become_method: 'sudo'
+  shell:  |
+    {{ oracle_home }}/bin/olsnodes -c
+  register: 'client_name_result'
+- debug:
+    msg: '{{ client_name_result }}'
+- set_fact:
+    client_name: '{{ client_name_result.stdout }}'
+- debug:
+    var: 'client_name'
+
 
 
 

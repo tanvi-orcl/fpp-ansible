@@ -1,6 +1,6 @@
 # GENERAL
-exa_group: 'clustertest'
-#exa_group: 'fiservdb'
+#exa_group: 'clustertest'
+exa_group: 'fiservdb'
 fpp_host: 'n3db1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 
@@ -14,8 +14,9 @@ curl_https_proxy: 'http://140.83.186.195:80'
 # optional: image_name
 
 # CREATE WORKING COPY
-#image_name: 'GI1911300'
-#gi_home_suffix: 'grid1911300_2'
+image_name: 'gihome1_191110'
+# gi_home_suffix: 'grid1911300_3'
+gi_home_path: '/u01/app/19.0.0.0/grid'
 #gi_home_suffix: 'grid1911_0_wc61_iad1602clu032f2_2202' #existing
 #exadata_type: 'exacc'
 # wc_name: 'wc_gihome1_191120_ecc9c3'

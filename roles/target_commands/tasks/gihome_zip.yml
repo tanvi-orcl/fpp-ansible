@@ -1,4 +1,17 @@
 
+- name: 'Check GI Version before Zipping'
+  become: 'true'
+  become_user: 'grid'
+  become_method: 'sudo'
+  shell:  |
+    {{ oracle_home }}/bin/oraversion -compositeVersion
+  register: 'composite_version_result'
+- debug:
+    msg: '{{ composite_version_result }}'
+
+- assert:
+    that: composite_version_result.stdout == version_tag
+
 - name: 'Copy File to Host'
   become: 'true'
   become_user: 'root'

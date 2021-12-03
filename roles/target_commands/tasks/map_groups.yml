@@ -13,8 +13,6 @@
     msg: '{{ osdbagrp_flags }}'
 - set_fact:
     osdbagrp_flags_list: '{{ osdbagrp_flags.stderr | regex_findall("-[a-z]") }}'
-- debug:
-    msg: '{{ osdbagrp_flags_list }}'
 
 - name: 'Group Name Command'
   become: 'true'

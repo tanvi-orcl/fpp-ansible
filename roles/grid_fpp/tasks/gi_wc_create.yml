@@ -1,24 +1,36 @@
 
 # Set WC Name and See if Exists
 
-- name: 'Get WC Name and Check if Exists'
-  include_tasks: 'gi_get_wc_name.yml'
-  vars:
-    ignore_errors_flag: 'yes'
-- fail:
-    msg: 'Working copy with name {{ wc_name }} already exists. Run on {{ ansible_hostname }} again with custom wc_name provided.'
-  when: not query_wc_result.stdout | regex_search("does not exist")
+# NAMING STANDARD
+# - set_fact:
+#     cluster_name: '{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
+- set_fact:
+    cluster_name: '{{ ansible_hostname[:-2] }}'
+- set_fact:
+    wc_name: 'wc_{{ image_name }}_2_{{ cluster_name }}'
+
+- block:
+  - name: 'Check if WC Exists'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'wc_query.yml'
+    vars:
+      ignore_errors_flag: 'yes'
+  - fail:
+      msg: 'Working copy with name {{ wc_name }} already exists. Run on {{ ansible_hostname }} again with custom wc_name provided.'
+    when: not query_wc_result.stdout | regex_search("does not exist")
+  delegate_to: '{{ fpp_host }}'
 
 - name: 'Set Current GI Home'
   include_role:
     name: 'target_commands'
-    tasks_from: 'gihome_path.yml'
+    tasks_from: 'gihome_info.yml'
 
-- name: 'If Creating WC with New Home'
+- name: 'Creating WC with New Home'
   include_tasks: 'gi_wc_add_new.yml'
   when: existing_home is not defined or existing_home == 'false'
 
-- name: 'If Creating WC with Existing Home'
+- name: 'Creating WC with Existing Home'
   include_tasks: 'gi_wc_add_existing.yml'
   when: existing_home is defined and existing_home == 'true'
 

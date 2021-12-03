@@ -3,7 +3,7 @@
   become_user: 'oracle'
   become_method: 'sudo'
   shell:  |
-    scp -i {{ identity_file }} opc@{{ target_node }}:{{ bugs_list_path }} {{ fpp_admin_path }}/{{ image_map_path }}
+    scp -i {{ identity_file }} opc@{{ target_node }}:{{ exa_bugs_path }} {{ fpp_maps_path }}/{{ image_map_dir }}
   register: 'bugs_list_result'
 - debug:
     msg: '{{ bugs_list_result }}'
@@ -14,7 +14,7 @@
   become_method: 'sudo'
   template:
     src: 'map.json'
-    dest: '{{ fpp_admin_path }}/{{ image_map_path }}/{{ image_name }}.map'
+    dest: '{{ fpp_maps_path }}/{{ image_map_dir }}/{{ image_name }}.map'
   register: 'map_template_result'
 - debug:
     msg: '{{ map_template_result }}'

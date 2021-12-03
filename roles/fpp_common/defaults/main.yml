@@ -1,5 +1,11 @@
+
 rhpctl_path: '/u02/app/fpp/fpphome/bin/rhpctl'
-fpp_admin_path: '/u02/app/fpp/admin'
+fpp_maps_path: '/u02/app/fpp/admin/maps'
+fpp_tmp_path: '/u02/app/fpp/admin/tmp'
+
+
+ignore_errors_flag: 'no'
+curl_https_proxy: ''    # default behavior is no proxy
 
 # patch defaults
 eval_param: ''
@@ -12,8 +18,6 @@ add_wc_param: ''
 # delete defaults
 metadata_param: ''
 
-ignore_errors_flag: 'no'
-curl_https_proxy: ''    # default behavior is no proxy
 
 
 

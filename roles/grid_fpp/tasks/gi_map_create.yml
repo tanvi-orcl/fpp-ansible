@@ -16,7 +16,6 @@
     image_type: 'grid'
     target_user: 'grid'
 
-# changed to include
 - block: 
   - name: 'Add Map File'
     include_role:
@@ -25,7 +24,7 @@
     vars:
       target_node: '{{ ansible_hostname }}'
       image_type: 'grid'
-      image_map_path: 'maps/gi'
+      image_map_dir: 'gi'
       image: '{{ image_name }}.zip.gpg'
 
   - name: 'Update Exa Map File'
@@ -33,5 +32,5 @@
       name: 'fpp_common'
       tasks_from: 'map_gi_master_update.yml'
     vars:
-      image_map_path: 'maps/gi'
+      image_map_dir: 'gi'
   delegate_to: '{{ fpp_host }}'

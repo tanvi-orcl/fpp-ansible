@@ -38,21 +38,14 @@ This codebase contains a set of playbooks that can be used individually or combi
 ### Playbooks
 
 General Variables
-
-- exa_group (fiservdb)
 - fpp_host (n3db1) - should be the specific host and not a group encompassing the host
 - identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
-
-RDBMS only
-- exadata_type (exacc or exacs)
-
-GI only
-- container_url
-- OPTIONAL: curl_https_proxy
 
 **rdbms_create_image.yml**
 - 
 - Runtime Variables
+    - exa_host (ecc9n1)
+    - exadata_type (exacc or exacs)
     - version (19.0.0.0) - to create temp home, for map file
     - version_tag (19.13.0.0.0) - to create temp home
     - OPTIONAL: image_name (DB1911_210420)
@@ -60,6 +53,7 @@ GI only
 **rdbms_create_wc.yml**
 - 
 - Runtime Variables
+    - exa_group (fiservdb)
     - image_name (DB1911_210420) - to create new home and add wc
     - version (19.0.0.0) - to create new home and add wc
     - version_tag (19.13.0.0.0) - to create new home and add wc
@@ -68,6 +62,7 @@ GI only
 **rdbms_create_wc_existing.yml**
 - 
 - Runtime Variables
+    - exa_group (fiservdb)
     - image_name (DB1911_210420) - to create new home and add wc
     - db_home_name (current dbhome name)
     - OPTIONAL: osdbagrp_groups
@@ -75,36 +70,41 @@ GI only
 **rdbms_delete_wc.yml**
 - 
 - Runtime Variables
+    - exa_group (ecc9n1)
+    - exadata_type (exacc or exacs)
     - db_home_name (db_home_name to delete)
 
 **rdbms_patch.yml**
 - 
-- Runtime Variables
+- Runtime Variables 
+    - exa_host (ecc9n1)
     - source_home (dbhome1_191200)
     - dest_home (dbhome1_191300)
     - db_unique_name (a4db0_iad3zx) - to patch
-    - OPTIONAL: patch_error_param (retry, revert)
-
-{{ ignorewcpatches_param }} {{ forcerolling_param }}    
+    - OPTIONAL: patch_error_param (-revert, -continue)
 
 **gi_create_image.yml**
-- 
-- Runtime Variables
+- ASSUMES THAT GI HOME ALREADY PATCHED / AT IMAGE THEY WOULD LIKE TO ZIP
+- Runtime Variables 
+    - container_url
+        - OPTIONAL: curl_https_proxy
     - version (19.0.0.0) - to create temp home, for map file
     - version_tag (19.13.0.0.0) - to patch/upgrade grid and for map file
-    - OPTIONAL: image_name (DB1911_210420), oracle_home
+    - OPTIONAL: image_name (DB1911_210420)
 
-**gi_create_wc.yml**
+**gi_create_wc_new.yml**
 - 
 - Runtime Variables
+    - container_url
+        - OPTIONAL: curl_https_proxy
     - image_name (GI1911_210420) - to create new home and add wc
-    - OPTIONAL: wc_name, gi_home_path
+    - OPTIONAL: wc_name, gi_home_suffix
 
 **gi_create_wc_existing.yml**
 - 
 - Runtime Variables
     - image_name (GI1911_210420) - to create new home and add wc
-    - wc_name
+    - gi_home_path
 
 **gi_patch.yml**
 - 
@@ -112,7 +112,9 @@ GI only
     - source_wc
     - dest_wc
     - batch_list
-    - OPTIONAL: patch_error_param (-revert)
+    - OPTIONAL: patch_error_param (-revert, -continue)
+    - OPTIONAL: ignorewcpatches_param (-ignorewcpatches)
+    - OPTIONAL: forcerolling_param (-forcerolling)
 
 
 ## Additional Resources

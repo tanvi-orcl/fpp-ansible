@@ -31,7 +31,6 @@
     name: 'target_commands'
     tasks_from: 'gihome_mcimgsetup.yml'
 
-# changed to include
 - block:
   - name: 'Add GI Workingcopy {{ wc_name }}'
     include_role:

@@ -24,7 +24,6 @@
 - set_fact:
     oracle_base: '{{ oracle_base_result.stdout }}'
 
-# changed to include
 - block:
   - name: 'Add RDBMS Workingcopy {{ wc_name }}'
     include_role:

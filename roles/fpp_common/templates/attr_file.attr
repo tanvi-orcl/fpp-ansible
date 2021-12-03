@@ -1,1 +1,1 @@
-{{ wc_name }},{{ cluster_name }}{{ swonly_param }}
+{{ wc_name }},{{ client_name }}{{ swonly_param }}

@@ -10,7 +10,6 @@
 # - set_fact:
 #     wc_name: 'wc{{ db_home_name | regex_findall("dbhome([0-9].+)") | first }}_{{ cluster_name }}'
 
-# changed to include
 - block:
   - name: 'Check if WC Exists'
     include_role:

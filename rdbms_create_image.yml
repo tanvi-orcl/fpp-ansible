@@ -2,7 +2,7 @@
 # per image so be sure the hostgroup specified only contains one cluster.
 
 - name:
-  hosts: '{{ exa_group }}'
+  hosts: '{{ exa_host }}'
   tasks:
     
     - name: 'Assert general variables are defined.'
@@ -10,6 +10,7 @@
         that: 
           - fpp_host is defined and identity_file is defined
           - exadata_type is defined and ( exadata_type == 'exacc' or exadata_type == 'exacs')
+        quiet: 'true'
 
     - name: 'Check Client Prerequistes'
       import_role:

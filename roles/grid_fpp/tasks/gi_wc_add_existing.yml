@@ -3,7 +3,7 @@
   become_user: 'root'
   become_method: 'sudo'
   shell:  |
-    grep '/{{ gi_home_path }}"' {{ inventory_path }}/ContentsXML/inventory.xml
+    grep "{{ gi_home_path }}" {{ inventory_path }}/ContentsXML/inventory.xml
   register: 'home_path_result'
 - set_fact:
     gi_home_path_inventory: '{{ home_path_result.stdout | regex_findall("LOC=.(/.+?). ") | first }}'
@@ -21,13 +21,12 @@
     swonly_param: ''
   when: gi_home_path_inventory == oracle_home
 
-# # changed to include
-# - block:
-#   - name: 'Register GI Workingcopy {{ wc_name }}'
-#     include_role:
-#       name: 'fpp_common'
-#       tasks_from: 'wc_register.yml'
-#     vars:
-#       target_node: '{{ ansible_hostname }}'
-#       path: '{{ gi_home_path }}'
-#   delegate_to: '{{ fpp_host }}'
+- block:
+  - name: 'Register GI Workingcopy {{ wc_name }}'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'wc_register.yml'
+    vars:
+      target_node: '{{ ansible_hostname }}'
+      path: '{{ gi_home_path }}'
+  delegate_to: '{{ fpp_host }}'

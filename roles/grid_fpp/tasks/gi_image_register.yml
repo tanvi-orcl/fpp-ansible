@@ -6,7 +6,7 @@
       name: 'fpp_common'
       tasks_from: 'image_register.yml'
     vars:
-      image_map_path: 'maps/gi'
+      image_map_dir: 'gi'
       software_type: 'ORACLEGISOFTWARE'
 
   - name: 'Query GI Image {{ image_name }}'

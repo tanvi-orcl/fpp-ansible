@@ -14,7 +14,6 @@
     image_type: 'db'
     target_user: 'oracle'
 
-# changed to include
 - block:
   - name: 'Add Map File'
     include_role:
@@ -23,6 +22,6 @@
     vars:
       target_node: '{{ ansible_hostname }}'
       image_type: 'db'
-      image_map_path: 'maps/db'
+      image_map_dir: 'db'
       image: '{{ image_name }}.zip.gpg'
   delegate_to: '{{ fpp_host }}'

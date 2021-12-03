@@ -6,8 +6,10 @@
     - name: 'Assert general variables are defined.'
       assert:
         that: 
-          - fpp_host is defined and identity_file is defined
+          - fpp_host is defined
+          - identity_file is defined
           - container_url is defined
+        quiet: 'true'
 
     - name: 'Check Client Prerequistes'
       import_role:
@@ -25,6 +27,6 @@
     - name: 'Add GI Working Copy'
       include_role:
         name: 'grid_fpp'
-        tasks_from: 'gi_create_wc.yml'
+        tasks_from: 'gi_wc_create.yml'
       vars:
         existing_home: 'true'

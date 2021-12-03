@@ -1,15 +1,21 @@
 
-# TO DO: Set Up Actual Pre Task
+- assert:
+    that:
+      - patch_error_param == '-revert' or patch_error_param == '-continue'
+    quiet: 'true'
+  when: patch_error_param is defined
+- assert:
+    that: ignorewcpatches_param == '-ignorewcpatches' or ignorewcpatches_param == ''
+    quiet: 'true'
+- assert:
+    that: forcerolling_param == '-forcerolling' or forcerolling_param == ''
+    quiet: 'true'
+
 - name: 'Run Pre-Tasks'
   include_role:
     name: 'target_commands'
-    tasks_from: 'gihome_path.yml'
+    tasks_from: 'gihome_patch_pretasks.yml'
   when: patch_error_param is not defined
-
-- assert:
-  that:
-    - patch_error_param == '-revert' or patch_error_param == '-continue'
-  when: patch_error_param is defined
 
 - name: 'Patching Work to Delegate to FPP and Run Once'
   block:
@@ -35,7 +41,6 @@
         name: 'fpp_common'
         tasks_from: 'patch_grid.yml'
       vars:
-        ignorewcpatches_param: '-ignorewcpatches'
         eval_param: '-eval'
     when: hostvars[fpp_host]["curr_batch"] is not defined and patch_error_param is not defined
       
@@ -43,8 +48,6 @@
     include_role:
       name: 'fpp_common'
       tasks_from: 'patch_grid.yml'
-    vars:
-      ignorewcpatches_param: '-ignorewcpatches'
   
   run_once: 'true'
   delegate_to: '{{ fpp_host }}'

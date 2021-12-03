@@ -10,7 +10,6 @@
 - debug:
     var: image_name
 
-# changed to include
 - block:
   - name: 'Check if Image {{ image_name }} Exists'
     include_role:
@@ -28,10 +27,7 @@
     name: 'target_commands'
     tasks_from: 'gihome_path.yml'
 
-- name: 'Upgrade GI Home'
-  include_role:
-    name: 'target_commands'
-    tasks_from: 'gihome_upgrade.yml'
+- assert: { that: oracle_home is defined }
 
 - name: 'Zip GI Home'
   include_role:

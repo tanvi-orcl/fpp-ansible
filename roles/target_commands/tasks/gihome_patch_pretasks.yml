@@ -1,0 +1,22 @@
+
+- name: 'Copy Pretask Script to Exadata Host'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  copy:
+    src: 'fiserv_patch_pretasks.sh'
+    dest: '{{ exa_tmp_path }}'
+    mode: '1777'
+  register: 'copy_script_result'
+- debug:
+    msg: '{{ copy_script_result }}'
+
+- name: 'Run Pretask Script'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  shell:  |
+    .{{ exa_tmp_path }}/fiserv_patch_pretasks.sh
+  register: 'run_script_result'
+- debug:
+    msg: '{{ run_script_result }}'

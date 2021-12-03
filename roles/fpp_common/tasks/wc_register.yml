@@ -1,10 +1,10 @@
 - name: 'Copy Template to create Attr file'
   become: 'true'
-  become_user: 'root'
+  become_user: 'oracle'
   become_method: 'sudo'
   template:
     src: 'attr_file.attr'
-    dest: '{{ fpp_admin_path }}/{{ wc_name }}.attr'
+    dest: '{{ fpp_tmp_path }}/{{ wc_name }}.attr'
   register: 'attr_template_result'
 - debug:
     msg: '{{ attr_template_result }}'
@@ -14,7 +14,7 @@
   become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    {{ rhpctl_path }} register workingcopy -attrfile {{ fpp_admin_path }}/{{ wc_name }}.attr -image {{ image_name }} -path {{ path }} -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
+    {{ rhpctl_path }} register workingcopy -attrfile {{ fpp_tmp_path }}/{{ wc_name }}.attr -image {{ image_name }} -path {{ path }} -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
   register: 'register_wc_result'
 - debug:
     msg: '{{ register_wc_result }}'

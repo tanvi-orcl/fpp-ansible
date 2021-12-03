@@ -11,10 +11,9 @@
       msg: '{{ cswlib_showimages_result }}'
   - set_fact:
       software_bp: '{{ cswlib_showimages_result.stdout | regex_findall("-([A-Z]+?[0-9]+?)\b") | first }}'
-  run_once: 'true'
-
-- debug:
+  - debug:
     var: 'software_bp'
+  run_once: 'true'
 
 - name: 'cswlib check available bp'
   become: 'true'

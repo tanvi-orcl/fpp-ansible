@@ -3,16 +3,14 @@
   assert: { that: version is defined and version_tag is defined }
 
 # Set Image Name and Check if Exists
-# NAMING STANDARD
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
-    version_string: '{{ version | regex_replace("\.", "") }}'
+# NAMING STANDARD
 - set_fact:
     image_name: 'DB2{{ ru_version_string[:6] }}'
   when: image_name is not defined
 - debug: { var: image_name }
 
-# changed to include
 - block:
   - name: 'Check if Image {{ image_name }} Exists'
     include_role:
@@ -34,38 +32,37 @@
   vars:
     db_home_name: '{{ temp_db_home_name }}'
 
-# - name: 'Always delete temp home, even if errors occur.'
-#   block:
+- name: 'Always delete temp home, even if errors occur.'
+  block:
 
-#   - assert: { that: oracle_home is defined }
+  - assert: { that: oracle_home is defined }
 
-#   - name: 'Create Map File'
-#     include_tasks: 'rdbms_map_create.yml'
+  - name: 'Create Map File'
+    include_tasks: 'rdbms_image_map.yml'
     
-#   - name: 'Register Image'
-#     include_tasks: 'rdbms_image_register.yml'
+  - name: 'Register Image'
+    include_tasks: 'rdbms_image_register.yml'
 
-#   always:
+  always:
   
-#   - name: 'Purge dbhome'
-#     include_role:
-#       name: 'target_commands'
-#       tasks_from: 'dbhome_purge.yml'
-#     vars:
-#         db_home_name: '{{ temp_db_home_name }}'
+  - name: 'Purge dbhome'
+    include_role:
+      name: 'target_commands'
+      tasks_from: 'dbhome_purge.yml'
+    vars:
+        db_home_name: '{{ temp_db_home_name }}'
 
-#   - name: 'Find VM Cluster OCID'
-#     include_role:
-#       name: 'target_commands'
-#       tasks_from: '{{ exadata_type }}_ocid.yml'
+  - name: 'Find VM Cluster OCID'
+    include_role:
+      name: 'target_commands'
+      tasks_from: '{{ exadata_type }}_ocid.yml'
 
-#   # changed to include
-#   - block:
-#     - name: 'Delete Temp DB Home'
-#       include_role:
-#         name: 'oci_tasks'
-#         tasks_from: 'db_home_delete.yml'
-#       ignore_errors: 'true'
-#       vars:
-#         db_home_name: '{{ temp_db_home_name }}'
-#     delegate_to: localhost
+  - block:
+    - name: 'Delete Temp DB Home'
+      include_role:
+        name: 'oci_tasks'
+        tasks_from: 'db_home_delete.yml'
+      ignore_errors: 'true'
+      vars:
+        db_home_name: '{{ temp_db_home_name }}'
+    delegate_to: localhost
