@@ -9,8 +9,7 @@
     patch_id: '{{ item.id }}'
   when: item.version == '{{ ru_version }}'
   loop: '{{ patch_facts_result.db_home_patches }}'
-- debug:
-    var: 'patch_id'
+- debug: { var: patch_id }
 
 - name: Precheck Patch to DB Home
   oci_database_db_home:

@@ -1,11 +1,13 @@
 
 - name: 'Assert RDBMS Create Image Variables are defined.'
-  assert: { that: version is defined and version_tag is defined }
+  assert:
+    that: version is defined and version_tag is defined
+    quiet: 'true'
 
 # Set Image Name and Check if Exists
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
-# NAMING STANDARD
+# NAMING STANDARDS
 - set_fact:
     image_name: 'DB2{{ ru_version_string[:6] }}'
   when: image_name is not defined
@@ -27,7 +29,7 @@
 
 - name: 'Create fresh {{ version_tag }} DB Home'
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: 'dbhome_create.yml'
   vars:
     db_home_name: '{{ temp_db_home_name }}'
@@ -35,7 +37,10 @@
 - name: 'Always delete temp home, even if errors occur.'
   block:
 
-  - assert: { that: oracle_home is defined }
+  - name: 'Assert that oracle_home is defined.'
+    assert: 
+      that: oracle_home is defined
+      quiet: 'true'
 
   - name: 'Create Map File'
     include_tasks: 'rdbms_image_map.yml'
@@ -47,22 +52,26 @@
   
   - name: 'Purge dbhome'
     include_role:
-      name: 'target_commands'
+      name: 'target_common'
       tasks_from: 'dbhome_purge.yml'
     vars:
-        db_home_name: '{{ temp_db_home_name }}'
+      db_home_name: '{{ temp_db_home_name }}'
 
   - name: 'Find VM Cluster OCID'
     include_role:
-      name: 'target_commands'
+      name: 'target_common'
       tasks_from: '{{ exadata_type }}_ocid.yml'
 
   - block:
     - name: 'Delete Temp DB Home'
       include_role:
-        name: 'oci_tasks'
+        name: 'oci_common'
         tasks_from: 'db_home_delete.yml'
       ignore_errors: 'true'
       vars:
         db_home_name: '{{ temp_db_home_name }}'
+    # TO DO: Figure out Fail Condition
+    # - fail:
+    #     msg: ''
+    #   when: not query_image_result.stdout | regex_search("does not exist")
     delegate_to: localhost

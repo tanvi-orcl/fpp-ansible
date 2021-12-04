@@ -7,10 +7,13 @@
     - name: 'Assert general variables are defined.'
       assert:
         that: 
-          - identity_file is defined
+          - exa_group is defined and identity_file is defined
+        quiet: 'true'
 
     - name: 'Assert GI Create WC Variables are defined.'
-      assert: { that: source_wc is defined and dest_wc is defined }
+      assert: 
+        that: source_wc is defined and dest_wc is defined
+        quiet: 'true'
     
     - name: 'Query {{ dest_wc }} for any Current Batches'
       include_role:
@@ -24,7 +27,7 @@
   tasks:
     
     - block:
-      - name: End the play for hosts not in the current batch
+      - name: End the play for hosts not in the first batch
         meta: end_host
         when: ansible_hostname != '{{ batches_list | regex_findall("\b(.+?)\b") | first }}'
       when: hostvars[fpp_host]["curr_batch"] is not defined
@@ -43,7 +46,7 @@
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
     
-    - name: 'Run PreReqs'
+    - name: 'GI Patch'
       include_role:
         name: 'grid_fpp'
         tasks_from: 'gi_patch.yml'

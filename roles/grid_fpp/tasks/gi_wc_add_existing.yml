@@ -1,15 +1,18 @@
-- name: 'Get Provided Home For Existing'
-  become: 'true'
-  become_user: 'root'
-  become_method: 'sudo'
-  shell:  |
-    grep "{{ gi_home_path }}" {{ inventory_path }}/ContentsXML/inventory.xml
-  register: 'home_path_result'
+
+- name: 'Check for Provided Path'
+  include_role:
+    name: 'target_common'
+    tasks_from: 'gihome_check_inventory'
+  vars:
+    gi_home_inventory: '{{ gi_home_path }}'
 - set_fact:
     gi_home_path_inventory: '{{ home_path_result.stdout | regex_findall("LOC=.(/.+?). ") | first }}'
   when: home_path_result.stdout != ""
-- assert:
+
+- name: 'Assert that gi_home_path exists in inventory.xml'
+  assert:
     that: gi_home_path_inventory is defined and gi_home_path == gi_home_path_inventory
+    quiet: 'true'
 
 # If GI Home is not active, then move software only
 - set_fact:

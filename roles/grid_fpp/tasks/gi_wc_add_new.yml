@@ -1,14 +1,14 @@
 
 - name: 'When Suffix Defined for Custom Path'
   block:
+  
   - name: 'Check for Existing Suffix'
-    become: 'true'
-    become_user: 'root'
-    become_method: 'sudo'
-    shell:  |
-      grep '/{{ gi_home_suffix }}"' {{ inventory_path }}/ContentsXML/inventory.xml
-    ignore_errors: 'yes'
-    register: 'home_path_result'
+    include_role:
+      name: 'target_common'
+      tasks_from: 'gihome_check_inventory'
+    vars:
+      ignore_errors_flag: 'yes'
+      gi_home_inventory: '/{{ gi_home_suffix }}"'
   - fail:
       msg: 'Path ending in {{ gi_home_suffix }} already exists.'
     when: home_path_result.stdout != ""
@@ -20,7 +20,7 @@
 
 - name: 'Find GI Groups of Current Home'
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: 'map_groups.yml'
   vars:
     image_type: 'grid'
@@ -28,7 +28,7 @@
 
 - name: 'Create New GI Home'
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: 'gihome_mcimgsetup.yml'
 
 - block:

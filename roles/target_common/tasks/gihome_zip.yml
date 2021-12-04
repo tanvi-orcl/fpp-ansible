@@ -6,13 +6,14 @@
   shell:  |
     {{ oracle_home }}/bin/oraversion -compositeVersion
   register: 'composite_version_result'
-- debug:
-    msg: '{{ composite_version_result }}'
+- debug: { msg: '{{ composite_version_result }}' }
 
-- assert:
+- name: 'Assert that composite version matches provided version_tag.'
+  assert:
     that: composite_version_result.stdout == version_tag
+    quiet: 'true'
 
-- name: 'Copy File to Host'
+- name: 'Copy install_gi.excl File to Host'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'
@@ -20,8 +21,7 @@
     src: 'install_gi.excl'
     dest: '{{ exa_tmp_path }}'
   register: 'copy_script_result'
-- debug:
-    msg: '{{ copy_script_result }}'
+- debug: { msg: '{{ copy_script_result }}' }
 
 - name: 'Create Zip File'
   become: 'true'
@@ -32,8 +32,7 @@
   args:
     chdir: '{{ oracle_home }}'
   register: 'gi_zip_result'
-- debug:
-    msg: '{{ gi_zip_result }}'
+- debug: { msg: '{{ gi_zip_result }}' }
 
 - name: 'Encrypt Zip File'
   become: 'true'
@@ -44,8 +43,7 @@
   args:
     chdir: '{{ oracle_home }}'
   register: 'gi_encrypt_result'
-- debug:
-    msg: '{{ gi_encrypt_result }}'
+- debug: { msg: '{{ gi_encrypt_result }}' }
 
 - name: 'Upload encrypted image file to object store'
   become: 'true'
@@ -56,6 +54,5 @@
   environment:
     HTTPS_PROXY: '{{ curl_https_proxy }}'
   register: 'upload_result'
-- debug:
-    msg: '{{ upload_result }}'
+- debug: { msg: '{{ upload_result }}' }
 

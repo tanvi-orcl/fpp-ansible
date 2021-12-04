@@ -1,4 +1,12 @@
 
+- name: 'Check if Provided Image Exists'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'image_query.yml'
+  delegate_to: '{{ fpp_host }}'
+  run_once: 'true'
+
+# NAMING STANDARDS
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
 - set_fact:
@@ -9,7 +17,7 @@
 
 - name: 'Check if {{ db_home_name }} Exists'
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: 'dbhome_info.yml'
 
 - assert:
@@ -20,6 +28,7 @@
 - assert:
     that: oracle_home is not defined
     fail_msg: 'DB Home {{ db_home_name }} already exists, please pass in custom db_home_name.'
+    quiet: 'true'
   when: existing_home is not defined or existing_home == 'false'
 
 - name: 'Get WC Name and Check if Exists'
@@ -34,10 +43,14 @@
 
 - name: 'Create {{ version_tag }} DB Home for new WC'
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: 'dbhome_create.yml'
   when: existing_home is not defined or existing_home == 'false'
-- assert: { that: oracle_home is defined }
+
+- name: 'Assert that oracle home and oracle base are defined.'
+  assert:
+    that: oracle_home is defined and oracle_base is defined
+    quiet: 'true'
 
 - name: 'Add Working Copy'
   include_tasks: 'rdbms_wc_add.yml'

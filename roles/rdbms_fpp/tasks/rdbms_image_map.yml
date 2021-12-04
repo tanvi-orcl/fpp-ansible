@@ -1,14 +1,14 @@
 
 - name: 'Find Patch and Bug Data'
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: 'map_data.yml'
   vars:
     target_user: 'oracle'
 
 - name: 'Find DB Groups'
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: 'map_groups.yml'
   vars:
     image_type: 'db'

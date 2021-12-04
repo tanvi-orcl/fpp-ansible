@@ -7,7 +7,7 @@
       assert:
         that: 
           - fpp_host is defined and identity_file is defined
-        #  - exadata_type is defined and ( exadata_type == 'exacc' or exadata_type == 'exacs')
+      quiet: 'true'
 
     - name: 'Check Client Prerequistes'
       import_role:

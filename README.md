@@ -86,6 +86,7 @@ General Variables
 **gi_create_image.yml**
 - ASSUMES THAT GI HOME ALREADY PATCHED / AT IMAGE THEY WOULD LIKE TO ZIP
 - Runtime Variables 
+    - exa_host (ecc9n1)
     - container_url
         - OPTIONAL: curl_https_proxy
     - version (19.0.0.0) - to create temp home, for map file

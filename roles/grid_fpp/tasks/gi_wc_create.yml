@@ -1,13 +1,20 @@
 
 # Set WC Name and See if Exists
 
-# NAMING STANDARD
+- name: 'Check if Provided Image Exists'
+  import_role:
+    name: 'fpp_common'
+    tasks_from: 'image_query.yml'
+  delegate_to: '{{ fpp_host }}'
+  run_once: 'true'
+
+# NAMING STANDARDS
 # - set_fact:
 #     cluster_name: '{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
 - set_fact:
     cluster_name: '{{ ansible_hostname[:-2] }}'
 - set_fact:
-    wc_name: 'wc_{{ image_name }}_2_{{ cluster_name }}'
+    wc_name: 'wc_{{ image_name }}_4_{{ cluster_name }}'
 
 - block:
   - name: 'Check if WC Exists'
@@ -23,7 +30,7 @@
 
 - name: 'Set Current GI Home'
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: 'gihome_info.yml'
 
 - name: 'Creating WC with New Home'

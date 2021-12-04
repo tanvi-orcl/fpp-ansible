@@ -16,12 +16,12 @@
 
 - name: 'Find VM Cluster OCID'
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: '{{ exadata_type }}_ocid.yml'
 
 - block:
   - name: 'Delete DB Home'
     include_role:
-      name: 'oci_tasks'
+      name: 'oci_common'
       tasks_from: 'db_home_delete.yml'
   delegate_to: localhost

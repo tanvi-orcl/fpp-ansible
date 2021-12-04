@@ -9,19 +9,16 @@
         that: 
           - fpp_host is defined and identity_file is defined
           - exadata_type is defined and ( exadata_type == 'exacc' or exadata_type == 'exacs')
+        quiet: 'true'
+      run_once: 'true'
     
     - name: 'Assert Create WC New variables are defined.'
       assert:
         that:
-          - image_name is defined and version is defined and version_tag is defined
-
-    - name: 'Check if Provided Image Exists'
-      import_role:
-        name: 'fpp_common'
-        tasks_from: 'image_query.yml'
-      delegate_to: '{{ fpp_host }}'
+          - image_name is defined
+          - version is defined and version_tag is defined
+        quiet: 'true'
       run_once: 'true'
-      any_errors_fatal: 'true'
 
     - name: 'Check Client Prerequistes'
       import_role:

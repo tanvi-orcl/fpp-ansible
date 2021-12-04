@@ -5,8 +5,7 @@
   shell: |
     {{ rhpctl_path }} query workingcopy -image {{ image_name }}
   register: 'query_image_wc_result'
-- debug:
-    msg: '{{ query_image_wc_result }}'
+- debug: { msg: '{{ query_image_wc_result }}' }
 - fail:
     msg: 'Image with name {{ image_name }} has working copies and cannot be deleted'
   when: not query_image_wc_result.stdout | regex_search("No software home has been configured")
@@ -18,8 +17,7 @@
   shell: |
     {{ rhpctl_path }} delete image -image {{ image_name }}
   register: 'delete_image_result'
-- debug:
-    msg: '{{ delete_image_result }}'
+- debug: { msg: '{{ delete_image_result }}' }
 
 - name: 'Check if Image {{ image_name }} Exists'
   import_tasks: 'image_query.yml'

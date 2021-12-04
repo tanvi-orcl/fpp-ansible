@@ -19,8 +19,7 @@
     source: '{{ db_home_source }}'
     vm_cluster_id: '{{ vm_cluster_id }}'
   register: 'db_home_create_result'
-- debug:
-    msg: '{{ db_home_create_result }}'
+- debug: { msg: '{{ db_home_create_result }}' }
 - set_fact:
     db_home_id: '{{ db_home_create_result.db_home.id }}'
     db_home_version: '{{ db_home_create_result.db_home.db_version }}'

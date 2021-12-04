@@ -2,27 +2,11 @@
 - name: 'Find DB Groups'
   when: osdbagrp_groups is not defined
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: 'map_groups.yml'
   vars:
     image_type: 'db'
     target_user: 'oracle'
-
-- name: 'Find Oracle Base'
-  become: 'true'
-  become_user: 'root'
-  become_method: 'sudo'
-  shell:  |
-    ./orabase
-  args:
-    chdir: '{{ oracle_home }}/bin'
-  environment:
-    ORACLE_HOME: '{{ oracle_home }}'
-  register: 'oracle_base_result'
-- debug:
-    msg: '{{ oracle_base_result }}'
-- set_fact:
-    oracle_base: '{{ oracle_base_result.stdout }}'
 
 - block:
   - name: 'Add RDBMS Workingcopy {{ wc_name }}'
@@ -38,4 +22,5 @@
     include_role:
       name: 'fpp_common'
       tasks_from: 'wc_query.yml'
+  
   delegate_to: '{{ fpp_host }}'

@@ -5,7 +5,7 @@
   hosts: '{{ exa_host }}'
   tasks:
     
-    - name: 'Assert general variables are defined.'
+    - name: 'Assert required variables are defined.'
       assert:
         that: 
           - fpp_host is defined and identity_file is defined

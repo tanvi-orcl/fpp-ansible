@@ -1,8 +1,12 @@
 exa_tmp_path: '/tmp'
+ignore_errors_flag: 'no'
+
 dbaascli_path: '/bin/dbaascli'
+
 gpg_path: '/bin/gpg'
 gi_zip_path: '/acfs01'
 mcimgsetup_path: '/var/opt/oracle/managed/fpp/mcimgsetupfpp'
+oh_dirname_param: ''
 
 curl_https_proxy: ''    # default behavior is no proxy
 

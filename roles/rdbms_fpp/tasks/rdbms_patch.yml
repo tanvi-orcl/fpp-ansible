@@ -1,28 +1,29 @@
 - name: 'Assert RDBMS Create Image Variables are defined.'
-  assert: { that: db_unique_name is defined and source_home is defined and dest_home is defined }
+  assert: 
+    that: db_unique_name is defined source_home is defined and dest_home is defined
+    quiet: 'true'
 
-- assert:
+- name: 'Assert that patch_error_param is expected value.'
+  assert:
     that:
       - patch_error_param == '-revert' or patch_error_param == '-continue'
     quiet: 'true'
   when: patch_error_param is defined
-- assert:
+
+- name: 'Assert that ignorewcpatches_param is expected value.'
+  assert:
     that: ignorewcpatches_param == '-ignorewcpatches' or ignorewcpatches_param == ''
     quiet: 'true'
-- assert:
+
+- name: 'Assert that forcerolling_param is expected value.'
+  assert:
     that: forcerolling_param == '-forcerolling' or forcerolling_param == ''
     quiet: 'true'
 
 - name: 'Check if DB Unique Name is valid'
-  become: true
-  become_user: 'root'
-  become_method: 'sudo'
-  shell: 'grep {{ db_unique_name }}: /etc/oratab'
-  ignore_errors: 'yes'
-  register: 'db_name_result'
-- fail:
-    msg: 'Database not valid.'
-  when: not db_name_result.stdout | regex_search(db_unique_name)
+  include_role:
+    name: 'target_common'
+    tasks_from: 'db_unique_name.yml'
 
 - name: 'Delegating to FPP Host'
   block:
@@ -60,4 +61,5 @@
       tasks_from: 'patch.yml'
     vars:
       target_node: '{{ ansible_hostname }}'
+  
   delegate_to: '{{ fpp_host }}'

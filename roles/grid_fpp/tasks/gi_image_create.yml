@@ -1,14 +1,15 @@
 - name: 'Assert GI Create Image Variables are defined.'
-  assert: { that: version is defined and version_tag is defined }
+  assert:
+    that: version is defined and version_tag is defined
+  quiet: 'true'
 
-# NAMING STANDARD
+# NAMING STANDARDS
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
 - set_fact:
     image_name: 'GI{{ ru_version_string }}'
   when: image_name is not defined
-- debug:
-    var: image_name
+- debug: { var: 'image_name' }
 
 - block:
   - name: 'Check if Image {{ image_name }} Exists'
@@ -24,20 +25,23 @@
 
 - name: 'Set Current GI Home'
   include_role:
-    name: 'target_commands'
-    tasks_from: 'gihome_path.yml'
+    name: 'target_common'
+    tasks_from: 'gihome_info.yml'
 
-- assert: { that: oracle_home is defined }
+- name: 'Assert that gi home path is defined.'
+  assert:
+    that: oracle_home is defined
+    quiet: 'true'
 
 - name: 'Zip GI Home'
   include_role:
-    name: 'target_commands'
+    name: 'target_common'
     tasks_from: 'gihome_zip.yml'
 
 - name: 'Create Map File'
   include_role:
     name: 'grid_fpp'
-    tasks_from: 'gi_map_create.yml'
+    tasks_from: 'gi_image_map.yml'
 
 - name: 'Register Image'
   include_role:

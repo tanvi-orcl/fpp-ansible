@@ -6,8 +6,7 @@
   slurp:
     src: '{{ fpp_maps_path }}/{{ image_map_dir }}/{{ image_name }}.map'    
   register: 'new_image_map'
-- debug:
-    msg: '{{ new_image_map.content|b64decode|from_json }}'
+- debug: { msg: '{{ new_image_map.content|b64decode|from_json }}' }
 
 - name: Load Master Map From Container
   become: 'true'
@@ -18,8 +17,7 @@
   environment:
     HTTPS_PROXY: '{{ curl_https_proxy }}'
   register: 'curl_master_map'
-- debug:
-    msg: '{{ curl_master_map }}'
+- debug: { msg: '{{ curl_master_map }}' }
 
 - name: Pull Master Map Content From File
   become: 'true'
@@ -28,14 +26,12 @@
   slurp:
     src: '{{ fpp_maps_path }}/{{ image_map_dir }}/exa_map'
   register: 'master_map_data'
-- debug:
-    msg: '{{ master_map_data.content|b64decode|from_json }}'
+- debug: { msg: '{{ master_map_data.content|b64decode|from_json }}' }
 
 - name: Appending New GI Map
   set_fact:
     updated_master_map: '{{ master_map_data.content|b64decode|from_json | default([]) | combine(new_image_map.content|b64decode|from_json) }}'
-- debug:
-    var: updated_master_map
+- debug: { var: updated_master_map }
 
 - name: Write Master Map Content to File
   become: 'true'
@@ -51,6 +47,5 @@
     curl -X PUT --data-binary '@{{ fpp_maps_path }}/{{ image_map_dir }}/exa_map' {{ container_url }}/exa_map
   environment:
     HTTPS_PROXY: '{{ curl_https_proxy }}'
-  register: 'master_map_container'
-- debug:
-    msg: '{{ master_map_container }}'
+  register: 'master_map_container_result'
+- debug: { msg: '{{ master_map_container_result }}' }

@@ -9,9 +9,8 @@
   environment:
     ORACLE_HOME: '{{ oracle_home }}'
   register: 'osdbagrp_flags'
-- debug:
-    msg: '{{ osdbagrp_flags }}'
-- set_fact:
+- name: 'Set osdbagrp flags to check'
+  set_fact:
     osdbagrp_flags_list: '{{ osdbagrp_flags.stderr | regex_findall("-[a-z]") }}'
 
 - name: 'Group Name Command'
@@ -24,8 +23,6 @@
     ORACLE_HOME: '{{ oracle_home }}'
   loop: '{{ osdbagrp_flags_list }}'
   register: 'osdbagrp_names_result'
-- debug:
-    msg: '{{ osdbagrp_names_result }}'
 
 - name: 'For RDBMS'
   block:

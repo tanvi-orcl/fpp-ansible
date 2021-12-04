@@ -8,6 +8,15 @@
         that: 
           - fpp_host is defined and identity_file is defined
           - container_url is defined
+        quiet: ' true'
+      run_once: 'true'
+
+    - name: 'Assert GI Create WC Variables are defined.'
+      assert:
+        that: 
+          - image_name is defined
+        quiet: ' true'
+      run_once: 'true'
 
     - name: 'Check Client Prerequistes'
       import_role:
@@ -16,11 +25,6 @@
       vars:
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
-
-    - name: 'Assert GI Create WC Variables are defined.'
-      assert:
-        that: 
-          - image_name is defined
 
     - name: 'Add GI Working Copy'
       include_role:

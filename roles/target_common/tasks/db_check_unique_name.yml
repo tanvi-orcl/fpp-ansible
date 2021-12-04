@@ -1,0 +1,11 @@
+- name: 'Check if DB Unique Name is valid'
+  become: true
+  become_user: 'root'
+  become_method: 'sudo'
+  shell: |
+    'grep {{ db_unique_name }}: /etc/oratab'
+  ignore_errors: 'yes'
+  register: 'db_name_result'
+- fail:
+    msg: 'Database not valid.'
+  when: not db_name_result.stdout | regex_search(db_unique_name)

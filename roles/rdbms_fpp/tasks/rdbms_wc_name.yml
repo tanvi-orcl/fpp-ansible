@@ -4,7 +4,7 @@
 - set_fact:
     wc_name: 'wc_{{ db_home_name }}_{{ cluster_name }}'
 
-# NAMING STANDARD
+# NAMING STANDARDS
 # - set_fact:
 #     cluster_name: '{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
 # - set_fact:

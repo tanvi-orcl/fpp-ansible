@@ -7,12 +7,10 @@
     shell:  |
       {{ dbaascli_path }} cswlib showimages --product database | grep "IMAGE_TAG={{ version_tag }} " -A 4
     register: 'cswlib_showimages_result'
-  - debug:
-      msg: '{{ cswlib_showimages_result }}'
+  - debug: { msg: '{{ cswlib_showimages_result }}' }
   - set_fact:
       software_bp: '{{ cswlib_showimages_result.stdout | regex_findall("-([A-Z]+?[0-9]+?)\b") | first }}'
-  - debug:
-    var: 'software_bp'
+  - debug: { var: 'software_bp' }
   run_once: 'true'
 
 - name: 'cswlib check available bp'
@@ -22,8 +20,7 @@
   shell:  |
     {{ dbaascli_path }} dbimage list
   register: 'dbimage_list_result'
-- debug:
-    msg: '{{ dbimage_list_result }}'
+- debug: { msg: '{{ dbimage_list_result }}' }
 
 - block:
 
@@ -35,8 +32,7 @@
       {{ dbaascli_path }} cswlib download --version {{ version | regex_replace("\.", "") }} --bp {{ software_bp }}
     register: 'cswlib_download_result'
     failed_when: cswlib_download_result.stdout | regex_search("ERROR:.+")
-  - debug:
-      msg: '{{ cswlib_download_result }}'
+  - debug: { msg: '{{ cswlib_download_result }}' }
 
   when: not dbimage_list_result.stdout | regex_search(software_bp)
 
@@ -48,8 +44,7 @@
     {{ dbaascli_path }} dbhome create --version {{ version | regex_replace("\.", "") }} --imageTag {{ version_tag }} --ohome_name {{ db_home_name }} --noprompt YES
   register: 'dbhome_create_result'
   failed_when: dbhome_create_result.stdout | regex_search("ERROR:.+")
-- debug:
-    msg: '{{ dbhome_create_result }}'
+- debug: { msg: '{{ dbhome_create_result }}' }
 
 - name: 'DB Home Info'
   include_tasks: 'dbhome_info.yml'

@@ -4,5 +4,4 @@
   shell:  |
     {{ dbaascli_path }} dbhome purge --hname {{ db_home_name }} --noprompt YES
   register: 'dbhome_purge_result'
-- debug:
-    msg: '{{ dbhome_purge_result }}'
+- debug: { msg: '{{ dbhome_purge_result }}' }

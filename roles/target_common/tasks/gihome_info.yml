@@ -8,8 +8,7 @@
   register: 'inventory_result'
 - set_fact:
     inventory_path: '{{ inventory_result.stdout | regex_findall("inventory_loc=(.+)") | first }}'
-- debug:
-    var: 'inventory_path'
+- debug: { var: 'inventory_path' }
 
 - name: 'Get Active Home'
   become: 'true'
@@ -18,12 +17,10 @@
   shell:  |
     grep 'CRS="true"' {{ inventory_path }}/ContentsXML/inventory.xml
   register: 'crs_path_result'
-- debug:
-    msg: '{{ crs_path_result }}'
+- debug: { msg: '{{ crs_path_result }}' }
 - set_fact:
     oracle_home: '{{ crs_path_result.stdout | regex_findall("LOC=.(/.+?). ") | first }}'
-- debug:
-    var: 'oracle_home'
+- debug: { var: 'oracle_home' }
 
 - name: 'Get Client Name'
   become: 'true'
@@ -36,8 +33,7 @@
     msg: '{{ client_name_result }}'
 - set_fact:
     client_name: '{{ client_name_result.stdout }}'
-- debug:
-    var: 'client_name'
+- debug: { var: 'client_name' }
 
 
 
