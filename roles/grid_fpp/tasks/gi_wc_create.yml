@@ -14,7 +14,7 @@
 - set_fact:
     cluster_name: '{{ ansible_hostname[:-2] }}'
 - set_fact:
-    wc_name: 'wc_{{ image_name }}_4_{{ cluster_name }}'
+    wc_name: 'wctst1_{{ image_name }}_{{ cluster_name }}'
 
 - block:
   - name: 'Check if WC Exists'

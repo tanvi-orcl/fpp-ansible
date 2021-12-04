@@ -1,3 +1,10 @@
+Testing Done 12/4
+- rdbms_create_image (DBtst1_191300)
+    - forgetting parameters
+    - existing image
+    - incorrect version_tag
+    - success
+
 
 
 
@@ -34,7 +41,6 @@ Full Test
     - revert
     - Fail Case --> Source not WC, Dest not WC
     - Fail Case --> incorrectly defined flags
-- rdbms_create_image
 - rdbms_create_wc
     - new
     - existing

@@ -16,7 +16,7 @@ curl_https_proxy: 'http://140.83.186.195:80'
 # CREATE WORKING COPY
 image_name: 'gihome1_191110'
 gi_home_suffix: 'grid1911_0_wc65_iad1602clu032f2_1940'
-gi_home_path: '/u02/app/19.0.0.0/grid1911_0_wc65_iad1602clu032f2_194066667777'
+gi_home_path: '/u02/app/19.0.0.0/grid1911_0_wc61_iad1602clu032f2_2202'
 #gi_home_suffix: 'grid1911_0_wc61_iad1602clu032f2_2202' #existing
 #exadata_type: 'exacc'
 # wc_name: 'wc_gihome1_191120_ecc9c3'

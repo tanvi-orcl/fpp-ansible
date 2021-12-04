@@ -10,7 +10,7 @@
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
 - set_fact:
-    db_home_name: 'dbhome3_{{ ru_version_string[:6] }}'
+    db_home_name: 'dbhometst1_{{ ru_version_string[:6] }}'
   when: db_home_name is not defined
 
 # Checks if database home exists

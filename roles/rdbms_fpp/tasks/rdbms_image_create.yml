@@ -9,7 +9,7 @@
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
 # NAMING STANDARDS
 - set_fact:
-    image_name: 'DB2{{ ru_version_string[:6] }}'
+    image_name: 'DBtst1_{{ ru_version_string[:6] }}'
   when: image_name is not defined
 - debug: { var: image_name }
 
@@ -63,15 +63,18 @@
       tasks_from: '{{ exadata_type }}_ocid.yml'
 
   - block:
-    - name: 'Delete Temp DB Home'
-      include_role:
-        name: 'oci_common'
-        tasks_from: 'db_home_delete.yml'
-      ignore_errors: 'true'
-      vars:
-        db_home_name: '{{ temp_db_home_name }}'
-    # TO DO: Figure out Fail Condition
-    # - fail:
-    #     msg: ''
-    #   when: not query_image_result.stdout | regex_search("does not exist")
+    - block:
+      - name: 'Delete Temp DB Home'
+        include_role:
+          name: 'oci_common'
+          tasks_from: 'db_home_delete.yml'
+        vars:
+          db_home_name: '{{ temp_db_home_name }}'
+    
+      rescue:
+      - fail:
+          msg: 'Delete operation failed.'
+        when: db_home_discovery_result.db_homes|length != 0
+      - debug: { msg: 'Operation succeeded. {{ temp_db_home_name }} not synced to console.' }
+        
     delegate_to: localhost

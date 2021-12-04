@@ -5,6 +5,9 @@
     tasks_from: 'gihome_check_inventory'
   vars:
     gi_home_inventory: '{{ gi_home_path }}'
+- fail:
+    msg: 'Path {{ gi_home_path }} has been removed.'
+  when: home_path_result.stdout | regex_search("REMOVED=.T.")
 - set_fact:
     gi_home_path_inventory: '{{ home_path_result.stdout | regex_findall("LOC=.(/.+?). ") | first }}'
   when: home_path_result.stdout != ""
@@ -15,12 +18,14 @@
     quiet: 'true'
 
 # If GI Home is not active, then move software only
-- set_fact:
+- name: 'Not the active home: setting swonly'
+  set_fact:
     swonly_param: ',swonly'
   when: gi_home_path_inventory != oracle_home
 
 # If GI Home is currently active, then omit swonly
-- set_fact:
+- name: 'Active home: not setting swonly'
+  set_fact:
     swonly_param: ''
   when: gi_home_path_inventory == oracle_home
 

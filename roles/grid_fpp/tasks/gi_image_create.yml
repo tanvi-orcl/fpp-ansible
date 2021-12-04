@@ -7,7 +7,7 @@
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
 - set_fact:
-    image_name: 'GI{{ ru_version_string }}'
+    image_name: 'GItst1_{{ ru_version_string }}'
   when: image_name is not defined
 - debug: { var: 'image_name' }
 
