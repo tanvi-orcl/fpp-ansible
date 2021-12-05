@@ -4,11 +4,25 @@ Testing Done 12/4
     - existing image
     - incorrect version_tag
     - success
+Testing Done 12/5
+- rdbms_create_wc_new (DBtst1_191300, wc_dbhometst1_191300_ecc9c3)
+    - forgetting parameters
+    - image does not exist
+    - existing db_home
+    - existing wc
+    - success
+- rdbms_create_wc_new (DBtst1_191300, wc_dbhometst1_191300_ecc9c3)
+    - forgetting parameters
+    - image does not exist
+    - not existing db_home
+    - not existing wc
+    - success
 
 
 
 
 TO DO
+- Double check that we shouldn't be using the image to create the dbhome for wc
 - TEST
     - multiple hosts in one group (where possible)
     - continue on a failed database patch

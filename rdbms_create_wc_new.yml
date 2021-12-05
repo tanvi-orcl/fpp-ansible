@@ -4,19 +4,11 @@
   hosts: '{{ exa_group }}'
   tasks:
 
-    - name: 'Assert general variables are defined.'
+    - name: 'Assert required variables are defined.'
       assert:
         that: 
           - fpp_host is defined and identity_file is defined
-          - exadata_type is defined and ( exadata_type == 'exacc' or exadata_type == 'exacs')
-        quiet: 'true'
-      run_once: 'true'
-    
-    - name: 'Assert Create WC New variables are defined.'
-      assert:
-        that:
-          - image_name is defined
-          - version is defined and version_tag is defined
+          - image_name is defined and version is defined and version_tag is defined
         quiet: 'true'
       run_once: 'true'
 

@@ -7,10 +7,11 @@
   run_once: 'true'
 
 # NAMING STANDARDS
-- set_fact:
-    ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
-- set_fact:
-    db_home_name: 'dbhometst1_{{ ru_version_string[:6] }}'
+- block:
+  - set_fact:
+      ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
+  - set_fact:
+      db_home_name: 'dbhometst1_{{ ru_version_string[:6] }}'
   when: db_home_name is not defined
 
 # Checks if database home exists
@@ -22,35 +23,41 @@
 
 - assert:
     that: oracle_home is defined
-    fail_msg: 'DB Home {{ db_home_name }} not found.'
-    success_msg: 'DB Home {{ db_home_name }} exists with oracle_home {{ oracle_home }}'
+    fail_msg: 'DB Home {{ db_home_name }} does not exist.'
+    quiet: 'true'
   when: existing_home is defined and existing_home is true
 - assert:
     that: oracle_home is not defined
     fail_msg: 'DB Home {{ db_home_name }} already exists, please pass in custom db_home_name.'
     quiet: 'true'
-  when: existing_home is not defined or existing_home == 'false'
+  when: existing_home is not defined or existing_home is false
 
 - name: 'Get WC Name and Check if Exists'
-  include_tasks: 'rdbms_get_wc_name.yml'
+  include_tasks: 'rdbms_wc_name.yml'
   vars:
     ignore_errors_flag: 'yes'
 - fail:
     msg: 'Working copy with name {{ wc_name }} already exists. Run on {{ ansible_hostname }} again with custom wc_name provided.'
   when: not query_wc_result.stdout | regex_search("does not exist")
   
-# Create Home and Working Copy
+# Create Home
 
-- name: 'Create {{ version_tag }} DB Home for new WC'
-  include_role:
-    name: 'target_common'
-    tasks_from: 'dbhome_create.yml'
-  when: existing_home is not defined or existing_home == 'false'
+- block:
 
-- name: 'Assert that oracle home and oracle base are defined.'
-  assert:
-    that: oracle_home is defined and oracle_base is defined
-    quiet: 'true'
+  - name: 'Create {{ version_tag }} DB Home for new WC'
+    include_role:
+      name: 'target_common'
+      tasks_from: 'dbhome_create.yml'
+
+  - name: 'Assert that oracle home and oracle base are defined.'
+    assert:
+      that: oracle_home is defined and oracle_base is defined
+      success_msg: 'DB Home {{ db_home_name }} created with oracle_home {{ oracle_home }}'
+      quiet: 'true'
+
+  when: existing_home is not defined or existing_home is false
+
+# Create WC
 
 - name: 'Add Working Copy'
   include_tasks: 'rdbms_wc_add.yml'

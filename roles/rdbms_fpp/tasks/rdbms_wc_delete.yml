@@ -1,7 +1,7 @@
 
 - name: 'Get WC Name and Check if Exists'
   include_tasks: 'rdbms_get_wc_name.yml'
-  when: orphan_home is not defined or orphan_home == 'false'
+  when: orphan_home is not defined or orphan_home is false
 
 - block:
   - name: 'Delete Working Copy'

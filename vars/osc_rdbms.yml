@@ -1,30 +1,26 @@
 # GENERAL
 exa_host: 'fiservdb'
+# exa_group: 'fiservdb'
 #exa_group: 'clustertest'
 fpp_host: 'n3db1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
-exadata_type: 'exacc'
+#exadata_type: 'exacc'
 
 # CREATE IMAGE
-version: '19.0.0.0'
-version_tag: '19.13.0.0.0'
+#version: '19.0.0.0'
+#version_tag: '19.13.0.0.0'
 #image_name: 'DB191200'
 
 # CREATE WORKING COPY
-#image_name: 'DB2191300782345'
-#db_home_name: dbhome1_191100
-# image_name: 'dbhome1_191300'
-#db_home_name: 'dbhome2_191300_123423'
+# image_name: 'DBtst1_191300'
+# db_home_name: dbhometst2_191300
 # optional: wc_name
-
-#db_home_name: 'OraHome2'
 # orphan_home: 'true'
 
 # # PATCH
-# #check_prereq: 'true'
 # dest_home: 'dbhome2_191300'
 # source_home: 'dbhome3_191300'
-# db_unique_name: 'tst1911_mwf_iad'
+db_unique_name: 'tst1911_mwf_iad'
 
 ###### TESTING VALUES
 #oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'

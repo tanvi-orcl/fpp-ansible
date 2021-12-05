@@ -4,19 +4,11 @@
   hosts: '{{ exa_group }}'
   tasks:
 
-    - name: 'Assert general variables are defined.'
+    - name: 'Assert required variables are defined.'
       assert:
         that: 
           - fpp_host is defined and identity_file is defined
-          - exadata_type is defined and ( exadata_type == 'exacc' or exadata_type == 'exacs')
-        quiet: 'true'
-      run_once: 'true'
-    
-    - name: 'Assert Create WC Existing variables are defined.'
-      assert:
-        that: 
-          - image_name is defined
-          - db_home_name is defined
+          - image_name is defined and db_home_name is defined
         quiet: 'true'
       run_once: 'true'
 
@@ -33,6 +25,6 @@
         name: 'rdbms_fpp'
         tasks_from: 'rdbms_wc_create.yml'
       vars:
-        existing_home: 'true'
+        existing_home: true
 
     
