@@ -67,13 +67,6 @@ General Variables
     - db_home_name (current dbhome name)
     - OPTIONAL: osdbagrp_groups
 
-**rdbms_delete_wc.yml**
-- 
-- Runtime Variables
-    - exa_group (ecc9n1)
-    - exadata_type (exacc or exacs)
-    - db_home_name (db_home_name to delete)
-
 **rdbms_patch.yml**
 - 
 - Runtime Variables 
@@ -84,6 +77,14 @@ General Variables
     - OPTIONAL: patch_error_param (-revert, -continue)
     - OPTIONAL: ignorewcpatches_param (-ignorewcpatches)
     - OPTIONAL: forcerolling_param (-forcerolling)
+
+**rdbms_delete_wc.yml**
+- 
+- Runtime Variables
+    - exa_group (ecc9n1)
+    - exadata_type (exacc or exacs)
+    - db_home_name (db_home_name to delete)
+    - OPTIONAL: orphan_home
 
 **gi_create_image.yml**
 - ASSUMES THAT GI HOME ALREADY PATCHED / AT IMAGE THEY WOULD LIKE TO ZIP
@@ -119,6 +120,10 @@ General Variables
     - OPTIONAL: ignorewcpatches_param (-ignorewcpatches)
     - OPTIONAL: forcerolling_param (-forcerolling)
 
+**rdbms_delete_image.yml**
+- 
+- Runtime Variables
+    - image_name (DB1911_210420)
 
 ## Additional Resources
 
