@@ -3,9 +3,5 @@
   become_user: 'root'
   become_method: 'sudo'
   shell: |
-    'grep {{ db_unique_name }}: /etc/oratab'
-  ignore_errors: 'yes'
+    grep "{{ db_unique_name }}" /etc/oratab
   register: 'db_name_result'
-- fail:
-    msg: 'Database not valid.'
-  when: not db_name_result.stdout | regex_search(db_unique_name)

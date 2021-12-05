@@ -10,6 +10,7 @@
         that: 
           - fpp_host is defined and identity_file is defined
           - container_url is defined
+        quiet: 'true'
 
     - name: 'Check Client Prerequistes'
       import_role:

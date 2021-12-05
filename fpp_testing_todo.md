@@ -17,20 +17,26 @@ Testing Done 12/5
     - not existing db_home
     - not existing wc
     - success
+- rdbms_patchdb (dbhome3_191300 --> dbhometst1_191300)
+    - forgetting parameters
+    - db does not exist
+    - source_wc does not exist
+    - dest_wc does not exist
+    - incorrect ignorewcpatches_param / forcerolling_param
 
+TO DO (Broke Environment)
+    - continue (dbhome3_191300 --> dbhometst1_191300)
+    - ignorewcpatches_param + forcerolling_param
+    - revert
+    - run again as is (dbhometst1_191300 --> dbhometst2_191300)
 
 
 
 TO DO
-- Double check that we shouldn't be using the image to create the dbhome for wc
 - TEST
     - multiple hosts in one group (where possible)
-    - continue on a failed database patch
-    - revert on a failed database patch
     - pre-gihome script
         - Note: set correct permissions / owner for action script
-- Organization
-    - should we be running these tasks from the same servers we are patching/doing working copies? I.e. when should the main playbook be running from "exahost" --> could it run from localhost??
 - do more greps when ONLY parsing outputs of a shell command a single time
 - check if variables are defined correctly / exist
 - figure out a better way to select only the current batch / first node to run

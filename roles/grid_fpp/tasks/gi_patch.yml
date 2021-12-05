@@ -1,35 +1,23 @@
 
-- name: 'Assert that patch_error_param is expected value.'
+- name: 'Assert additional patch params are expected values if defined.'
   assert:
     that:
-      - patch_error_param == '-revert' or patch_error_param == '-continue'
+      - patch_error_param is not defined or (patch_error_param == '-revert' or patch_error_param == '-continue')
+      - ignorewcpatches_param is not defined or (ignorewcpatches_param == '-ignorewcpatches' or ignorewcpatches_param == '')
+      - forcerolling_param is not defined or (forcerolling_param == '-forcerolling' or forcerolling_param == '')
     quiet: 'true'
-  run_once: 'true'
-  when: patch_error_param is defined
-
-- name: 'Assert that ignorewcpatches_param is expected value.'
-  assert:
-    that: ignorewcpatches_param == '-ignorewcpatches' or ignorewcpatches_param == ''
-    quiet: 'true'
-  run_once: 'true'
-
-- name: 'Assert that forcerolling_param is expected value.'
-  assert:
-    that: forcerolling_param == '-forcerolling' or forcerolling_param == ''
-    quiet: 'true'
-  run_once: 'true'
 
 - name: 'Check if Source and Dest WC are valid.'
   block:
   
-  - name: 'Check if Source Home is WC'
+  - name: 'Check if Source WC exists'
     include_role:
       name: 'fpp_common'
       tasks_from: 'wc_query.yml'
     vars:
       wc_name: '{{ source_wc }}'
 
-  - name: 'Check if New Home is WC'
+  - name: 'Check if Dest WC exists'
     include_role:
       name: 'fpp_common'
       tasks_from: 'wc_query.yml'

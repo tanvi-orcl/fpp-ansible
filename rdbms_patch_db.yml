@@ -3,19 +3,18 @@
   hosts: '{{ exa_host }}'
   tasks:
 
-    - name: 'Assert general variables are defined.'
-      assert:
-        that: 
-          - fpp_host is defined and identity_file is defined
-      quiet: 'true'
+    # - name: 'Assert general variables are defined.'
+    #   assert:
+    #     that: fpp_host is defined and identity_file is defined
+    #     quiet: 'true'
 
-    - name: 'Check Client Prerequistes'
-      import_role:
-        name: 'fpp_common'
-        tasks_from: 'check_client_prereq.yml'
-      vars:
-        target_node: '{{ ansible_hostname }}'
-      delegate_to: '{{ fpp_host }}'
+    # - name: 'Check Client Prerequistes'
+    #   import_role:
+    #     name: 'fpp_common'
+    #     tasks_from: 'check_client_prereq.yml'
+    #   vars:
+    #     target_node: '{{ ansible_hostname }}'
+    #   delegate_to: '{{ fpp_host }}'
   
     - name: 'RDBMS Patch'
       include_role:

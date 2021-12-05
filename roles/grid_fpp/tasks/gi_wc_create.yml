@@ -9,12 +9,10 @@
   run_once: 'true'
 
 # NAMING STANDARDS
+- set_fact:
+    wc_name: 'wctst1_{{ image_name }}_{{ ansible_hostname[:-2] }}'
 # - set_fact:
-#     cluster_name: '{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
-- set_fact:
-    cluster_name: '{{ ansible_hostname[:-2] }}'
-- set_fact:
-    wc_name: 'wctst1_{{ image_name }}_{{ cluster_name }}'
+#     wc_name: 'wctst1_{{ image_name }}_{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
 
 - block:
   - name: 'Check if WC Exists'

@@ -50,7 +50,7 @@ General Variables
     - version_tag (19.13.0.0.0) - to create temp home
     - OPTIONAL: image_name (DB1911_210420)
 
-**rdbms_create_wc.yml**
+**rdbms_create_wc_new.yml**
 - 
 - Runtime Variables
     - exa_group (fiservdb)
@@ -82,6 +82,8 @@ General Variables
     - dest_home (dbhome1_191300)
     - db_unique_name (a4db0_iad3zx) - to patch
     - OPTIONAL: patch_error_param (-revert, -continue)
+    - OPTIONAL: ignorewcpatches_param (-ignorewcpatches)
+    - OPTIONAL: forcerolling_param (-forcerolling)
 
 **gi_create_image.yml**
 - ASSUMES THAT GI HOME ALREADY PATCHED / AT IMAGE THEY WOULD LIKE TO ZIP
