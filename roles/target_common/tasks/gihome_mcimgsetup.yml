@@ -1,5 +1,5 @@
 
-- name: 'Create GI Home'
+- name: 'Create GI Home from Image {{ image_name }}'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'
@@ -11,7 +11,7 @@
 - debug:
     msg: '{{ create_gi_home_result }}'
 
-- name: 'GI Home Path'
+- name: 'Find GI Home Path'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'

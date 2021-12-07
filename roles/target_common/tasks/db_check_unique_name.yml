@@ -1,5 +1,5 @@
-- name: 'Check if DB Unique Name is valid'
-  become: true
+- name: 'Check if DB Unique Name {{ db_unique_name }} is valid'
+  become: 'true'
   become_user: 'root'
   become_method: 'sudo'
   shell: |

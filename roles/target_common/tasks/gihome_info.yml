@@ -10,7 +10,7 @@
     inventory_path: '{{ inventory_result.stdout | regex_findall("inventory_loc=(.+)") | first }}'
 - debug: { var: 'inventory_path' }
 
-- name: 'Get Active Home'
+- name: 'Get Active Grid Home'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'

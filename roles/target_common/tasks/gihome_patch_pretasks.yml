@@ -1,3 +1,4 @@
+# TO EDIT - script name
 
 - name: 'Run pre-patch script remotely'
   become: 'true'

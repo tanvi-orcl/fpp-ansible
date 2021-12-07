@@ -1,5 +1,5 @@
 
-- name: 'Check GI Version before Zipping'
+- name: 'Check GI Version before zipping'
   become: 'true'
   become_user: 'grid'
   become_method: 'sudo'
@@ -8,22 +8,23 @@
   register: 'composite_version_result'
 - debug: { msg: '{{ composite_version_result }}' }
 
-- name: 'Assert that composite version matches provided version_tag.'
+- name: 'Assert that composite version matches provided version_tag'
   assert:
     that: composite_version_result.stdout == version_tag
     quiet: 'true'
 
-- name: 'Copy install_gi.excl File to Host'
+- name: 'Copy install_gi.excl File to Host if not present'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'
   copy:
     src: 'install_gi.excl'
     dest: '{{ exa_tmp_path }}'
+    force: 'no'
   register: 'copy_script_result'
 - debug: { msg: '{{ copy_script_result }}' }
 
-- name: 'Create Zip File'
+- name: 'Create Zip File at {{ gi_zip_path }}/{{ image_name }}.zip'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'
