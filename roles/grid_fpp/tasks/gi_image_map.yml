@@ -1,5 +1,4 @@
-
-# Create Individual Map File 
+# TO EDIT - image_map_dir
 
 - name: 'Find Patch and Bug Data'
   include_role:

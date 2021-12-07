@@ -1,5 +1,5 @@
 
-- name: 'Assert additional patch params are expected values if defined.'
+- name: 'Assert additional patch params are expected values if defined'
   assert:
     that:
       - patch_error_param is not defined or (patch_error_param == '-revert' or patch_error_param == '-continue')
@@ -7,7 +7,7 @@
       - forcerolling_param is not defined or (forcerolling_param == '-forcerolling' or forcerolling_param == '')
     quiet: 'true'
 
-- name: 'Check if Source and Dest WC are valid. Run Patch Eval.'
+- name: 'Check if WCs are valid and run patch eval if on first run'
   block:
   
   - name: 'Check if Source WC exists'
@@ -41,8 +41,7 @@
     tasks_from: 'gihome_patch_pretasks.yml'
   when: patch_error_param is not defined
 
-- name: 'Patching Work to Delegate to FPP and Run Once'
-  block:
+- block:
   - name: 'Patch GI Image'
     include_role:
       name: 'fpp_common'

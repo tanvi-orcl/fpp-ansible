@@ -1,4 +1,4 @@
-# assert that image is defined
+# TO EDIT - image_map_dir
 
 - block:
   - name: 'Register GI Image {{ image_name }}'

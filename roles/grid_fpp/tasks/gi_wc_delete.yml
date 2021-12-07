@@ -1,11 +1,12 @@
 
 - block:
-  - name: 'Check if WC Exists'
+  - name: 'Check if WC Exists and if Software only'
     include_role:
       name: 'fpp_common'
       tasks_from: 'wc_query.yml'
   - assert:
       that: query_wc_result.stdout | regex_search("Software only. true")
+      quiet: 'true'
   delegate_to: '{{ fpp_host }}'
 
 - block:
