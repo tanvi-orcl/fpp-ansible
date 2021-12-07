@@ -1,4 +1,10 @@
-- name: ExaCS VM Cluster Discovery - VM Cluster Name
+
+- name: 'Assert that vm_cluster_id is defined'
+  assert: 
+    that: vm_cluster_id is defined
+    quiet: 'true'
+
+- name: ExaCS VM Cluster Discovery
   oci_database_cloud_vm_cluster_facts:
     cloud_vm_cluster_id: '{{ vm_cluster_id }}'
   register: vm_cluster_discovery_result

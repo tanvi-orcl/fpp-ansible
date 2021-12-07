@@ -5,7 +5,7 @@
 
 - assert: 
     that: db_home_id is defined
-    fail_msg: 'db home {{ db_home_name }} not found.'
+    fail_msg: 'db home {{ db_home_name }} not found'
 
 - name: 'Delete db home with name {{ db_home_name }}'
   oci_database_db_home:

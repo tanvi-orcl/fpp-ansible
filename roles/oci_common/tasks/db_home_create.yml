@@ -3,7 +3,9 @@
   when: compartment_id is not defined
   include_tasks: '{{ exadata_type }}_vm_cluster_discovery.yml'
 
-- assert: { that: compartment_id is defined }
+- assert:
+    that: compartment_id is defined
+    quiet: 'true'
 
 # Create new database home. Default Source is VM_CLUSTER_NEW 
 
@@ -24,7 +26,6 @@
     db_home_id: '{{ db_home_create_result.db_home.id }}'
     db_home_version: '{{ db_home_create_result.db_home.db_version }}'
     oracle_home: '{{ db_home_create_result.db_home.db_home_location }}'
-    
 
 - name: 'Patch DB Home to {{ ru_version }} if needed'
   include_tasks: 'db_patch.yml'

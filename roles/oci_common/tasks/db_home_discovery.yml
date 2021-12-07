@@ -3,7 +3,10 @@
   when: compartment_id is not defined
   include_tasks: '{{ exadata_type }}_vm_cluster_discovery.yml'
 
-- assert: { that: compartment_id is defined }
+- name: 'Assert that compartment_id is defined'
+  assert: 
+    that: compartment_id is defined
+    quiet: 'true'
 
 - name: 'Discover DB Home {{ db_home_name }}'
   oci_database_db_home_facts:
