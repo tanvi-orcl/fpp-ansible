@@ -16,22 +16,24 @@ This codebase contains a set of playbooks used to automate FPP operations. The p
 ### Roles
 
 **grid_fpp.yml**, **rdbms_fpp.yml**
+
 The grid_fpp and rdbms_fpp roles perform grid/rdbms specific fpp operations. The playbooks call tasks within these roles, and then these roles call helper functions in the same role and in the common roles.
 
 **fpp_common.yml**, **target_common.yml**, **oci_common.yml**
+
 The common roles run any tasks that must be performed on a specific host, such a shell scripts and file creations. If the role is being called, the assumption is that ansible is already operating on the correct host; any delegation happens in the actual playbooks, grid_fpp tasks, or rdbms_fpp tasks. The fpp_common runs on the fpp host, target_common on the exadata hosts, and oci_common on the localhost.
 
 
 ### Playbooks
 
-General Variables
+General Variables - should always be included in a playbook run
 - fpp_host (n3db1) - note: this must be the specific hostname, not a hostgroup encompassing the name in the inventory, as some playbooks will need the name.
 - identity_file (/home/oracle/.ssh/idrsa.key) - path to the exadata ssh key from the fpp host
 
 **rdbms_create_image.yml**
 - Creates and registers a new rdbms image. It will only need to be run once per image so be sure the hostgroup specified (exa_host) only contains one cluster.
 - Runtime Variables
-    - exa_host (ecc9n1) - host where temporary home will be created and queried for create image operations 
+    - exa_host (ecc1n1) - host where temporary home will be created and queried for create image operations 
     - exadata_type (exacc, exacs)
     - version (19.0.0.0) - base version
     - version_tag (19.13.0.0.0) - image tag for database home creation. Run cswlib showimages --product database to see available image tags. 
@@ -58,7 +60,7 @@ General Variables
 **rdbms_patch.yml**
 - Moves a database to a new home. As databases should be patched individually, only one host should be specified. The actual database home names should be provided and the playbook will automatically parse for the corresponding working copy names.
 - Runtime Variables 
-    - exa_host (ecc9n1)
+    - exa_host (ecc1n1)
     - source_home (dbhome1_191200)
     - dest_home (dbhome1_191300)
     - db_unique_name (a4db0_iad3zx)
@@ -77,7 +79,7 @@ General Variables
 **gi_create_image.yml**
 - Creates and registers a new grid image. Run once per image so be sure the hostgroup specified (exa_host) only contains one cluster. The host should have an active grid home that has already been patched to the correct version and is the image to be saved.
 - Runtime Variables 
-    - exa_host (ecc9n1)
+    - exa_host (ecc1n1)
     - container_url
         - OPTIONAL: curl_https_proxy
     - version (19.0.0.0)
@@ -97,24 +99,24 @@ General Variables
 **gi_create_wc_existing.yml**
 - Takes an existing grid home and registers it to FPP. Unlike other create WC operations, this will run on only one vm cluster as a time, as we are specifying an exact grid home path.  
 - Runtime Variables
-    - exa_host (ecc9n1)
+    - exa_host (ecc1n1)
     - image_name (GI191300) - to create new home and add wc
     - gi_home_path (/u02/app/19.0.0.0/grid1) - existing grid home to register as working copy. This home can be active or inactive.
 
 **gi_patch.yml**
 - Patches grid home in batches and will run on only one vm cluster as a time. Hostgroup exa_group should contain all hosts for the vm cluster in order to run patching prerequisties on the hosts included in the current batch.
 - Runtime Variables
-    - exa_group (exadata1)
+    - exa_cluster (ecc1_cluster)
     - source_wc (GI191300_ecc9)
     - dest_wc (GI191300_ecc9)
-    - batch_list ((ecc9n1),(ecc9n2,ecc9n4),(ecc9n4)) - comma separated list of hosts to indicate batches for patching. First batch should always continue only one node. 
+    - batch_list ((ecc1n1),(ecc1n3,ecc1n5),(ecc1n2,ecc1n4, ecc1n6)) - comma separated list of hosts to indicate batches for patching. First batch should always continue only one node. 
     - OPTIONAL: patch_error_param (-revert, -continue)
     - OPTIONAL: ignorewcpatches_param (-ignorewcpatches)
     - OPTIONAL: forcerolling_param (-forcerolling)
 
 **gi_delete_home.yml**
 - Deletes a grid home from the vm cluster and from FPP. This will run on only one vm cluster as a time, as we want to take care not to try to delete any grid homes that are still in use.
-    - exa_host (ecc9n1)
+    - exa_host (ecc1n1)
     - wc_name (GI191300_ecc9)
 
 **delete_image.yml**

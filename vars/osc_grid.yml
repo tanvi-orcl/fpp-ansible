@@ -1,28 +1,20 @@
 # GENERAL
-exa_group: 'clustertest'
 fpp_host: 'n3db1'
 identity_file: '/home/oracle/.ssh/idrsa.key'
-
-# container_url: ''
-# curl_https_proxy: ''
+exa_host: 'ecc1n1'
+container_url: ''
+curl_https_proxy: ''
 
 # CREATE IMAGE
-#version: '19.0.0.0.0'
-#version_tag: '19.11.4.0.0'
-# optional: image_name
+version: '19.0.0.0.0'
+version_tag: '19.13.0.0.0'
 
 # CREATE WORKING COPY
-# image_name: 'GItst1_1911400'
-#gi_home_suffix: 'gitst1_1911400'
-# gi_home_path: '/u02/app/19.0.0.0/grid1911_0_wc59_iad1602clu032f2_2116khgkhg'
-#gi_home_suffix: 'grid1911_0_wc61_iad1602clu032f2_2202' #existing
-#exadata_type: 'exacc'
-# wc_name: 'wc_gihome1_191120_ecc9c3'
+image_name: 'GI191300'
+gi_home_suffix: 'grid191300_1'
 
 # PATCH
-batches_list: '(ecc9c3n1),(ecc9c3n2, ecc9c3n3),(ecc9c3n4)'
-# source_wc: 'wc_GI1911300_ecc9c3'
-# dest_wc: 'wctst1_GItst1_1911400_ecc9c3'
+batches_list: '(ecc1n1),(ecc1n3, ecc1n5),(ecc1n2, ecc1n4, ecc1n6)'
 source_wc: 'wc_GI1911300_ecc9c3'
-dest_wc: 'wc_gihome1_191110_ecc9c3'
+dest_wc: 'wc_GI191300_ecc9c3'
 # patch_error_param: '-continue'

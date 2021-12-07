@@ -1,15 +1,17 @@
-[exadata1]
-ecc9c3n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
-ecc9c3n2 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
-ecc9c3n3 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
-ecc9c3n4 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
+
+[fiservfpp]
+n3db1 ansible_ssh_common_args='-o ProxyCommand="ssh -i idrsa.key -v -W %h:%p opc@bastion_host_ip_address"' ansible_user=opc ansible_ssh_private_key_file=idrsa.key
 
 [exadata1]
-ecc9c3n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
-ecc9c4n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
-ecc9c5n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
-ecc9c6n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
+ecc1n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+ecc2n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+ecc3n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
 
-[fpp]
-n3db1 ansible_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+[ecc1_cluster]
+ecc1n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+ecc1n2 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+ecc1n3 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+ecc1n4 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+ecc1n5 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+ecc1n6 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
 

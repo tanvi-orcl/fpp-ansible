@@ -1,32 +1,20 @@
 # GENERAL
-exa_host: 'exadata1'
-# exa_group: 'exadata2'
 fpp_host: 'n3db1'
 identity_file: '/home/oracle/.ssh/idrsa.key'
-#exadata_type: 'exacc'
+exa_host: 'ecc1n1'
+exadata_type: 'exacc'
 
 # CREATE IMAGE
-#version: '19.0.0.0'
-#version_tag: '19.13.0.0.0'
-#image_name: 'DB191200'
+version: '19.0.0.0.0'
+version_tag: '19.13.0.0.0'
 
 # CREATE WORKING COPY
-# image_name: 'DBtst1_191300'
-# db_home_name: dbhometst2_191300
-# optional: wc_name
-# orphan_home: 'true'
+image_name: 'DB191300'
 
-# # PATCH
-dest_home: 'dbhometst1_191300'
+# PATCH
 source_home: 'dbhome3_191300'
+dest_home: 'dbhometst1_191300'
 db_unique_name: 'tst1911_mwf_iad'
-#patch_error_param: '-revert'
-ignorewcpatches_param: '-ignorewcpatches'
-forcerolling_param: '-forcerolling'
-
-###### TESTING VALUES
-#oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
-#path: '/u02/app/oracle/product/19.0.0.0/dbhome_10'
-#oracle_base: '/u02/app/oracle'
-#patch_numbers: '12345678,12345678'
-#osdbagrp_groups: 'OSDBA=dba'
+# patch_error_param: '-continue'
+# ignorewcpatches_param: '-ignorewcpatches'
+# forcerolling_param: '-forcerolling'
