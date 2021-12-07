@@ -1,4 +1,4 @@
-- name: 'Query Working Copy'
+- name: 'Query Working Copies for Image {{ image_name }}'
   become: 'true'
   become_user: 'oracle'
   become_method: 'sudo'
@@ -10,7 +10,7 @@
     msg: 'Image with name {{ image_name }} has working copies and cannot be deleted'
   when: not query_image_wc_result.stdout | regex_search("No software home has been configured")
 
-- name: 'Delete Image'
+- name: 'Delete Image {{ image_name }}'
   become: 'true'
   become_user: 'oracle'
   become_method: 'sudo'
@@ -20,9 +20,9 @@
 - debug: { msg: '{{ delete_image_result }}' }
 
 - name: 'Check if Image {{ image_name }} Exists'
-  import_tasks: 'image_query.yml'
+  include_tasks: 'image_query.yml'
   vars:
     ignore_errors_flag: 'yes'
 - fail:
-    msg: 'Image still registered.'
+    msg: 'Image {{ image_name }} still registered.'
   when: not query_image_result.stdout | regex_search("does not exist")

@@ -1,9 +1,10 @@
 
+# fpp paths
 rhpctl_path: '/u02/app/fpp/fpphome/bin/rhpctl'
 fpp_maps_path: '/u02/app/fpp/admin/maps'
 fpp_tmp_path: '/u02/app/fpp/admin/tmp'
 
-
+# fpp command defaults
 ignore_errors_flag: 'no'
 curl_https_proxy: ''    # default behavior is no proxy
 

@@ -1,4 +1,4 @@
-- name: 'Query Working Copy'
+- name: 'Query Working Copy {{ wc_name }}'
   become: 'true'
   become_user: 'oracle'
   become_method: 'sudo'

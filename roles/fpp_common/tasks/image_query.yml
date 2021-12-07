@@ -1,5 +1,5 @@
 
-- name: 'Query Image'
+- name: 'Query Image {{ image_name }}'
   become: 'true'
   become_user: 'oracle'
   become_method: 'sudo'

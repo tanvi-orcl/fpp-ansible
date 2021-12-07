@@ -1,7 +1,6 @@
 
-
 - block:
-  - name: 'Patch Database {{ eval_param }}'
+  - name: 'Patch Database {{ db_unique_name }} {{ eval_param }}'
     become: 'true'
     become_user: 'oracle'
     become_method: 'sudo'
@@ -12,7 +11,7 @@
   when: patch_error_param is not defined
 
 - block:
-  - name: 'Patch Database {{ eval_param }}, {{ patch_error_param }}'
+  - name: 'Patch Database {{ db_unique_name }} {{ eval_param }}, {{ patch_error_param }}'
     become: 'true'
     become_user: 'oracle'
     become_method: 'sudo'

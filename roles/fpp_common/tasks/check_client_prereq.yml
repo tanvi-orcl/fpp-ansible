@@ -18,12 +18,13 @@
   register: 'check_client_prereq_result'
 - debug: { msg: '{{ check_client_prereq_result }}' }
 
-- set_fact:
+- name: 'Setting dbaas, fpe, and fpptools versions'
+  set_fact:
     dbaas_version: '{{ check_client_prereq_result.stdout | regex_findall("dbaas.+?-(.+)\b") | first }}'
     fpe_version: '{{ check_client_prereq_result.stdout | regex_findall("FPE.+?-(.+)\b") | first }}'
     client_server_fpptools: '{{ check_client_prereq_result.stdout | regex_findall("(fpptools.+)\b") | first }}'
 
-- name: 'Assert that dbaas, fpe, and fpp server tools are the correct versions.'
+- name: 'Assert that dbaas, fpe, and fpp server tools are the correct versions'
   assert:
     that: 
       - dbaas_version is version('1.0-1+21.1.1.3.0_210630.1055', '>=')

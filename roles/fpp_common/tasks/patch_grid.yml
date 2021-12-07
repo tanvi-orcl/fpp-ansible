@@ -1,6 +1,6 @@
 
 - block:
-  - name: 'Patch GIHome {{ eval_param }}'
+  - name: 'Patch Grid {{ eval_param }}'
     become: 'true'
     become_user: 'oracle'
     become_method: 'sudo'
@@ -11,7 +11,7 @@
   when: patch_error_param is not defined
 
 - block:
-  - name: 'Patch GIHome {{ eval_param }}, {{ patch_error_param }}'
+  - name: 'Patch Grid {{ eval_param }}, {{ patch_error_param }}'
     become: 'true'
     become_user: 'oracle'
     become_method: 'sudo'

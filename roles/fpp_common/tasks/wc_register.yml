@@ -1,4 +1,4 @@
-- name: 'Copy Template to create Attr file'
+- name: 'Use Template to create Attr file'
   become: 'true'
   become_user: 'oracle'
   become_method: 'sudo'
