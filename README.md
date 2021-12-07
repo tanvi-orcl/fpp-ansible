@@ -15,13 +15,9 @@ This codebase contains a set of playbooks used to automate FPP operations. The p
 
 ### Roles
 
-**grid_fpp.yml**, **rdbms_fpp.yml**
+**grid_fpp.yml**, **rdbms_fpp.yml**: grid_fpp and rdbms_fpp roles perform grid/rdbms specific fpp operations. The playbooks call tasks within these roles, and then these roles call helper functions in the same role and in the common roles.
 
-The grid_fpp and rdbms_fpp roles perform grid/rdbms specific fpp operations. The playbooks call tasks within these roles, and then these roles call helper functions in the same role and in the common roles.
-
-**fpp_common.yml**, **target_common.yml**, **oci_common.yml**
-
-The common roles run any tasks that must be performed on a specific host, such a shell scripts and file creations. If the role is being called, the assumption is that ansible is already operating on the correct host; any delegation happens in the actual playbooks, grid_fpp tasks, or rdbms_fpp tasks. The fpp_common runs on the fpp host, target_common on the exadata hosts, and oci_common on the localhost.
+**fpp_common.yml**, **target_common.yml**, **oci_common.yml**: common roles run any tasks that must be performed on a specific host, such a shell scripts and file creations. If the role is being called, the assumption is that ansible is already operating on the correct host; any delegation happens in the actual playbooks, grid_fpp tasks, or rdbms_fpp tasks. The fpp_common runs on the fpp host, target_common on the exadata hosts, and oci_common on the localhost.
 
 
 ### Playbooks
