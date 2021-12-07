@@ -1,3 +1,4 @@
+# TO EDIT - image_map_dir
 
 - block:
   - name: 'Register RDBMS Image {{ image_name }}'

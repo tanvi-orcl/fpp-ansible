@@ -1,10 +1,8 @@
 
-
+# TO EDIT
 # NAMING STANDARDS
 - set_fact:
-    wc_name: 'wc_{{ db_home_name }}_{{ ansible_hostname[:-2] }}'
-# - set_fact:
-#     wc_name: 'wc{{ db_home_name | regex_findall("dbhome([0-9].+)") | first }}_{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
+    wc_name: 'wc{{ db_home_name | regex_findall("dbhome([0-9].+)") | first }}_{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
 
 - block:
   - name: 'Check if WC Exists'

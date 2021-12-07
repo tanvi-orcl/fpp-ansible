@@ -1,15 +1,16 @@
 
-- name: 'Assert RDBMS Create Image Variables are defined.'
+- name: 'Assert RDBMS Create Image Variables are defined'
   assert:
     that: version is defined and version_tag is defined
     quiet: 'true'
 
+# TO EDIT
+# NAMING STANDARDS
 # Set Image Name and Check if Exists
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
-# NAMING STANDARDS
 - set_fact:
-    image_name: 'DBtst1_{{ ru_version_string[:6] }}'
+    image_name: 'DB{{ ru_version_string[:6] }}'
   when: image_name is not defined
 - debug: { var: image_name }
 
@@ -62,7 +63,9 @@
       name: 'target_common'
       tasks_from: '{{ exadata_type }}_ocid.yml'
 
-  - block:
+  - name: 'Run from localhost with OCI authentication'
+    block:
+    
     - block:
       - name: 'Delete Temp DB Home'
         include_role:

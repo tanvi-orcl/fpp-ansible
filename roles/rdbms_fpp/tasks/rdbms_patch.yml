@@ -19,14 +19,14 @@
 - name: 'Delegating to FPP Host'
   block:
 
-  - name: 'Check if Source Home is WC'
+  - name: 'Check if source home is WC and set WC name'
     include_tasks: 'rdbms_wc_name.yml'
     vars:
       db_home_name: '{{ source_home }}'
   - set_fact:
       source_wc: '{{ wc_name }}'
 
-  - name: 'Check if Dest Home is WC'
+  - name: 'Check if dest home is WC and set WC name'
     include_tasks: 'rdbms_wc_name.yml'
     vars:
       db_home_name: '{{ dest_home }}'

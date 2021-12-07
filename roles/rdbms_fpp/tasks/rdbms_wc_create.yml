@@ -11,7 +11,7 @@
   - set_fact:
       ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
   - set_fact:
-      db_home_name: 'dbhometst1_{{ ru_version_string[:6] }}'
+      db_home_name: 'dbhome1_{{ ru_version_string[:6] }}'
   when: db_home_name is not defined
 
 # Checks if database home exists
@@ -53,7 +53,6 @@
     assert:
       that: oracle_home is defined and oracle_base is defined
       success_msg: 'DB Home {{ db_home_name }} created with oracle_home {{ oracle_home }}'
-      quiet: 'true'
 
   when: existing_home is not defined or existing_home is false
 
