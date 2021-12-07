@@ -1,6 +1,5 @@
 
-# TO EDIT
-# NAMING STANDARDS
+# TO EDIT - naming standards
 - set_fact:
     wc_name: 'wc{{ db_home_name | regex_findall("dbhome([0-9].+)") | first }}_{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
 

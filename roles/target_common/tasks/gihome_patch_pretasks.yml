@@ -1,10 +1,8 @@
-# TO EDIT - script name
-
 - name: 'Run pre-patch script remotely'
   become: 'true'
   become_user: 'root'
   become_method: 'sudo'
-  script: 'fiserv_patch_pretasks.sh'
+  script: 'gi_patch_pretasks.sh'
   register: script_execution_result
   any_errors_fatal: 'true'
 - debug:

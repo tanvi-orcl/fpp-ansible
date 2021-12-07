@@ -1,20 +1,15 @@
-[x8m]
-10.0.10.225 ansible_user=opc ansible_ssh_private_key_file=/Users/tvaradha/.ssh/x8_bastion.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/x8_bastion.key -v -W %h:%p opc@129.146.70.63"'
+[exadata1]
+ecc9c3n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
+ecc9c3n2 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
+ecc9c3n3 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
+ecc9c3n4 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
 
-[testhost]
-129.146.106.116 ansible_user=opc ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_python_interpreter=/usr/bin/python3
+[exadata1]
+ecc9c3n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
+ecc9c4n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
+ecc9c5n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
+ecc9c6n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
 
-[clustertest]
-ecc9c3n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/fiserv165299cluster.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/fiserv165299cluster.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
-ecc9c3n2 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/fiserv165299cluster.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/fiserv165299cluster.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
-ecc9c3n3 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/fiserv165299cluster.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/fiserv165299cluster.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
-ecc9c3n4 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/fiserv165299cluster.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/fiserv165299cluster.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
+[fpp]
+n3db1 ansible_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/idrsa.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/idrsa.key -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 
-[fiservdb]
-ecc9c3n1 ansible_ssh_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/fiserv165299cluster.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/fiserv165299cluster.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123'
-
-[fiservfpp]
-n3db1 ansible_user=opc ansible_password=pkg81sbw ansible_ssh_private_key_file=/Users/tvaradha/.ssh/fiserv165299cluster.key ansible_ssh_common_args='-o ProxyCommand="ssh -i /Users/tvaradha/.ssh/fiserv165299cluster.key -v -W %h:%p tvaradha@lz1.us.osc.oracle.com" -o ServerAliveInterval=123 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
-
-[fiservjump]
-lz1.us.osc.oracle.com ansible_user=tvaradha ansible_password=pkg81sbw

@@ -3,8 +3,7 @@
     that: version is defined and version_tag is defined
     quiet: 'true'
 
-# TO EDIT
-# NAMING STANDARDS
+# TO EDIT - naming standards
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
 - set_fact:

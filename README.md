@@ -1,8 +1,6 @@
-# Ansible for Databases
+# Ansible for FPP
 
-This ansible project allows for FPP execution for Fiserv. 
-
-## Getting Started
+This ansible project allows for Fleet Patching and Provisioning automation. 
 
 ## Playbook Execution
 
@@ -13,18 +11,22 @@ If running a playbook locally, edit the inventory file in this github repo. Add 
 
 ## Ansible Codebase
 
-This codebase contains a set of playbooks that can be used individually or combined into a workflow for Database Set-up. Each playbook references ansible roles (an ansible file structure used to group reusable components). Each ansible role folder contains three subdirectories - tasks, defaults, and meta. In the case of the database_scripts role, there is a fourth folder (files) to store scripts used in database set-up.
+This codebase contains a set of playbooks used to automate FPP operations. The playbooks reference ansible roles (an ansible file structure used to group reusable components), where the majority of work takes place. 
 
-- Tasks: Contains a main.yml file that will be automatically called if the role is invoked. Also contains reusable standalone tasks.
-- Defaults: Default variable values for the tasks in that role. These variables have the least precedence and will be overrided by any variables defined in the included variable file (vars_file) or in the ansible job template. Many of these variables are set as null as they are optional variables for the oci tasks and it is your choice whether to define them. For required variables, check the sample variable files or the oracle.oci ansible documentation. 
-- Meta: Sets collection oracle.oci
+### Roles
+
+**grid_fpp.yml**, **rdbms_fpp.yml**
+The grid_fpp and rdbms_fpp roles perform grid/rdbms specific fpp operations. The playbooks call tasks within these roles, and then these roles call helper functions in the same role and in the common roles.
+
+**fpp_common.yml**, **target_common.yml**, **oci_common.yml**
+The common roles run any tasks that must be performed on a specific host, such a shell scripts and file creations. If the role is being called, the assumption is that ansible is already operating on the correct host; any delegation happens in the actual playbooks, grid_fpp tasks, or rdbms_fpp tasks. The fpp_common runs on the fpp host, target_common on the exadata hosts, and oci_common on the localhost.
 
 
 ### Playbooks
 
 General Variables
 - fpp_host (n3db1) - should be the specific host and not a group encompassing the host
-- identity_file (/home/oracle/.ssh/fiserv.key) - path to exadata key from fpp host
+- identity_file (/home/oracle/.ssh/idrsa.key) - path to exadata key from fpp host
 
 **rdbms_create_image.yml**
 - 
@@ -38,7 +40,7 @@ General Variables
 **rdbms_create_wc_new.yml**
 - 
 - Runtime Variables
-    - exa_group (fiservdb)
+    - exa_group (exadb)
     - image_name (DB1911_210420) - to create new home and add wc
     - version (19.0.0.0) - to create new home and add wc
     - version_tag (19.13.0.0.0) - to create new home and add wc

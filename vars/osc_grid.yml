@@ -1,12 +1,10 @@
 # GENERAL
 exa_group: 'clustertest'
-# exa_host: 'fiservdb'
-# exa_group: 'fiservdb'
 fpp_host: 'n3db1'
-identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
+identity_file: '/home/oracle/.ssh/idrsa.key'
 
-# container_url: 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/5jl4rKbGW4Nf96igLLbxd8npI8a9xlvC1oTJDenSzpZVi5pWNVK3Vvlza2UL2YcQ/n/oscnas001/b/osc_ansible/o'
-# curl_https_proxy: 'http://140.83.186.195:80'
+# container_url: ''
+# curl_https_proxy: ''
 
 # CREATE IMAGE
 #version: '19.0.0.0.0'
@@ -28,10 +26,3 @@ batches_list: '(ecc9c3n1),(ecc9c3n2, ecc9c3n3),(ecc9c3n4)'
 source_wc: 'wc_GI1911300_ecc9c3'
 dest_wc: 'wc_gihome1_191110_ecc9c3'
 # patch_error_param: '-continue'
-
-
-
-###### TESTING VALUES
-
-#patch_numbers: '12345678,12345678'
-#osdbagrp_groups: 'OSASM=asmadmin,OSDBA=asmdba,OSOPER=asmoper'
