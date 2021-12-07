@@ -7,4 +7,4 @@
     grep '{{ gi_home_inventory }}' {{ inventory_path }}/ContentsXML/inventory.xml
   ignore_errors: '{{ ignore_errors_flag }}'
   register: 'home_path_result'
-- debug: { msg: 'home_path_result' }
+- debug: { msg: '{{ home_path_result }}' }

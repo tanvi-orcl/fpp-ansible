@@ -12,7 +12,7 @@
 
     - name: 'Assert GI Create WC Variables are defined.'
       assert: 
-        that: source_wc is defined and dest_wc is defined
+        that: source_wc is defined and dest_wc is defined and batches_list is defined
         quiet: 'true'
     
     - name: 'Query {{ dest_wc }} for any Current Batches'
@@ -27,9 +27,12 @@
   tasks:
     
     - block:
+      - set_fact:
+          first_batch: '{{ batches_list | regex_findall("\b(.+?)\b") | first }}'
+        run_once: 'true'
       - name: End the play for hosts not in the first batch
         meta: end_host
-        when: ansible_hostname != '{{ batches_list | regex_findall("\b(.+?)\b") | first }}'
+        when: ansible_hostname != first_batch
       when: hostvars[fpp_host]["curr_batch"] is not defined
     
     - block:

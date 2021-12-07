@@ -29,4 +29,4 @@
         name: 'grid_fpp'
         tasks_from: 'gi_wc_create.yml'
       vars:
-        existing_home: 'true'
+        existing_home: true

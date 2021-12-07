@@ -46,7 +46,5 @@
     include_role:
       name: 'fpp_common'
       tasks_from: 'patch_db.yml'
-    vars:
-      target_node: '{{ ansible_hostname }}'
   
   delegate_to: '{{ fpp_host }}'

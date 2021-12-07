@@ -23,23 +23,30 @@ Testing Done 12/5
     - source_wc does not exist
     - dest_wc does not exist
     - incorrect ignorewcpatches_param / forcerolling_param
-
-TESTING TO DO (Broke Environment)
-- rdbms_patchdb
-    - continue (dbhome3_191300 --> dbhometst1_191300)
-    - ignorewcpatches_param + forcerolling_param
+    - continue 
     - revert
-    - run again as is (dbhometst1_191300 --> dbhometst2_191300)
-- rdbms_delete_wc
-    - orphan_home
-    - normal home
+    - ignorewcpatches_param + forcerolling_param
+    - run again as is (dbhome3_191300 --> dbhometst1_191300)
+
+12/6
 - gi_create_image
-    - Fail Case --> Same Image Name
-- gi_create_wc
-    - new (with and without path)
-    - existing (curr and not curr home)
-    - Fail Case --> Not existing Image
-    - Fail Case --> oh_dirname already exists
+    - forgetting container url
+    - existing image
+    - incorrect version
+    - success (19.11.4.0.0, GItst1_1911400)
+- gi_create_wc_new
+    - forgetting parameters
+    - image does not exist
+    - existing oh_dirname (grid1911_0_wc65_iad1602clu032f2_1940)
+    - create with oh_dirname (wctst1_GItst1_1911400_ecc9c3)
+    - create without oh_dirname (wctst2_GItst1_1911400_ecc9c3)
+    - success
+- gi_create_wc_existing
+    - forgetting parameters
+    - gi path does not exist
+    - gi path removed (grid1911_0_wc59_iad1602clu032f2_2116)
+    - wc name exists (wc_GI1911300_ecc9c3)
+    - success
 - gi_patch
     - ensure pre-patch script executes
     - continue
@@ -47,11 +54,18 @@ TESTING TO DO (Broke Environment)
     - Fail Case --> Source not WC, Dest not WC
     - Fail Case --> incorrectly defined flags
 - multiple_homes
-
-NOTE (if environment works on Monday lol)
-- Register Working Copy - creating a new attr file with that line
-    - Make sure double check if the home is active or not (check inventory file AND run ps -ef | grep crsd)
-    - check in BOTH cases just to be sure
+- rdbms_delete_wc
+    - orphan_home
+    - normal home
+- gi_delete_wc
+    - orphan_home
+    - normal home
+- rdbms_delete_image
+    - orphan_home
+    - normal home
+- gi_delete_image
+    - orphan_home
+    - normal home
 
 
 Cleanup

@@ -1,5 +1,4 @@
 #!/bin/sh
-cd /root
 systemctl stop crond
 ./linux/stoptools.sh
 

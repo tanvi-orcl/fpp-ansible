@@ -1,7 +1,7 @@
 - name: 'Assert GI Create Image Variables are defined.'
   assert:
     that: version is defined and version_tag is defined
-  quiet: 'true'
+    quiet: 'true'
 
 # NAMING STANDARDS
 - set_fact:

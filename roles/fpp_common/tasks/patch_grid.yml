@@ -16,7 +16,7 @@
     become_user: 'oracle'
     become_method: 'sudo'
     shell: |
-      {{ rhpctl_path }} move gihome -destwc {{ dest_wc }} -batches "{{ batches_list }}" {{ eval_param }} {{ patch_error_param }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
+      {{ rhpctl_path }} move gihome -destwc {{ dest_wc }} {{ eval_param }} {{ patch_error_param }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
     register: 'patch_result'
   - debug: { msg: '{{ patch_result }}' }
   when: patch_error_param is defined

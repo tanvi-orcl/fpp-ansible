@@ -21,9 +21,9 @@ identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 dest_home: 'dbhometst1_191300'
 source_home: 'dbhome3_191300'
 db_unique_name: 'tst1911_mwf_iad'
-# patch_error_param: '-continue'
-# ignorewcpatches_param: '-ignorewcpatches'
-# forcerolling_param: '-forcerolling'
+#patch_error_param: '-revert'
+ignorewcpatches_param: '-ignorewcpatches'
+forcerolling_param: '-forcerolling'
 
 ###### TESTING VALUES
 #oracle_home: '/u02/app/oracle/product/19.0.0.0/dbhome_10'

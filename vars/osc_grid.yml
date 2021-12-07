@@ -1,32 +1,34 @@
 # GENERAL
-#exa_group: 'clustertest'
-exa_group: 'fiservdb'
+exa_group: 'clustertest'
+# exa_host: 'fiservdb'
+# exa_group: 'fiservdb'
 fpp_host: 'n3db1'
 identity_file: '/home/oracle/.ssh/fiserv165299cluster.key'
 
-container_url: 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/5jl4rKbGW4Nf96igLLbxd8npI8a9xlvC1oTJDenSzpZVi5pWNVK3Vvlza2UL2YcQ/n/oscnas001/b/osc_ansible/o'
-curl_https_proxy: 'http://140.83.186.195:80'
-#container_url: 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/6601NpB_wNK4rX2pOAfNHzEc9pg5cJFqOd9BkofHW8rt3H71aduWdtumBwCaxARN/n/orasenatdoracledigital01/b/Ansible/o'
+# container_url: 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/5jl4rKbGW4Nf96igLLbxd8npI8a9xlvC1oTJDenSzpZVi5pWNVK3Vvlza2UL2YcQ/n/oscnas001/b/osc_ansible/o'
+# curl_https_proxy: 'http://140.83.186.195:80'
 
 # CREATE IMAGE
 #version: '19.0.0.0.0'
-#version_tag: '19.11.3.0.0'
+#version_tag: '19.11.4.0.0'
 # optional: image_name
 
 # CREATE WORKING COPY
-image_name: 'gihome1_191110'
-gi_home_suffix: 'grid1911_0_wc65_iad1602clu032f2_1940'
-gi_home_path: '/u02/app/19.0.0.0/grid1911_0_wc61_iad1602clu032f2_2202'
+# image_name: 'GItst1_1911400'
+#gi_home_suffix: 'gitst1_1911400'
+# gi_home_path: '/u02/app/19.0.0.0/grid1911_0_wc59_iad1602clu032f2_2116khgkhg'
 #gi_home_suffix: 'grid1911_0_wc61_iad1602clu032f2_2202' #existing
 #exadata_type: 'exacc'
 # wc_name: 'wc_gihome1_191120_ecc9c3'
 
 # PATCH
-batches_list: '(ecc9c3n1),(ecc9c3n2),(ecc9c3n3,ecc9c3n4)'
+batches_list: '(ecc9c3n1),(ecc9c3n2, ecc9c3n3),(ecc9c3n4)'
+# source_wc: 'wc_GI1911300_ecc9c3'
+# dest_wc: 'wctst1_GItst1_1911400_ecc9c3'
 source_wc: 'wc_GI1911300_ecc9c3'
 dest_wc: 'wc_gihome1_191110_ecc9c3'
-patch_error_param: '-revert'
-patch_error_flag: 'retry'
+# patch_error_param: '-continue'
+
 
 
 ###### TESTING VALUES

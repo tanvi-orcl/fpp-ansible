@@ -7,7 +7,7 @@
       - forcerolling_param is not defined or (forcerolling_param == '-forcerolling' or forcerolling_param == '')
     quiet: 'true'
 
-- name: 'Check if Source and Dest WC are valid.'
+- name: 'Check if Source and Dest WC are valid. Run Patch Eval.'
   block:
   
   - name: 'Check if Source WC exists'
@@ -23,11 +23,17 @@
       tasks_from: 'wc_query.yml'
     vars:
       wc_name: '{{ dest_wc }}'
-    
+  
+  - name: 'Patch GI Image EVAL'
+    include_role:
+      name: 'fpp_common'
+      tasks_from: 'patch_grid.yml'
+    vars:
+      eval_param: '-eval'
+
   run_once: 'true'
   delegate_to: '{{ fpp_host }}'
   when: hostvars[fpp_host]["curr_batch"] is not defined and patch_error_param is not defined
-
 
 - name: 'Run Pre-Tasks'
   include_role:
@@ -35,22 +41,11 @@
     tasks_from: 'gihome_patch_pretasks.yml'
   when: patch_error_param is not defined
 
-
 - name: 'Patching Work to Delegate to FPP and Run Once'
   block:
-
-  - name: 'Patch GI Image EVAL'
-    include_role:
-      name: 'fpp_common'
-      tasks_from: 'patch_grid.yml'
-    vars:
-      eval_param: '-eval'
-    when: hostvars[fpp_host]["curr_batch"] is not defined and patch_error_param is not defined
-      
   - name: 'Patch GI Image'
     include_role:
       name: 'fpp_common'
       tasks_from: 'patch_grid.yml'
-  
   run_once: 'true'
   delegate_to: '{{ fpp_host }}'
