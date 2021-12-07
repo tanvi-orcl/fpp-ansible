@@ -1,6 +1,6 @@
 
 - name:
-  hosts: '{{ exa_group }}'
+  hosts: '{{ exa_host }}'
   tasks:
     
     - name: 'Assert general variables are defined.'
@@ -19,10 +19,12 @@
         target_node: '{{ ansible_hostname }}'
       delegate_to: '{{ fpp_host }}'
 
-    - assert:
+    - name: 'Assert Create WC Existing variables are defined.'
+      assert:
         that: 
           - image_name is defined
           - gi_home_path is defined
+        quiet: 'true'
 
     - name: 'Add GI Working Copy'
       include_role:

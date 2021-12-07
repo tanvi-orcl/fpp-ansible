@@ -3,6 +3,11 @@
   hosts: '{{ fpp_host }}'
   tasks:
 
+    - name: 'Assert image_name is defined'
+      assert:
+        that: image_name is defined
+        quiet: 'true'
+
     - name: 'Delete Image'
       include_role:
         name: 'fpp_common'

@@ -1,4 +1,9 @@
 
+- name: 'Assert GI Delete WC Variable is defined'
+  assert:
+    that: wc_name is defined
+    quiet: 'true'
+
 - block:
   - name: 'Check if WC Exists and if Software only'
     include_role:

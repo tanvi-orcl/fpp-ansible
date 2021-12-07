@@ -1,6 +1,6 @@
    
 - name:
-  hosts: '{{ exa_group }}'
+  hosts: '{{ exa_host }}'
   tasks:
 
     - name: 'Assert general variables are defined.'
