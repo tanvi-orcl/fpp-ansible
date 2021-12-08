@@ -1,4 +1,4 @@
-# TO EDIT - exacc.props path
+# TO EDIT: exacs.props path
 
 - name: 'ExaCS VM Cluster OCID'
   become: 'true'

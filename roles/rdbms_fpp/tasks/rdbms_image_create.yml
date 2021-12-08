@@ -6,9 +6,9 @@
 
 # Set image name and check if it already exists
 
-# TO EDIT - naming standards
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
+# TO EDIT: image_name pattern
 - set_fact:
     image_name: 'DB{{ ru_version_string[:6] }}'
   when: image_name is not defined

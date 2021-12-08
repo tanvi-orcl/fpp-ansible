@@ -1,5 +1,3 @@
-# TO EDIT - image_map_dir
-
 - name: 'Find Patch and Bug Data'
   include_role:
     name: 'target_common'
@@ -14,6 +12,8 @@
   vars:
     image_type: 'grid'
     target_user: 'grid'
+
+# TO EDIT: image_map_dir
 
 - block: 
   - name: 'Add Map File'

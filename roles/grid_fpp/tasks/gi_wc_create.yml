@@ -8,7 +8,7 @@
 
 # Set working copy name and check if it already exists
 
-# TO EDIT - naming standards
+# TO EDIT: wc_name pattern
 - set_fact:
     wc_name: 'wc_{{ image_name }}_{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
 

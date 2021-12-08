@@ -1,11 +1,12 @@
-# TO EDIT
-
+# TO EDIT: exadata paths
 # exadata paths
 dbaascli_path: '/bin/dbaascli'
 exa_tmp_path: '/tmp'
 gpg_path: '/bin/gpg'
 gi_zip_path: '/acfs01'
 mcimgsetup_path: '/var/opt/oracle/managed/fpp/mcimgsetupfpp'
+
+# -----------------------------------
 
 # target command defaults
 ignore_errors_flag: 'no'
