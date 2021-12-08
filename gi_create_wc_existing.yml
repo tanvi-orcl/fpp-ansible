@@ -1,4 +1,6 @@
-
+# Takes an existing grid home and registers it to FPP. Run for individual homes - exa_host should include only one node. 
+# Required variables: fpp_host, identity_file, exa_host, image_name, gi_home_path
+    
 - name:
   hosts: '{{ exa_host }}'
   tasks:

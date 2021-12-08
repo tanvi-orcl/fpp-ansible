@@ -1,3 +1,5 @@
+# Deletes a rdbms or grid image from FPP. Run once per image; do not need to specify exadata hosts. 
+# Required variables: fpp_host, image_name
  
 - name:
   hosts: '{{ fpp_host }}'

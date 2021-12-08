@@ -1,12 +1,12 @@
 
-# Set WC Name and See if Exists
-
 - name: 'Check if Provided Image Exists'
   import_role:
     name: 'fpp_common'
     tasks_from: 'image_query.yml'
   delegate_to: '{{ fpp_host }}'
   run_once: 'true'
+
+# Set working copy name and check if it already exists
 
 # TO EDIT - naming standards
 - set_fact:
@@ -29,9 +29,13 @@
     name: 'target_common'
     tasks_from: 'gihome_info.yml'
 
+# Create new home if existing_home is false and add to FPP
+
 - name: 'Creating WC with New Home'
   include_tasks: 'gi_wc_add_new.yml'
   when: existing_home is not defined or existing_home is false
+
+# If existing_home is true, register to FPP
 
 - name: 'Creating WC with Existing Home'
   include_tasks: 'gi_wc_add_existing.yml'

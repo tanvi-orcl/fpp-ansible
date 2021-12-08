@@ -7,6 +7,8 @@
       - forcerolling_param is not defined or (forcerolling_param == '-forcerolling' or forcerolling_param == '')
     quiet: 'true'
 
+# Run prerequistes if first run (not a revert/continue job or mid-batch)
+
 - name: 'Check if WCs are valid and run patch eval if on first run'
   block:
   
@@ -35,11 +37,15 @@
   delegate_to: '{{ fpp_host }}'
   when: hostvars[fpp_host]["curr_batch"] is not defined and patch_error_param is not defined
 
+# Run gi pre-tasks for current batch
+
 - name: 'Run Pre-Tasks'
   include_role:
     name: 'target_common'
     tasks_from: 'gihome_patch_pretasks.yml'
   when: patch_error_param is not defined
+
+# Patch grid if prerequisties are met and pre-tasks were all successful
 
 - block:
   - name: 'Patch GI Image'

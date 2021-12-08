@@ -1,4 +1,4 @@
-# Creates and registers a new rdbms image. Run once per image - exa_host should include only a single host. 
+# Creates and registers a new RDBMS image. Run once per image - exa_host should include only a single host. 
 # Required variables: fpp_host, identity_file, exa_host, exadata_type, version, version_tag
 
 - name:

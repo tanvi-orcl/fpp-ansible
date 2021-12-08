@@ -1,3 +1,5 @@
+# Deletes a grid home from the vm cluster and from FPP. Run for individual homes - exa_host should include only one node. 
+# Required variables: fpp_host, identity_file, exa_host, wc_name  
    
 - name:
   hosts: '{{ exa_host }}'

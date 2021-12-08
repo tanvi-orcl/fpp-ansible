@@ -3,6 +3,8 @@
     that: version is defined and version_tag is defined
     quiet: 'true'
 
+# Set image name and check if it already exists
+
 # TO EDIT - naming standards
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
@@ -23,6 +25,8 @@
     when: not query_image_result.stdout | regex_search("does not exist")
   delegate_to: '{{ fpp_host }}'
 
+# Sets current active home as oracle home to query for image information
+
 - name: 'Set Current GI Home'
   include_role:
     name: 'target_common'
@@ -33,10 +37,14 @@
     that: oracle_home is defined
     quiet: 'true'
 
+# Zips home, encrypts file, and uploads to container
+
 - name: 'Zip GI Home'
   include_role:
     name: 'target_common'
     tasks_from: 'gihome_zip.yml'
+
+# Creates map file and registers image
 
 - name: 'Create Map File'
   include_tasks: 'gi_image_map.yml'

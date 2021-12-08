@@ -1,4 +1,5 @@
-
+# Moves a grid to a new home. Run for individual homes, but exa_cluster should include all nodes from the vm cluster. 
+# Required variables: fpp_host, identity_file, exa_cluster, source_wc, dest_wc, batch_list
 
 - name:
   hosts: '{{ fpp_host }}'
@@ -7,7 +8,7 @@
     - name: 'Assert general variables are defined.'
       assert:
         that: 
-          - exa_group is defined and identity_file is defined
+          - exa_cluster is defined and identity_file is defined
         quiet: 'true'
 
     - name: 'Assert GI Create WC Variables are defined.'
@@ -23,7 +24,7 @@
         wc_name: '{{ dest_wc }}'
 
 - name:
-  hosts: '{{ exa_group }}'
+  hosts: '{{ exa_cluster }}'
   tasks:
     
     - block:

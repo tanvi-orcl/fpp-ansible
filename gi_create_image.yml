@@ -1,5 +1,5 @@
-# This playbook creates and registers a new gi image. It will only need to be run 
-# once per image so be sure the hostgroup specified only contains one cluster.
+# Creates and registers a new GI image. Run once per image - exa_host should include only a single host. 
+# Required variables: fpp_host, identity_file, exa_host, container_url, version, version_tag
 
 - name:
   hosts: '{{ exa_host }}'
