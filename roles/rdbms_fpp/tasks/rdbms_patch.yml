@@ -18,6 +18,8 @@
 
 - name: 'Delegating to FPP Host'
   block:
+  
+  # Get working copy name from provided home name
 
   - name: 'Check if source home is WC and set WC name'
     include_tasks: 'rdbms_wc_name.yml'
@@ -33,6 +35,8 @@
   - set_fact:
       dest_wc: '{{ wc_name }}'
 
+  # Eval Patch Job if first run (not a revert or continue job)
+
   - name: 'Patch Database {{ db_unique_name }} EVAL'
     include_role:
       name: 'fpp_common'
@@ -41,6 +45,8 @@
       target_node: '{{ ansible_hostname }}'
       eval_param: '-eval'
     when: patch_error_param is not defined
+
+  # Patch Database if prerequisties are met
 
   - name: 'Patch Database {{ db_unique_name }}'
     include_role:

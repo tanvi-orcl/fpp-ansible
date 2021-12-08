@@ -4,8 +4,9 @@
     that: version is defined and version_tag is defined
     quiet: 'true'
 
+# Set image name and check if it already exists
+
 # TO EDIT - naming standards
-# Set Image Name and Check if Exists
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
 - set_fact:
@@ -25,7 +26,8 @@
     when: not query_image_result.stdout | regex_search("does not exist")
   delegate_to: '{{ fpp_host }}'
 
-# Creates temp DB and sets oracle home.
+# Creates temp home to query for image information and sets oracle home
+# If any errors post creation, will delete temp home
 
 - name: 'Create fresh {{ version_tag }} DB Home'
   include_role:
@@ -36,6 +38,8 @@
 
 - name: 'Always delete temp home, even if errors occur.'
   block:
+
+  # Create map file and register image
 
   - name: 'Assert that oracle_home is defined.'
     assert: 
@@ -50,6 +54,8 @@
 
   always:
   
+  # Always delete temp home
+
   - name: 'Purge dbhome'
     include_role:
       name: 'target_common'

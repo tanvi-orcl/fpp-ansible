@@ -1,5 +1,6 @@
-# This playbook adds a new working copy. It will need to be run once per dbhome per cluster. 
-  
+# Creates and adds a new RDBMS working copy. Run once per vm cluster - exa_group should include one node per cluster. 
+# Required variables: fpp_host, identity_file, exa_group, image_name, version, version_tag
+
 - name:
   hosts: '{{ exa_group }}'
   tasks:

@@ -1,4 +1,6 @@
-   
+# Deletes a database home from the vm cluster and from FPP. Run once per cluster - exa_group should include one node per cluster. 
+# Required variables: fpp_host, identity_file, exa_group, exadata_type, db_home_name   
+
 - name:
   hosts: '{{ exa_group }}'
   tasks:

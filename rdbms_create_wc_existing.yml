@@ -1,4 +1,5 @@
-# This version should be true only for initial setup, to convert homes to wc. 
+# Takes an existing database home and registers it to FPP. Run once per vm cluster - exa_group should include one node per cluster. 
+# Required variables: fpp_host, identity_file, exa_group, image_name, db_home_name
     
 - name:
   hosts: '{{ exa_group }}'

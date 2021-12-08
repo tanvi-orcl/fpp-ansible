@@ -1,3 +1,5 @@
+# Moves a database to a new home. Run for individual databases - exa_host should include only one node. 
+# Required variables: fpp_host, identity_file, exa_host, source_home, dest_home, db_unique_name
 
 - name:
   hosts: '{{ exa_host }}'

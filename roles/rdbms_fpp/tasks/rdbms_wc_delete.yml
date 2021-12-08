@@ -3,6 +3,8 @@
   include_tasks: 'rdbms_wc_name.yml'
   when: orphan_home is not defined or orphan_home is false
 
+# Delete home from FPP (metadata only)
+
 - block:
   - name: 'Delete Working Copy'
     include_role:
@@ -13,6 +15,8 @@
       metadata_param: '-metadataonly'
   when: wc_name is defined
   delegate_to: '{{ fpp_host }}'
+
+# Delete home from OCI
 
 - name: 'Find VM Cluster OCID'
   include_role:
