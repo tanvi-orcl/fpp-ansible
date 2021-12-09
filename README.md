@@ -102,6 +102,7 @@ General Variables - should always be included in a playbook run
     - exa_host (ecc1n1)
     - image_name (GI191300) - to create new home and add wc
     - gi_home_path (/u02/app/19.0.0.0/grid1) - existing grid home to register as working copy. This home can be active or inactive.
+    - active_home (true, false) - flag to indicate if path is active home or not. gi_home_path is also checked in the code, but as create existing wc is a very important operation, including flag as an extra check
 
 **gi_patch.yml**
 - Patches grid home in batches and will run on only one vm cluster as a time. Hostgroup exa_group should contain all hosts for the vm cluster in order to run patching prerequisties on the hosts included in the current batch.

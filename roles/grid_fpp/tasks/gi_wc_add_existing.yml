@@ -18,16 +18,26 @@
     quiet: 'true'
 
 # If GI Home is not active, then move software only
-- name: 'Not the active home: setting swonly'
-  set_fact:
-    swonly_param: ',swonly'
-  when: gi_home_path_inventory != oracle_home
+- block:
+  - name: 'Assert that gi_home_path from inventory is not equal to current active oracle home.'
+    assert:
+      that: gi_home_path_inventory != oracle_home
+      quiet: 'true'
+  - name: 'Not the active home: setting swonly'
+    set_fact:
+      swonly_param: ',swonly'
+  when: active_home is false
 
 # If GI Home is currently active, then omit swonly
-- name: 'Active home: not setting swonly'
-  set_fact:
-    swonly_param: ''
-  when: gi_home_path_inventory == oracle_home
+- block:
+  - name: 'Assert that gi_home_path from inventory equals to current active oracle home.'
+    assert:
+      that: gi_home_path_inventory == oracle_home
+      quiet: 'true'
+  - name: 'Active home: not setting swonly'
+    set_fact:
+      swonly_param: ''
+  when: active_home is true
 
 - block:
   - name: 'Register GI Workingcopy {{ wc_name }}'

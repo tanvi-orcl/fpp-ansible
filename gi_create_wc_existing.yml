@@ -26,6 +26,7 @@
         that: 
           - image_name is defined
           - gi_home_path is defined
+          - active_home is defined and (active_home is true or active_home is false)
         quiet: 'true'
 
     - name: 'Add GI Working Copy'
