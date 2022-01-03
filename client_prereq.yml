@@ -1,0 +1,13 @@
+
+- name:
+  hosts: '{{ exa_host }}'
+  tasks:
+
+    - name: 'Check Client Prerequistes'
+      import_role:
+        name: 'fpp_common'
+        tasks_from: 'check_client_prereq.yml'
+      vars:
+        target_node: '{{ ansible_hostname }}'
+      delegate_to: '{{ fpp_host }}'
+

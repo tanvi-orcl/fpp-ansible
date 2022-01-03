@@ -13,6 +13,8 @@ If running a playbook locally, edit the inventory file in this github repo. Add 
 
 This codebase contains a set of playbooks used to automate FPP operations. The playbooks reference ansible roles (an ansible file structure used to group reusable components), where the majority of work takes place. The roles > defaults > main.yml files for each role has default variables to set according to your environment. There are a few other places as well where changes should be made - search "TO EDIT" within the project.
 
+Run client_prereq.yml as a test to be sure all FPP set-up is complete. 
+
 ### Roles
 
 **grid_fpp.yml**, **rdbms_fpp.yml**
@@ -29,6 +31,11 @@ The common roles run any tasks that must be performed on a specific host, such a
 General Variables - should always be included in a playbook run
 - fpp_host (n3db1) - note: this must be the specific hostname, not a hostgroup encompassing the name in the inventory, as some playbooks will need the name.
 - identity_file (/home/oracle/.ssh/idrsa.key) - path to the exadata ssh key from the fpp host
+
+**client_prereq.yml**
+- Runs client prerequistes, checking dbaascli version and FPP tooling version. Ensures FPP host can connect to exadata hosts. 
+- Runtime Variables 
+    - exa_host (ecc1n1)
 
 **rdbms_create_image.yml**
 - Creates and registers a new rdbms image. It will only need to be run once per image so be sure the hostgroup specified (exa_host) only contains one cluster.
