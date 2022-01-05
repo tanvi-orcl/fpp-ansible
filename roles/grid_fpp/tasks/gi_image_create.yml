@@ -7,7 +7,7 @@
 
 - set_fact:
     ru_version_string: '{{ version_tag | regex_replace("\.", "") }}'
-# TO EDIT: image_name pattern
+# TO EDIT: image_name - GI image naming convention
 - set_fact:
     image_name: 'GI{{ ru_version_string }}'
   when: image_name is not defined

@@ -2,16 +2,35 @@
 
 This ansible project allows for Fleet Patching and Provisioning automation. 
 
-## Playbook Execution
+## Playbook Setup
 
 ### Inventory
 
-If running a playbook locally, edit the inventory file in this github repo. Add your FPP host and your Exadata hosts. Be sure to add in any required ssh args. Check the sample_inventory file for an example or refer to https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#inventory-basics-formats-hosts-and-groups for more information. 
+If running a playbook locally and using an inventory file, edit the inventory text file in this github repo. Add your FPP host and your Exadata hosts. Be sure to add in any required ssh args. Check the sample_inventory file for an example or refer to https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#inventory-basics-formats-hosts-and-groups for more information. 
 
+
+### OCI Ansible Modules
+
+Two playbooks, rdbms_create_image.yml and rdbms_delete_home.yml, utilize the OCI Ansible modules to delete a database home from the OCI console and therefore run on the localhost and utilize the OCI API authentication. The following two set-up steps are required for these playbooks.
+
+1. Create a file with the VM Cluster OCID. The file should have one line: vmcluster_ocid=ocid1....
+
+For ExaCC, this file should be located at /var/opt/oracle/exacc.props
+
+For ExaCS, there is no set standard but be sure to set the path in the exacs_ocid.yml file in the target_common role. Currently the path is set to be /opt/oracle/exacs.props
+
+2. OCI Authentication: Follow the instructions on this documentation to make sure you are set-up to use ansible with the OCI modules: https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/ansiblegetstarted.htm.
+
+
+### Update Variables
+
+The roles > defaults > main.yml files for each role has default variables to set according to your environment. 
+
+There are a few other places where changes should be made to paths or naming conventions - search "TO EDIT" within the project and make the updates indicated in the comments. You may want to change the comment to "EDITED" to keep track of what updates you have already made. 
 
 ## Ansible Codebase
 
-This codebase contains a set of playbooks used to automate FPP operations. The playbooks reference ansible roles (an ansible file structure used to group reusable components), where the majority of work takes place. The roles > defaults > main.yml files for each role has default variables to set according to your environment. There are a few other places as well where changes should be made - search "TO EDIT" within the project.
+This codebase contains a set of playbooks used to automate FPP operations. The playbooks reference ansible roles (an ansible file structure used to group reusable components), where the majority of work takes place. 
 
 Run client_prereq.yml as a test to be sure all FPP set-up is complete. 
 

@@ -1,4 +1,4 @@
-# TO EDIT: exacs.props path
+# TO EDIT: exacs.props path - change portion tbat is currently /opt/oracle/exacs.props
 
 - name: 'ExaCS VM Cluster OCID'
   become: 'true'

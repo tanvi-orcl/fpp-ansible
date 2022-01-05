@@ -1,4 +1,4 @@
-# TO EDIT: fpp paths 
+# TO EDIT: fpp paths - check your fpp server for rhpctl executable, maps directory, and a temporary directory
 # fpp paths
 rhpctl_path: '/u02/app/fpp/fpphome/bin/rhpctl'
 fpp_maps_path: '/u02/app/fpp/admin/maps'

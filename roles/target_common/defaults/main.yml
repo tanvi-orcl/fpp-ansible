@@ -1,4 +1,4 @@
-# TO EDIT: exadata paths
+# TO EDIT: paths to executables on exadata hosts
 # exadata paths
 dbaascli_path: '/bin/dbaascli'
 exa_tmp_path: '/tmp'

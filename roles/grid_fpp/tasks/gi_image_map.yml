@@ -13,8 +13,6 @@
     image_type: 'grid'
     target_user: 'grid'
 
-# TO EDIT: image_map_dir
-
 - block: 
   - name: 'Add Map File'
     include_role:
@@ -23,7 +21,7 @@
     vars:
       target_node: '{{ ansible_hostname }}'
       image_type: 'grid'
-      image_map_dir: 'gi'
+      image_map_dir: 'gi'     # development note: this should be the default path for grid maps on FPP. If running into errors, may need to update dir name
       image: '{{ image_name }}.zip.gpg'
 
   - name: 'Update Exa Map File'

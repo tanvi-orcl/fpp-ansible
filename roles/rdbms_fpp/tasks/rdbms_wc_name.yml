@@ -1,5 +1,5 @@
 
-# TO EDIT: wc_name pattern
+# TO EDIT: wc_name - RDBMS working copy naming pattern / hostname parsing
 - set_fact:
     wc_name: 'wc_{{ db_home_name | regex_findall("dbhome([0-9].+)") | first }}_{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
 
