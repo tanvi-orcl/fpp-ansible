@@ -5,7 +5,7 @@
       name: 'fpp_common'
       tasks_from: 'image_register.yml'
     vars:
-      image_map_dir: 'gi'   # development note: this should be the default path for grid maps on FPP. If running into errors, may need to update dir name
+      image_map_dir: 'gi'
       software_type: 'ORACLEGISOFTWARE'
 
   - name: 'Query GI Image {{ image_name }}'
