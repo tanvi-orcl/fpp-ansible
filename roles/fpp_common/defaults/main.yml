@@ -1,8 +1,10 @@
 # TO EDIT: fpp paths - check your fpp server for rhpctl executable, maps directory, and a temporary directory
 # fpp paths
 rhpctl_path: '/u02/app/fpp/fpphome/bin/rhpctl'
-fpp_maps_path: '/u02/app/fpp/admin/maps'
 fpp_tmp_path: '/u02/app/fpp/admin/tmp'
+
+# maps path note: gi and db expected subdirectory names on FPP server. If using custom names, update image_map_dir values assigned in gi_image_map.yml, rdbms_image_map.yml, gi_image_register,yml, and rdbms_image_register.yml
+fpp_maps_path: '/u02/app/fpp/admin/maps'
 
 # -------------------------------------------
 
