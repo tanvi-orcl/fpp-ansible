@@ -15,9 +15,9 @@ Two playbooks, rdbms_create_image.yml and rdbms_delete_home.yml, utilize the OCI
 
 1. Create a file with the VM Cluster OCID. The file should have one line: vmcluster_ocid=ocid1....
 
-For ExaCC, this file should be located at /var/opt/oracle/exacc.props
+    For ExaCC, this file should be located at /var/opt/oracle/exacc.props
 
-For ExaCS, there is no set standard but be sure to set the path in the exacs_ocid.yml file in the target_common role. Currently the path is set to be /opt/oracle/exacs.props
+    For ExaCS, there is no set standard but be sure to set the path in the exacs_ocid.yml file in the target_common role. Currently the path is set to be /opt/oracle/exacs.props
 
 2. OCI Authentication: Follow the instructions on this documentation to make sure you are set-up to use ansible with the OCI modules: https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/ansiblegetstarted.htm.
 
