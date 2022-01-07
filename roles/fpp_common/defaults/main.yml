@@ -1,11 +1,14 @@
-# TO EDIT: fpp paths - check your fpp server for rhpctl executable, maps directory, and a temporary directory
+# TO EDIT: paths - check your fpp server for rhpctl executable, maps directory, and a temporary directory
 # fpp paths
 rhpctl_path: '/u02/app/fpp/fpphome/bin/rhpctl'
 fpp_tmp_path: '/u02/app/fpp/admin/tmp'
+fpp_tools_path: '/u02/app/fpp/fpphome/target_rpm/fpptools_exa-ATP_19.11-19.0.0.0.0+211114.x86_64.rpm'
 
 # maps path note: gi and db expected subdirectory names on FPP server. If using custom names, update image_map_dir values assigned in gi_image_map.yml, rdbms_image_map.yml, gi_image_register,yml, and rdbms_image_register.yml
 fpp_maps_path: '/u02/app/fpp/admin/maps'
 
+# target paths
+target_mcpostpatch_path: '/var/opt/oracle/managed/exapatch/mcpostpatch'
 # -------------------------------------------
 
 # fpp command defaults

@@ -1,8 +1,8 @@
 
 - block:
-  - name: 'Check FPP RPM Version'
+  - name: 'Check FPP RPM'
     shell: |
-      rpm -qp /u02/app/fpp/fpphome/target_rpm/fpptools_exa-ATP_19.11-19.0.0.0.0+211114.x86_64.rpm
+      rpm -qp {{ fpp_tools_path }}
     register: 'check_fpp_prereq_result'
   - debug: { msg: '{{ check_fpp_prereq_result }}' }
   - set_fact:
@@ -14,7 +14,7 @@
   become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    ssh -i {{ identity_file }} -o "StrictHostKeyChecking=no" opc@{{ target_node }} -t "rpm -qa | egrep 'dbaas|FPE|fpptools' ; ls /var/opt/oracle/managed/exapatch/mcpostpatch"
+    ssh -i {{ identity_file }} -o "StrictHostKeyChecking=no" opc@{{ target_node }} -t "rpm -qa | egrep 'dbaas|FPE|fpptools' ; ls {{ target_mcpostpatch_path }}"
   register: 'check_client_prereq_result'
 - debug: { msg: '{{ check_client_prereq_result }}' }
 
