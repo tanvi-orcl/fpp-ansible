@@ -1,7 +1,7 @@
 
 - name: 'Pull New Map Content From {{ image_name }}.map'
   become: 'true'
-  become_user: 'root'
+  become_user: 'oracle'
   become_method: 'sudo'
   slurp:
     src: '{{ fpp_maps_path }}/{{ image_map_dir }}/{{ image_name }}.map'    
@@ -10,7 +10,7 @@
 
 - name: 'Load Master Map From Container'
   become: 'true'
-  become_user: 'root'
+  become_user: 'oracle'
   become_method: 'sudo'
   shell:
     curl -o {{ fpp_maps_path }}/{{ image_map_dir }}/exa_map {{ container_url }}/exa_map
@@ -21,7 +21,7 @@
 
 - name: 'Pull Master Map Content From File'
   become: 'true'
-  become_user: 'root'
+  become_user: 'oracle'
   become_method: 'sudo'
   slurp:
     src: '{{ fpp_maps_path }}/{{ image_map_dir }}/exa_map'
@@ -35,14 +35,14 @@
 
 - name: 'Write Updated Master Map Content to File'
   become: 'true'
-  become_user: 'root'
+  become_user: 'oracle'
   become_method: 'sudo'
   copy: 
     content: '{{ updated_master_map | to_nice_json }}'
     dest: '{{ fpp_maps_path }}/{{ image_map_dir }}/exa_map'
 - name: Write Master Map File to Container
   become: 'true'
-  become_user: 'root'
+  become_user: 'oracle'
   shell: 
     curl -X PUT --data-binary '@{{ fpp_maps_path }}/{{ image_map_dir }}/exa_map' {{ container_url }}/exa_map
   environment:

@@ -9,7 +9,7 @@
 
 - name: 'Use Template to create Map file {{ image_name }}.map'
   become: 'true'
-  become_user: 'root'
+  become_user: 'oracle'
   become_method: 'sudo'
   template:
     src: 'map.json'
