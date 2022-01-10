@@ -29,6 +29,9 @@
 # Creates temp home to query for image information and sets oracle home
 # If any errors post creation, will delete temp home
 
+- set_fact:
+    temp_db_home_name: 'tmp{{ ru_version_string[:5] }}img'
+
 - name: 'Create fresh {{ version_tag }} DB Home'
   include_role:
     name: 'target_common'
