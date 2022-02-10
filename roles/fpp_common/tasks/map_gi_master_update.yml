@@ -8,6 +8,7 @@
   register: 'new_image_map'
 - debug: { msg: '{{ new_image_map.content|b64decode|from_json }}' }
 
+# TO EDIT: Update Curl Method
 - name: 'Load Master Map From Container'
   become: 'true'
   become_user: 'oracle'
@@ -40,6 +41,8 @@
   copy: 
     content: '{{ updated_master_map | to_nice_json }}'
     dest: '{{ fpp_maps_path }}/{{ image_map_dir }}/exa_map'
+
+# TO EDIT: Update Curl Method
 - name: Write Master Map File to Container
   become: 'true'
   become_user: 'oracle'

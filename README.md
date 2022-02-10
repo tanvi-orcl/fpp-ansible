@@ -26,7 +26,7 @@ Two playbooks, rdbms_create_image.yml and rdbms_delete_home.yml, utilize the OCI
 
 The roles > defaults > main.yml files for each role has default variables to set according to your environment. 
 
-There are a few other places where changes should be made to paths or naming conventions - search "TO EDIT" within the project and make the updates indicated in the comments. You may want to change the comment to "EDITED" to keep track of what updates you have already made. 
+There are a few other places where changes should be made to paths or naming conventions - search "TO EDIT" within the project and make the updates indicated in the comments. You may want to change the comment to "EDITED" to keep track of what updates you have already made. We've also flagged "TO EDIT" where curl commands are run in case the container you are using for your grid tasks is accessed differently. In our testing, we used an OCI Object Storage bucket.
 
 ## Ansible Codebase
 
