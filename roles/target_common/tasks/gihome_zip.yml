@@ -33,6 +33,9 @@
   args:
     chdir: '{{ oracle_home }}'
   register: 'gi_zip_result'
+  async: 5400
+  poll: 120
+
 - debug: { msg: '{{ gi_zip_result }}' }
 
 - name: 'Encrypt Zip File'

@@ -5,6 +5,8 @@ exa_tmp_path: '/tmp'
 gpg_path: '/bin/gpg'
 gi_zip_path: '/acfs01'
 mcimgsetup_path: '/var/opt/oracle/managed/fpp/mcimgsetupfpp'
+exacc_props_path: '/var/opt/oracle/exacc.props'
+exacs_props_path: '/opt/oracle/exacs.props'
 
 # -----------------------------------
 

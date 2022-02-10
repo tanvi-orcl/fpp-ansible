@@ -4,7 +4,7 @@
   become_user: 'root'
   become_method: 'sudo'
   shell: |
-    grep vmcluster_ocid= /var/opt/oracle/exacc.props
+    grep vmcluster_ocid= {{ exacc_props_path }}
   register: 'exacc_vm_cluster_ocid'
 - debug: { msg: '{{ exacc_vm_cluster_ocid }}' }
 - set_fact:

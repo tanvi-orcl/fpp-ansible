@@ -20,7 +20,7 @@
       name: 'fpp_common'
       tasks_from: 'map_file_create.yml'
     vars:
-      target_node: '{{ ansible_hostname }}'
+      target_node: '{{ ansible_host }}'
       image_type: 'db'
       image_map_dir: 'db'
       image: '{{ image_name }}.zip.gpg'

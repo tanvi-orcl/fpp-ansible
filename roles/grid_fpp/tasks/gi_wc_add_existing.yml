@@ -45,6 +45,6 @@
       name: 'fpp_common'
       tasks_from: 'wc_register.yml'
     vars:
-      target_node: '{{ ansible_hostname }}'
+      target_node: '{{ ansible_host }}'
       path: '{{ gi_home_path }}'
   delegate_to: '{{ fpp_host }}'

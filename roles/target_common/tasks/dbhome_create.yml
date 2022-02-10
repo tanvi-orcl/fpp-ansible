@@ -44,6 +44,9 @@
     {{ dbaascli_path }} dbhome create --version {{ version | regex_replace("\.", "") }} --imageTag {{ version_tag }} --ohome_name {{ db_home_name }} --noprompt YES
   register: 'dbhome_create_result'
   failed_when: dbhome_create_result.stdout | regex_search("ERROR:.+")
+  async: 5400
+  poll: 120
+  
 - debug: { msg: '{{ dbhome_create_result }}' }
 
 - name: 'DB Home Info'

@@ -17,10 +17,10 @@
         name: 'fpp_common'
         tasks_from: 'check_client_prereq.yml'
       vars:
-        target_node: '{{ ansible_hostname }}'
+        target_node: '{{ ansible_host }}'
       delegate_to: '{{ fpp_host }}'
 
-    - name: 'Set Current GI Home'
+    - name: 'Create Grid Image'
       include_role:
         name: 'grid_fpp'
         tasks_from: 'gi_image_create.yml'

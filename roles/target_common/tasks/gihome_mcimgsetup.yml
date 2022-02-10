@@ -8,6 +8,9 @@
   environment:
     HTTPS_PROXY: '{{ curl_https_proxy }}'
   register: 'create_gi_home_result'
+  async: 5400
+  poll: 120
+  
 - debug:
     msg: '{{ create_gi_home_result }}'
 

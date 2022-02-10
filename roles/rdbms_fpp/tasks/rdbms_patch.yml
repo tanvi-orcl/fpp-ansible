@@ -42,7 +42,7 @@
       name: 'fpp_common'
       tasks_from: 'patch_db.yml'
     vars:
-      target_node: '{{ ansible_hostname }}'
+      target_node: '{{ ansible_host }}'
       eval_param: '-eval'
     when: patch_error_param is not defined
 

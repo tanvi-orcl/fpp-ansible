@@ -14,5 +14,5 @@
     - name: 'Delete RDBMS Working Copy'
       include_role:
         name: 'rdbms_fpp'
-        tasks_from: 'rdbms_delete_wc'
+        tasks_from: 'rdbms_wc_delete'
       

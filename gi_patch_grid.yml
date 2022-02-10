@@ -47,7 +47,7 @@
         name: 'fpp_common'
         tasks_from: 'check_client_prereq.yml'
       vars:
-        target_node: '{{ ansible_hostname }}'
+        target_node: '{{ ansible_host }}'
       delegate_to: '{{ fpp_host }}'
     
     - name: 'GI Patch'

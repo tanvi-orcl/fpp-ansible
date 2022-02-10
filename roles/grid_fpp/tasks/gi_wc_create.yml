@@ -20,7 +20,7 @@
     vars:
       ignore_errors_flag: 'yes'
   - fail:
-      msg: 'Working copy with name {{ wc_name }} already exists. Run on {{ ansible_hostname }} again with custom wc_name provided.'
+      msg: 'Working copy with name {{ wc_name }} already exists. Run on {{ ansible_host }} again with custom wc_name provided.'
     when: not query_wc_result.stdout | regex_search("does not exist")
   delegate_to: '{{ fpp_host }}'
 

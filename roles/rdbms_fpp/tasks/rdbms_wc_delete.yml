@@ -11,7 +11,7 @@
       name: 'fpp_common'
       tasks_from: 'wc_delete.yml'
     vars:
-      target_node: '{{ ansible_hostname }}'
+      target_node: '{{ ansible_host }}'
       metadata_param: '-metadataonly'
   when: wc_name is defined
   delegate_to: '{{ fpp_host }}'

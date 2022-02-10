@@ -14,7 +14,7 @@
       name: 'fpp_common'
       tasks_from: 'wc_add.yml'
     vars:
-      target_node: '{{ ansible_hostname }}'
+      target_node: '{{ ansible_host }}'
       path: '{{ oracle_home }}'
       add_wc_param: '-skipclone -oraclebase {{ oracle_base }} -user oracle'
 

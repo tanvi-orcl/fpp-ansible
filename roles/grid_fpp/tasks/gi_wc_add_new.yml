@@ -37,7 +37,7 @@
       name: 'fpp_common'
       tasks_from: 'wc_add.yml'
     vars:
-      target_node: '{{ ansible_hostname }}'
+      target_node: '{{ ansible_host }}'
       path: '{{ wc_path }}'
       add_wc_param: '-softwareonly'
   delegate_to: '{{ fpp_host }}'
