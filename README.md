@@ -108,8 +108,6 @@ General Variables - should always be included in a playbook run
     - exa_host (ecc1n1)
     - container_url
         - OPTIONAL: curl_https_proxy
-    - curl_username
-    - curl_password
     - version (19.0.0.0)
     - version_tag (19.13.0.0.0)
     - OPTIONAL: image_name (GI191300) - specify custom image_name if default name already registered 
@@ -120,8 +118,6 @@ General Variables - should always be included in a playbook run
     - exa_group (exadata1)
     - container_url
         - OPTIONAL: curl_https_proxy
-    - curl_username
-    - curl_password
     - image_name (GI191300)
     - OPTIONAL: gi_home_suffix (grid191300_1) - path suffix to create custom gi home path instead of FPP generated path
     - OPTIONAL: wc_name - specify custom wc_name if default name already registered 
