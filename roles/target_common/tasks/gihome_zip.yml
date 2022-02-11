@@ -60,4 +60,18 @@
     HTTPS_PROXY: '{{ curl_https_proxy }}'
   register: 'upload_result'
 - debug: { msg: '{{ upload_result }}' }
+# alternate upload method
+# - name: Upload Zip file
+#   ansible.builtin.uri:
+#     url: '{{ container_url }}/{{ image_name }}.zip.gpg'
+#     src: '{{ gi_zip_path }}/{{ image_name }}.zip.gpg'
+#     remote_src: 'true'
+#     user: '{{ curl_username }}'
+#     password: '{{ curl_password }}'
+#     force_basic_auth: 'yes'
+#     method: PUT
+#     status_code: 201
+#     headers:
+#       Content-Type: application/octet-stream
+
 

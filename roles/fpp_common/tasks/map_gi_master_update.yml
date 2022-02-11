@@ -52,3 +52,16 @@
     HTTPS_PROXY: '{{ curl_https_proxy }}'
   register: 'master_map_container_result'
 - debug: { msg: '{{ master_map_container_result }}' }
+# alternate upload method
+# - name: Upload Updated exa_map
+#   ansible.builtin.uri:
+#     url: '{{ container_url }}/exa_map'
+#     src: '{{ fpp_maps_path }}/{{ image_map_dir }}/exa_map'
+#     remote_src: 'true'
+#     user: '{{ curl_username }}'
+#     password: '{{ curl_password }}'
+#     force_basic_auth: 'yes'
+#     method: PUT
+#     status_code: 201
+#     headers:
+#       Content-Type: application/octet-stream
