@@ -11,6 +11,7 @@
 # TO EDIT: wc_name - GI working copy naming pattern / hostname parsing
 - set_fact:
     wc_name: 'wc_{{ image_name }}_{{ ansible_hostname | regex_findall("(.+?)-") | first }}'
+  when: wc_name is not defined
 
 - block:
   - name: 'Check if WC Exists'

@@ -22,6 +22,7 @@
     oracle_home: '{{ crs_path_result.stdout | regex_findall("LOC=.(/.+?). ") | first }}'
 - debug: { var: 'oracle_home' }
 
+# used for gi wc create
 - name: 'Get Client Name'
   become: 'true'
   become_user: 'grid'
