@@ -137,7 +137,7 @@ General Variables - should always be included in a playbook run
     - exa_cluster (ecc1_cluster)
     - source_wc (GI191300_ecc9)
     - dest_wc (GI191300_ecc9)
-    - batch_list ((ecc1n1),(ecc1n3,ecc1n5),(ecc1n2,ecc1n4, ecc1n6)) - comma separated list of hosts to indicate batches for patching. First batch should always continue only one node. 
+    - batch_list ((ecc1n1),(ecc1n3,ecc1n5),(ecc1n2,ecc1n4,ecc1n6)) - comma separated list of hosts to indicate batches for patching. First batch should always continue only one node. 
     - OPTIONAL: patch_error_param (-revert, -continue)
     - OPTIONAL: ignorewcpatches_param (-ignorewcpatches)
     - OPTIONAL: forcerolling_param (-forcerolling)
