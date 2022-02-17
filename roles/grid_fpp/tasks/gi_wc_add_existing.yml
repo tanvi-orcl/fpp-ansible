@@ -26,7 +26,7 @@
   - name: 'Not the active home: setting swonly'
     set_fact:
       swonly_param: ',swonly'
-  when: active_home is false
+  when: active_home|bool is false
 
 # If GI Home is currently active, then omit swonly
 - block:
@@ -37,7 +37,7 @@
   - name: 'Active home: not setting swonly'
     set_fact:
       swonly_param: ''
-  when: active_home is true
+  when: active_home|bool is true
 
 - block:
   - name: 'Register GI Workingcopy {{ wc_name }}'
