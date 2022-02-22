@@ -131,13 +131,13 @@ General Variables - should always be included in a playbook run
     - active_home (true, false) - flag to indicate if path is active home or not. gi_home_path is also checked in the code, but as create existing wc is a very important operation, including flag as an extra check
     - OPTIONAL: wc_name - specify custom wc_name if default name already registered 
 
-**gi_patch.yml**
+**gi_patch_grid.yml**
 - Patches grid home in batches and will run on only one vm cluster as a time. Hostgroup exa_group should contain all hosts for the vm cluster in order to run patching prerequisties on the hosts included in the current batch.
 - Runtime Variables
     - exa_cluster (ecc1_cluster)
     - source_wc (GI191300_ecc9)
     - dest_wc (GI191300_ecc9)
-    - batch_list ((ecc1n1),(ecc1n3,ecc1n5),(ecc1n2,ecc1n4,ecc1n6)) - comma separated list of hosts to indicate batches for patching. First batch should always continue only one node. 
+    - batches_list ((ecc1n1),(ecc1n3,ecc1n5),(ecc1n2,ecc1n4,ecc1n6)) - comma separated list of hosts to indicate batches for patching. First batch should always continue only one node. 
     - OPTIONAL: patch_error_param (-revert, -continue)
     - OPTIONAL: ignorewcpatches_param (-ignorewcpatches)
     - OPTIONAL: forcerolling_param (-forcerolling)

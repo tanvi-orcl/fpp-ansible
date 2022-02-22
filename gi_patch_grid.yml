@@ -1,5 +1,5 @@
 # Moves a grid to a new home. Run for individual homes, but exa_cluster should include all nodes from the vm cluster. 
-# Required variables: fpp_host, identity_file, exa_cluster, source_wc, dest_wc, batch_list
+# Required variables: fpp_host, identity_file, exa_cluster, source_wc, dest_wc, batches_list
 
 - name:
   hosts: '{{ fpp_host }}'
@@ -29,17 +29,17 @@
     
     - block:
       - set_fact:
-          first_batch: '{{ batches_list | regex_findall("\b(.+?)\b") | first }}'
+          first_batch: '{{ batches_list | regex_findall("\b(.+?).,") | first }}'
         run_once: 'true'
       - name: End the play for hosts not in the first batch
         meta: end_host
-        when: ansible_hostname != first_batch
+        when: ansible_host != first_batch
       when: hostvars[fpp_host]["curr_batch"] is not defined
     
     - block:
       - name: End the play for hosts not in the current batch
         meta: end_host
-        when: ansible_hostname not in hostvars[fpp_host]["curr_batch"]
+        when: ansible_host not in hostvars[fpp_host]["curr_batch"]
       when: hostvars[fpp_host]["curr_batch"] is defined
 
     - name: 'Check Client Prerequistes'

@@ -11,6 +11,7 @@
 - set_fact:
     gi_home_path_inventory: '{{ home_path_result.stdout | regex_findall("LOC=.(/.+?). ") | first }}'
   when: home_path_result.stdout != ""
+- debug: { var: gi_home_path_inventory }
 
 - name: 'Assert that gi_home_path exists in inventory.xml'
   assert:
