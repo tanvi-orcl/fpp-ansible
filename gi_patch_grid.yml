@@ -33,13 +33,13 @@
         run_once: 'true'
       - name: End the play for hosts not in the first batch
         meta: end_host
-        when: ansible_host != first_batch
+        when: ansible_hostname != first_batch
       when: hostvars[fpp_host]["curr_batch"] is not defined
     
     - block:
       - name: End the play for hosts not in the current batch
         meta: end_host
-        when: ansible_host not in hostvars[fpp_host]["curr_batch"]
+        when: ansible_hostname not in hostvars[fpp_host]["curr_batch"]
       when: hostvars[fpp_host]["curr_batch"] is defined
 
     - name: 'Check Client Prerequistes'
