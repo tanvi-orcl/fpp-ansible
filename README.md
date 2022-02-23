@@ -54,12 +54,12 @@ General Variables - should always be included in a playbook run
 **client_prereq.yml**
 - Runs client prerequistes, checking dbaascli version and FPP tooling version. Ensures FPP host can connect to exadata hosts. 
 - Runtime Variables 
-    - exa_host `ecc1n1`
+    - exa_host `exadata1n1`
 
 **rdbms_create_image.yml**
 - Creates and registers a new rdbms image. It will only need to be run once per image so be sure the hostgroup specified (exa_host) only contains one cluster.
 - Runtime Variables
-    - exa_host `ecc1n1` - host where temporary home will be created and queried for create image operations 
+    - exa_host `exadata1n1` - host where temporary home will be created and queried for create image operations 
     - exadata_type `exacc`,`exacs`
     - version `19.0.0.0` - base version
     - version_tag `19.13.0.0.0` - image tag for database home creation. Run cswlib showimages --product database to see available image tags. 
@@ -68,7 +68,7 @@ General Variables - should always be included in a playbook run
 **rdbms_create_wc_new.yml**
 - Creates and adds a new RDBMS working copy. It will need to be run once per vm cluster so the hostgroup specified (exa_group) should contain one node per cluster.
 - Runtime Variables
-    - exa_group `exadata1` - hosts where fresh database homes will be created and registered as working copies 
+    - exa_group `exadata1n1, exadata2n1` - hosts where fresh database homes will be created and registered as working copies 
     - image_name `DB191300` 
     - version `19.0.0.0`
     - version_tag `19.13.0.0.0`
@@ -78,7 +78,7 @@ General Variables - should always be included in a playbook run
 **rdbms_create_wc_existing.yml**
 - Takes an existing database home and registers it to FPP. As with creating a new home, it will need to be run once per vm cluster so the hostgroup specified (exa_group) should contain one node per cluster. If running it on multiple clusters, remember that the database home to be registered should have the same name across the clusters. 
 - Runtime Variables
-    - exa_group `exadata1`
+    - exa_group `exadata1n1,exadata2n1`
     - image_name `DB191200`
     - db_home_name `dbhome1_191200`
     - OPTIONAL: osdbagrp_groups
@@ -86,7 +86,7 @@ General Variables - should always be included in a playbook run
 **rdbms_patch.yml**
 - Moves a database to a new home. As databases should be patched individually, only one host should be specified. The actual database home names should be provided and the playbook will automatically parse for the corresponding working copy names.
 - Runtime Variables 
-    - exa_host `ecc1n1`
+    - exa_host `exadata1n1`
     - source_home `dbhome1_191200`
     - dest_home `dbhome1_191300`
     - db_unique_name `a4db0_iad3zx`
@@ -97,7 +97,7 @@ General Variables - should always be included in a playbook run
 **rdbms_delete_home.yml**
 - Deletes a database home from the vm cluster and from FPP. It will need to be run once per vm cluster so the hostgroup specified (exa_group) should contain one node per cluster. If running it on multiple clusters, remember that the database home to be deleted should have the same name across the clusters. 
 - Runtime Variables
-    - exa_group `exadata1`
+    - exa_group `exadata1n1, exadata2n1`
     - exadata_type `exacc`,`exacs`
     - db_home_name `dbhome1_191200`
     - OPTIONAL: orphan_home - set orphan_home to true if home does not exist in FPP (i.e. if exists in the vm cluster but is not a registered working copy)
@@ -105,7 +105,7 @@ General Variables - should always be included in a playbook run
 **gi_create_image.yml**
 - Creates and registers a new grid image. Run once per image so be sure the hostgroup specified (exa_host) only contains one cluster. The host should have an active grid home that has already been patched to the correct version and is the image to be saved.
 - Runtime Variables 
-    - exa_host `ecc1n1`
+    - exa_host `exadata1n1`
     - container_url
         - OPTIONAL: curl_https_proxy
     - version `19.0.0.0`
@@ -115,7 +115,7 @@ General Variables - should always be included in a playbook run
 **gi_create_wc_new.yml**
 - Creates and adds a new GI working copy. It will need to be run once per vm cluster so the hostgroup specified (exa_group) should contain one node per cluster.
 - Runtime Variables
-    - exa_group `exadata1`
+    - exa_group `exadata1n1,exadata2n1`
     - container_url
         - OPTIONAL: curl_https_proxy
     - image_name `GI191300`
@@ -125,7 +125,7 @@ General Variables - should always be included in a playbook run
 **gi_create_wc_existing.yml**
 - Takes an existing grid home and registers it to FPP. Unlike other create WC operations, this will run on only one vm cluster as a time, as we are specifying an exact grid home path.  
 - Runtime Variables
-    - exa_host `ecc1n1`
+    - exa_host `exadata1n1`
     - image_name `GI191300` - to create new home and add wc
     - gi_home_path `/u02/app/19.0.0.0/grid1` - existing grid home to register as working copy. This home can be active or inactive.
     - active_home `true`,`false` - flag to indicate if path is active home or not. gi_home_path is also checked in the code, but as create existing wc is a very important operation, including flag as an extra check
@@ -134,7 +134,7 @@ General Variables - should always be included in a playbook run
 **gi_patch_grid.yml**
 - Patches grid home in batches and will run on only one vm cluster as a time. Hostgroup exa_group should contain all hosts for the vm cluster in order to run patching prerequisties on the hosts included in the current batch.
 - Runtime Variables
-    - exa_cluster `ecc1_cluster`
+    - exa_cluster `exadata1n1,exadata1n2,exadata1n3,exadata1n4`
     - source_wc `GI191300_ecc9`
     - dest_wc `GI191300_ecc9`
     - batches_list `(ecc1n1.oracle.com),(ecc1n3.oracle.com,ecc1n5.oracle.com),(ecc1n2.oracle.com,ecc1n4.oracle.com,ecc1n6.oracle.com)` - comma separated list of FQDN hosts to indicate batches for patching. First batch should always be only one node. 
@@ -144,7 +144,7 @@ General Variables - should always be included in a playbook run
 
 **gi_delete_home.yml**
 - Deletes a grid home from the vm cluster and from FPP. This will run on only one vm cluster as a time, as we want to take care not to try to delete any grid homes that are still in use.
-    - exa_host `ecc1n1`
+    - exa_host `exadata1n1`
     - wc_name `GI191300_ecc9`
 
 **delete_image.yml**
