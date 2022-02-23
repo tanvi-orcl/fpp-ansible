@@ -135,9 +135,9 @@ General Variables - should always be included in a playbook run
 - Patches grid home in batches and will run on only one vm cluster as a time. Hostgroup exa_group should contain all hosts for the vm cluster in order to run patching prerequisties on the hosts included in the current batch.
 - Runtime Variables
     - exa_cluster `exadata1n1,exadata1n2,exadata1n3,exadata1n4`
-    - source_wc `GI191300_ecc9`
-    - dest_wc `GI191300_ecc9`
-    - batches_list `(ecc1n1.oracle.com),(ecc1n3.oracle.com,ecc1n5.oracle.com),(ecc1n2.oracle.com,ecc1n4.oracle.com,ecc1n6.oracle.com)` - comma separated list of FQDN hosts to indicate batches for patching. First batch should always be only one node. 
+    - source_wc `GI191300_exadata1`
+    - dest_wc `GI191300_exadata1`
+    - batches_list `(exadata1n1.oracle.com),(exadata1n2.oracle.com,exadata1n4.oracle.com),(exadata1n3)` - comma separated list of FQDN hosts to indicate batches for patching. First batch should always be only one node. 
     - OPTIONAL: patch_error_param `-revert`,`-continue`
     - OPTIONAL: ignorewcpatches_param `-ignorewcpatches`
     - OPTIONAL: forcerolling_param `-forcerolling`
@@ -145,7 +145,7 @@ General Variables - should always be included in a playbook run
 **gi_delete_home.yml**
 - Deletes a grid home from the vm cluster and from FPP. This will run on only one vm cluster as a time, as we want to take care not to try to delete any grid homes that are still in use.
     - exa_host `exadata1n1`
-    - wc_name `GI191300_ecc9`
+    - wc_name `GI191300_exadata1`
 
 **delete_image.yml**
 - Deletes a rdbms or grid image from FPP.
