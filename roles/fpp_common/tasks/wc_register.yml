@@ -13,6 +13,6 @@
   become_user: 'oracle'
   become_method: 'sudo'
   shell: |
-    {{ rhpctl_path }} register workingcopy -attrfile {{ fpp_tmp_path }}/{{ wc_name }}.attr -image {{ image_name }} -path {{ path }} -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo
+    {{ rhpctl_path }} register workingcopy -attrfile {{ fpp_tmp_path }}/{{ wc_name }}.attr -image {{ image_name }} -path {{ path }} -targetnode {{ target_node }} -auth sshkey -arg1 user:opc -arg2 identity_file:{{ identity_file }} -arg3 sudo_location:/bin/sudo -user {{ user }}
   register: 'register_wc_result'
 - debug: { msg: '{{ register_wc_result }}' }

@@ -18,6 +18,11 @@
     that: gi_home_path_inventory is defined and gi_home_path == gi_home_path_inventory
     quiet: 'true'
 
+- name: 'Get GI User'
+  include_role:
+    name: 'target_common'
+    tasks_from: 'gihome_user'
+
 # If GI Home is not active, then move software only
 - block:
   - name: 'Assert that gi_home_path from inventory is not equal to current active oracle home.'
@@ -48,4 +53,5 @@
     vars:
       target_node: '{{ ansible_host }}'
       path: '{{ gi_home_path }}'
+      user: '{{ gi_user }}'
   delegate_to: '{{ fpp_host }}'

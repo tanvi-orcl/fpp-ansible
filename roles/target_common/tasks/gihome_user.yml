@@ -1,0 +1,12 @@
+- name: 'Get Grid User'
+  become: 'true'
+  become_user: 'root'
+  become_method: 'sudo'
+  shell:  |
+    ls -l {{ gi_home_path }}/bin/oracle
+  register: 'grid_user_result'
+- debug:
+    msg: '{{ grid_user_result }}'
+- set_fact:
+    gi_user: '{{ grid_user_result.stdout.split(" ")[2] }}'
+- debug: { var: 'gi_user' }

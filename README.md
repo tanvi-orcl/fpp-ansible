@@ -60,7 +60,7 @@ General Variables - should always be included in a playbook run
 - Creates and registers a new rdbms image. It will only need to be run once per image so be sure the hostgroup specified (exa_host) only contains one cluster.
 - Runtime Variables
     - exa_host `ecc1n1` - host where temporary home will be created and queried for create image operations 
-    - exadata_type `exacc, exacs`
+    - exadata_type `exacc`,`exacs`
     - version `19.0.0.0` - base version
     - version_tag `19.13.0.0.0` - image tag for database home creation. Run cswlib showimages --product database to see available image tags. 
     - OPTIONAL: image_name `DB191300` - specify custom image_name if default name already registered 
