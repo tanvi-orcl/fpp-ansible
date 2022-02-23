@@ -48,8 +48,8 @@ The common roles run any tasks that must be performed on a specific host, such a
 ### Playbooks
 
 General Variables - should always be included in a playbook run
-- fpp_host (n3db1) - note: this must be the specific hostname, not a hostgroup encompassing the name in the inventory, as some playbooks will need the name.
-- identity_file (/home/oracle/.ssh/idrsa.key) - path to the exadata ssh key from the fpp host
+- fpp_host `n3db1` - note: this must be the specific hostname, not a hostgroup encompassing the name in the inventory, as some playbooks will need the name.
+- identity_file `/home/oracle/.ssh/idrsa.key` - path to the exadata ssh key from the fpp host
 
 **client_prereq.yml**
 - Runs client prerequistes, checking dbaascli version and FPP tooling version. Ensures FPP host can connect to exadata hosts. 
