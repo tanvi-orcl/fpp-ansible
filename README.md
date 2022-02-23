@@ -54,7 +54,7 @@ General Variables - should always be included in a playbook run
 **client_prereq.yml**
 - Runs client prerequistes, checking dbaascli version and FPP tooling version. Ensures FPP host can connect to exadata hosts. 
 - Runtime Variables 
-    - exa_host (ecc1n1)
+    - exa_host `ecc1n1`
 
 **rdbms_create_image.yml**
 - Creates and registers a new rdbms image. It will only need to be run once per image so be sure the hostgroup specified (exa_host) only contains one cluster.
