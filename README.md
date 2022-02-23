@@ -57,7 +57,7 @@ General Variables - should always be included in a playbook run
     - exa_host `exadata1n1`
 
 **rdbms_create_image.yml**
-- Creates and registers a new rdbms image. It will only need to be run once per image so be sure the hostgroup specified (exa_host) only contains one cluster.
+- Registers a new rdbms image to the fpp server. It will only need to be run once per image so be sure the hostgroup specified (exa_host) only contains one cluster.
 - Runtime Variables
     - exa_host `exadata1n1` - host where temporary home will be created and queried for create image operations 
     - exadata_type `exacc`,`exacs`
@@ -66,7 +66,7 @@ General Variables - should always be included in a playbook run
     - OPTIONAL: image_name `DB191300` - specify custom image_name if default name already registered 
 
 **rdbms_create_wc_new.yml**
-- Creates and adds a new RDBMS working copy. It will need to be run once per vm cluster so the hostgroup specified (exa_group) should contain one node per cluster.
+- Deploys a new home and adds home as an RDBMS working copy to FPP. It will need to be run once per vm cluster so the hostgroup specified (exa_group) should contain one node per cluster.
 - Runtime Variables
     - exa_group `exadata1n1, exadata2n1` - hosts where fresh database homes will be created and registered as working copies 
     - image_name `DB191300` 
@@ -76,7 +76,7 @@ General Variables - should always be included in a playbook run
     - OPTIONAL: osdbagrp_groups
 
 **rdbms_create_wc_existing.yml**
-- Takes an existing database home and registers it to FPP. As with creating a new home, it will need to be run once per vm cluster so the hostgroup specified (exa_group) should contain one node per cluster. If running it on multiple clusters, remember that the database home to be registered should have the same name across the clusters. 
+- Takes an existing database home and adds home as an RDBMS working copy to FPP. As with creating a new home, it will need to be run once per vm cluster so the hostgroup specified (exa_group) should contain one node per cluster. If running it on multiple clusters, remember that the database home to be registered should have the same name across the clusters. 
 - Runtime Variables
     - exa_group `exadata1n1,exadata2n1`
     - image_name `DB191200`
