@@ -2,16 +2,13 @@
 [fpp]
 n3db1 ansible_ssh_common_args='-o ProxyCommand="ssh -i idrsa.key -v -W %h:%p opc@bastion_host_ip_address"' ansible_user=opc ansible_ssh_private_key_file=idrsa.key
 
-[exadata1]
-ecc1n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
-ecc2n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
-ecc3n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+[exadata_group]
+exadata1n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+exadata2n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+exadata3n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
 
-[ecc1_cluster]
-ecc1n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
-ecc1n2 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
-ecc1n3 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
-ecc1n4 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
-ecc1n5 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
-ecc1n6 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
-
+[exadata1_cluster]
+exadata1n1 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+exadata1n2 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+exadata1n3 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
+exadata1n4 ansible_user=opc ansible_ssh_private_key_file=idrsa.key ansible_python_interpreter=/usr/bin/python3
